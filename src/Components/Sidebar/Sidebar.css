@@ -1,0 +1,21 @@
+.sidebar-container {
+    flex: 1;
+    height: 100vh;
+    color: white;
+    background-color: black;
+}
+
+.logo {
+    padding: 80px 50px 30px;
+    font-weight: 400;
+}
+
+.sidebar-list li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin: 30px;
+    font-size: 1.3rem;
+    list-style: none;
+}

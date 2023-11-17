@@ -1,14 +1,14 @@
 import React from "react";
-import Header from "../Components/Header";
-// import "../Styles/style.css"
+import { Sidebar } from "../Components/Sidebar/Sidebar";
+import { MainContent } from "../Components/MainContent.js/MainContent";
+import "./Home.css"
 
 function Home() {
    return (
-      <>
-         <Header />
-
-         
-      </>
+      <div className="home-container">
+         <Sidebar />
+         <MainContent />
+      </div>
    );
 }
 
