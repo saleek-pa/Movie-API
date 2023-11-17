@@ -1,12 +1,12 @@
 .sidebar-container {
     flex: 1;
-    height: 100vh;
+    height: auto;
     color: white;
     background-color: black;
 }
 
 .logo {
-    padding: 80px 50px 30px;
+    padding: 30px 50px 30px;
     font-weight: 400;
 }
 
