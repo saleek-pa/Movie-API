@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { MDBIcon } from "mdb-react-ui-kit";
+import { movies } from "../../DummyData";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
-   const suggestionsArray = [
-      "Avatar",
-      "Oppenheimer",
-      "Dune",
-      "Interstellar",
-      "Avatar",
-      "Oppenheimer",
-      "Dune",
-      "Interstellar",
-   ];
+   const navigate = useNavigate();
    const [searchTerm, setSearchTerm] = useState("");
    const [suggestions, setSuggestions] = useState([]);
 
@@ -23,12 +16,16 @@ export const Navbar = () => {
       if (value === "") {
          setSuggestions([]);
       } else {
-         const filteredSuggestions = suggestionsArray.filter((item) =>
-            item.toLowerCase().includes(value.toLowerCase())
-         );
+         const filteredSuggestions = movies.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
+         console.log(filteredSuggestions);
 
-         setSuggestions(filteredSuggestions.slice(0, 4));
+         setSuggestions(filteredSuggestions.slice(0, 3));
       }
+   };
+
+   const handleSuggestionClick = (title) => {
+      setSearchTerm("");
+      navigate(`/movie/${title}`);
    };
    return (
       <div className="navbar">
@@ -45,7 +42,10 @@ export const Navbar = () => {
             {searchTerm && (
                <ul className="suggestions-list">
                   {suggestions.map((suggestion, index) => (
-                     <li key={index}>{suggestion}</li>
+                     <li key={index} onClick={() => handleSuggestionClick(suggestion.title)}>
+                        <img src={suggestion.image} alt={suggestion.title} className="search-movie-image" />
+                        {suggestion.title} ({suggestion.year})
+                     </li>
                   ))}
                </ul>
             )}

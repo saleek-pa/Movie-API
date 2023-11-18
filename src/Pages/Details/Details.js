@@ -80,7 +80,7 @@ export const Details = () => {
                   </button>
                </div>
             </div>
-            {useMovieCardList(movies, "You may also like")}
+            {useMovieCardList(movies, "Similar Movies")}
          </div>
       </div>
    );
