@@ -1,6 +1,7 @@
 .sidebar-container {
     flex: 1;
     height: auto;
+    /* height: 100vh; */
     color: white;
     background-color: black;
 }

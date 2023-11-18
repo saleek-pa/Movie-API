@@ -12,10 +12,6 @@
    padding: 30px 20px 10px;
 }
 
-.list-heading h3 {
-   color: white;
-}
-
 .movie-card-container {
    display: flex;
    gap: 20px;
