@@ -1,9 +1,9 @@
 .main-content-container {
-   flex: 5;
+   flex: 1;
    background-color: black;
    color: white;
    height: auto;
-   margin-left: 242px;
+   margin-left: 250px;
 }
 
 .list-heading {

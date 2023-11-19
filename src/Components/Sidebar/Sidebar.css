@@ -1,22 +1,41 @@
 .sidebar-container {
-    flex: 1;
-    height: 100vh;
-    color: white;
-    background-color: black;
-    position: fixed;
+   width: 250px;
+   height: 100vh;
+   color: white;
+   background-color: black;
+   position: fixed;
 }
 
 .logo {
-    padding: 30px 50px 30px;
-    font-weight: 400;
+   padding: 30px 50px 30px;
+   font-weight: 400;
+}
+
+.sidebar-list {
+    padding: 0;
 }
 
 .sidebar-list li {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    margin: 30px;
-    font-size: 1.3rem;
-    list-style: none;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 15px;
+   margin: 20px 40px;
+   padding: 10px 0px 10px 22px;
+   font-size: 1.3rem;
+   list-style: none;
+   cursor: pointer;
+   transition: all 0.3s;
+   border-radius: 10px;
+}
+
+.sidebar-list li:hover {
+   background-color: #5a5757;
+   border-radius: 10px;
+}
+
+.sidebar-list li.selected {
+   background-color: #ccc;
+   border-radius: 10px;
+   color: black;
 }

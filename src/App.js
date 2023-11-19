@@ -7,6 +7,8 @@ function App() {
       <>
          <Routes>
             <Route path="/" exact element={<Home />} />
+            <Route path="/movie/discover" element={<Home />} />
+            <Route path="/movie/my-shows" element={<Home />} />
             <Route path="/movie/:title" element={<Details />} />
             {/* <Route path="/watchlist" element={<Details />} />
             <Route path="/my-shows" element={<Details />} />
