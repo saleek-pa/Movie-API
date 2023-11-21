@@ -19,14 +19,23 @@ export const useMovieCardList = (movies, heading) => {
       fetchData();
    }, [setMovie]);
 
+   console.log(movie);
+
    return (
       <>
          <div className="list-heading">
             <h3>{heading}</h3>
+            <button class="cta">
+               <span class="hover-underline-animation"> View more </span>
+            </button>
          </div>
          <div className="movie-card-container">
             {movie.map((movie) => (
-               <div className="movie-card" key={movie.id} onClick={() => navigate(`/movie/${movie.original_title.toLowerCase()}`)}>
+               <div
+                  className="movie-card"
+                  key={movie.id}
+                  onClick={() => navigate(`/movie/${movie.original_title.toLowerCase()}`)}
+               >
                   <img
                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                      alt={movie.original_title}
@@ -35,7 +44,7 @@ export const useMovieCardList = (movies, heading) => {
                   <div className="movie-title">
                      {movie.original_title} ({movie.release_date.split("-")[0]})
                   </div>
-                  <div className="movie-review">{movie.rating}</div>
+                  <div className="movie-review">{movie.vote_average.toFixed(1)}</div>
                </div>
             ))}
          </div>

@@ -14,7 +14,7 @@ export const Sidebar = () => {
 
    return (
       <div className="sidebar-container">
-         <h1 className="logo">SideBar</h1>
+         <h1 className="logo">Hello.</h1>
          <div>
             <ul className="sidebar-list">
                <li

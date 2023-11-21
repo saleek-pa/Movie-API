@@ -7,8 +7,10 @@
 }
 
 .logo {
-   padding: 30px 50px 30px;
+   margin: 30px 50px;
    font-weight: 400;
+   text-align: center;
+   cursor: pointer;
 }
 
 .sidebar-list {
