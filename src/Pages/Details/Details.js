@@ -5,7 +5,7 @@ import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import "./Details.css";
-import { useMovieCardList } from "../../Hooks/useMovieCardList ";
+import { useMovieCardList } from "../../Hooks/useMovieCardList";
 
 export const Details = () => {
    const { title } = useParams();

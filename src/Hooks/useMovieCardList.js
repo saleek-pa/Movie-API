@@ -1,27 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../Configs/Axios";
 
 export const useMovieCardList = (movies, heading) => {
    const navigate = useNavigate();
-   const [movie, setMovie] = useState([]);
 
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await axios.get("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1");
-            setMovie(response.data.results);
-         } catch (error) {
-            console.error(error);
-         }
-      };
-
-      fetchData();
-   }, [setMovie]);
-
-   console.log(movie);
-
-   return (
+   const MovieCardList = () => (
       <>
          <div className="list-heading">
             <h3>{heading}</h3>
@@ -30,7 +13,7 @@ export const useMovieCardList = (movies, heading) => {
             </button>
          </div>
          <div className="movie-card-container">
-            {movie.map((movie) => (
+            {movies.map((movie) => (
                <div
                   className="movie-card"
                   key={movie.id}
@@ -42,7 +25,8 @@ export const useMovieCardList = (movies, heading) => {
                      className="movie-image"
                   />
                   <div className="movie-title">
-                     {movie.original_title} ({movie.release_date.split("-")[0]})
+                     {movie.media_type === "movie" ? movie.original_title : movie.name} (
+                     {movie.media_type === "movie" && movie.release_date.split("-")[0]})
                   </div>
                   <div className="movie-review">{movie.vote_average.toFixed(1)}</div>
                </div>
@@ -50,4 +34,8 @@ export const useMovieCardList = (movies, heading) => {
          </div>
       </>
    );
+
+   return MovieCardList;
 };
+
+export default useMovieCardList;

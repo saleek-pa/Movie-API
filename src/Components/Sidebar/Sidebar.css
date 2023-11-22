@@ -15,6 +15,7 @@
 
 .sidebar-list {
     padding: 0;
+    margin-top: 50px;
 }
 
 .sidebar-list li {
@@ -32,12 +33,12 @@
 }
 
 .sidebar-list li:hover {
-   background-color: #5a5757;
+   background-color: #1a1a1a;
    border-radius: 10px;
 }
 
 .sidebar-list li.selected {
-   background-color: #ccc;
+   background-color: #454545;
    border-radius: 10px;
-   color: black;
+   color: white;
 }

@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-import { MDBIcon } from "mdb-react-ui-kit";
+import React, { useContext, useState } from "react";
 import { movies } from "../../DummyData";
-import "./Navbar.css";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import { MovieContext } from "../../App";
+import "./Navbar.css";
 
 export const Navbar = () => {
    const navigate = useNavigate();
+   const { isMovie, setIsMovie } = useContext(MovieContext);
    const [searchTerm, setSearchTerm] = useState("");
    const [suggestions, setSuggestions] = useState([]);
+
+   const toggleMovieSeries = () => {
+      setIsMovie(!isMovie);
+   };
 
    const handleInputChange = (event) => {
       const value = event.target.value;
@@ -52,7 +58,13 @@ export const Navbar = () => {
          </div>
          <div className="navbar-right-section">
             <div>
-               <input id="checkbox_toggle" type="checkbox" className="check" />
+               <input
+                  id="checkbox_toggle"
+                  type="checkbox"
+                  className="check"
+                  value={isMovie}
+                  onClick={toggleMovieSeries}
+               />
                <div className="checkbox">
                   <label className="slide" htmlFor="checkbox_toggle">
                      <label className="toggle" htmlFor="checkbox_toggle"></label>
