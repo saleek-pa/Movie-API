@@ -38,6 +38,7 @@
 .movie-details-plot {
    font-size: 18px;
    margin-bottom: 15px;
+   /* width: 700px; */
 }
 
 .movie-details-cast {

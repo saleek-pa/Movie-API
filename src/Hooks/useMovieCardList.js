@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 export const useMovieCardList = (movies, heading) => {
    const navigate = useNavigate();
 
+   console.log(movies)
+
    const MovieCardList = () => (
       <>
          <div className="list-heading">
@@ -17,7 +19,9 @@ export const useMovieCardList = (movies, heading) => {
                <div
                   className="movie-card"
                   key={movie.id}
-                  onClick={() => navigate(`/movie/${movie.original_title.toLowerCase()}`)}
+                  onClick={() =>
+                     navigate(`/movie/${movie.id}-${movie.original_title.toLowerCase().replace(/\s+/g, "-")}`)
+                  }
                >
                   <img
                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}

@@ -13,6 +13,7 @@ export const Navbar = () => {
 
    const toggleMovieSeries = () => {
       setIsMovie(!isMovie);
+      isMovie ? navigate("/tv") : navigate("/movie");
    };
 
    const handleInputChange = (event) => {
