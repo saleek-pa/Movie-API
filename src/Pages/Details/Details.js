@@ -17,9 +17,7 @@ export const Details = () => {
          try {
             const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`);
             setMovie(response.data);
-            const similar = await axios.get(
-               `https://api.themoviedb.org/3/movie/${id}/similar?primary_release_year=${2020}`
-            );
+            const similar = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar`);
             setSimilar(similar.data.results.slice(0, 6));
          } catch (error) {
             console.error(error);

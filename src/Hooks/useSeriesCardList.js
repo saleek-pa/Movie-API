@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CardList.css";
 
-export const useMovieCardList = (movies, heading) => {
+export const useSeriesCardList = (movies, heading) => {
    const navigate = useNavigate();
 
    const MovieCardList = () => (
@@ -41,4 +41,4 @@ export const useMovieCardList = (movies, heading) => {
    return MovieCardList;
 };
 
-export default useMovieCardList;
+export default useSeriesCardList;

@@ -3,25 +3,24 @@
    height: 13vh;
    display: flex;
    justify-content: space-between;
-   margin-right: 40px;
+   padding-right: 30px;
    align-items: center;
 }
 
 .search-input-container {
-   flex: 1;
    position: relative;
 }
 
 .search-icon {
    position: absolute;
-   right: 15px;
-   top: calc(50% + 5px);
-   transform: translateY(calc(-50% - 5px));
+   right: 5%;
+   top: 50%;
+   transform: translateY(-50%);
    color: black;
 }
 
 .search-input {
-   width: 55%;
+   width: 400px;
    padding: 10px 15px;
    transition: 0.2s linear;
    border: 2.5px solid black;

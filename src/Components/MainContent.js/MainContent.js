@@ -4,53 +4,95 @@ import { MovieContext } from "../../App";
 import { useMovieCardList } from "../../Hooks/useMovieCardList";
 import axios from "../../Configs/Axios";
 import "./MainContent.css";
+import useSeriesCardList from "../../Hooks/useSeriesCardList";
 
 export const MainContent = () => {
    const { isMovie } = useContext(MovieContext);
-   const [movie, setMovie] = useState([]);
+   const [trendingMovies, setTrendingMovies] = useState([]);
+   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+   const [upcomingMovies, setUpcomingMovies] = useState([]);
+   const [topRatedMovies, setTopRatedMovies] = useState([]);
+
+   const [trendingSeries, setTrendingSeries] = useState([]);
+   const [airingTodaySeries, setAiringTodaySeries] = useState([]);
+   const [onTheAirSeries, setOnTheAirSeries] = useState([]);
+   const [topRatedSeries, setTopRatedSeries] = useState([]);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const endpoint = isMovie
-               ? "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
-               : "https://api.themoviedb.org/3/trending/tv/day?language=en-US";
-            const response = await axios.get(endpoint);
-            setMovie(response.data.results.slice(0, 6));
+            const endpoint1 = isMovie
+               ? "https://api.themoviedb.org/3/trending/movie/day"
+               : "https://api.themoviedb.org/3/trending/tv/day";
+
+            const endpoint2 = isMovie
+               ? "https://api.themoviedb.org/3/movie/now_playing"
+               : "https://api.themoviedb.org/3/tv/airing_today";
+
+            const endpoint3 = isMovie
+               ? "https://api.themoviedb.org/3/movie/upcoming"
+               : "https://api.themoviedb.org/3/tv/on_the_air";
+
+            const endpoint4 = isMovie
+               ? "https://api.themoviedb.org/3/movie/top_rated"
+               : "https://api.themoviedb.org/3/tv/top_rated";
+
+            const [response1, response2, response3, response4] = await Promise.all([
+               axios.get(endpoint1),
+               axios.get(endpoint2),
+               axios.get(endpoint3),
+               axios.get(endpoint4),
+            ]);
+
+            isMovie
+               ? setTrendingMovies(response1.data.results.slice(0, 6))
+               : setTrendingSeries(response1.data.results.slice(0, 6));
+            isMovie
+               ? setNowPlayingMovies(response2.data.results.slice(0, 6))
+               : setAiringTodaySeries(response2.data.results.slice(0, 6));
+            isMovie
+               ? setUpcomingMovies(response3.data.results.slice(0, 6))
+               : setOnTheAirSeries(response3.data.results.slice(0, 6));
+            isMovie
+               ? setTopRatedMovies(response4.data.results.slice(0, 6))
+               : setTopRatedSeries(response4.data.results.slice(0, 6));
          } catch (error) {
             console.error(error);
          }
       };
 
       fetchData();
-   }, [isMovie, setMovie]);
+   }, [isMovie]);
 
-   console.log(movie);
+   const TrendingMovies = useMovieCardList(trendingMovies, "Trending Now");
+   const NowPlayingMovies = useMovieCardList(nowPlayingMovies, "Now Playing");
+   const UpcomingMovies = useMovieCardList(upcomingMovies, "Upcoming");
+   const TopRatedMovies = useMovieCardList(topRatedMovies, "Top Rated");
 
-   const TrendingNow = useMovieCardList(movie, "Trending Now");
-   const NowPlaying = useMovieCardList(movie, "Now Playing");
-   const Upcoming = useMovieCardList(movie, "Upcoming");
-   const TopRated = useMovieCardList(movie, "Top Rated");
-   const ReturningThisWeek = useMovieCardList(movie, "Returning this Week");
-   const NewShowsAiringInNovember = useMovieCardList(movie, "New Shows Airing in November");
+   const TrendingSeries = useSeriesCardList(trendingSeries, "Trending Now");
+   const AiringTodaySeries = useSeriesCardList(airingTodaySeries, "Airing Today");
+   const OnTheAirSeries = useSeriesCardList(onTheAirSeries, "On The Air");
+   const TopRatedSeries = useSeriesCardList(topRatedSeries, "Top Rated");
 
    return (
       <div className="main-content-container">
          <Navbar />
 
-         <TrendingNow />
          {isMovie ? (
             <>
-               <NowPlaying />
-               <Upcoming />
+               <TrendingMovies />
+               <NowPlayingMovies />
+               <UpcomingMovies />
+               <TopRatedMovies />
             </>
          ) : (
             <>
-               <ReturningThisWeek />
-               <NewShowsAiringInNovember />
+               <TrendingSeries />
+               <AiringTodaySeries />
+               <OnTheAirSeries />
+               <TopRatedSeries />
             </>
          )}
-         <TopRated />
       </div>
    );
 };
