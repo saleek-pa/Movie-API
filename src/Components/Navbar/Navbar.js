@@ -13,7 +13,7 @@ export const Navbar = () => {
 
    const toggleMovieSeries = () => {
       setIsMovie(!isMovie);
-      isMovie ? navigate("/tv") : navigate("/movie");
+      isMovie ? navigate("/movie") : navigate("/tv");
    };
 
    const handleInputChange = (event) => {
@@ -24,8 +24,6 @@ export const Navbar = () => {
          setSuggestions([]);
       } else {
          const filteredSuggestions = movies.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
-         console.log(filteredSuggestions);
-
          setSuggestions(filteredSuggestions.slice(0, 3));
       }
    };

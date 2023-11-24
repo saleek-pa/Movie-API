@@ -10,7 +10,13 @@ export const useMovieCardList = (movies, heading) => {
          <div className="list-heading">
             <h3>{heading}</h3>
             <button className="cta">
-               <span className="hover-underline-animation"> View more </span>
+               <span
+                  className="hover-underline-animation"
+                  onClick={() => navigate(`/movie/discover/${heading.toLowerCase().replace(" ", "-")}`)}
+               >
+                  {" "}
+                  View more{" "}
+               </span>
             </button>
          </div>
          <div className="movie-card-list">
@@ -18,9 +24,7 @@ export const useMovieCardList = (movies, heading) => {
                <div
                   className="movie-card"
                   key={movie.id}
-                  onClick={() =>
-                     navigate(`/movie/${movie.id}-${movie.title.toLowerCase().replace(/\s+/g, "-")}`)
-                  }
+                  onClick={() => navigate(`/movie/${movie.id}-${movie.title.toLowerCase().replace(/\s+/g, "-")}`)}
                >
                   <img
                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}

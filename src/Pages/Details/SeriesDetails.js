@@ -4,20 +4,20 @@ import { useParams } from "react-router-dom";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
-import { useMovieCardList } from "../../Hooks/useMovieCardList";
+import useSeriesCardList from "../../Hooks/useSeriesCardList";
 import "./Details.css";
 
-export const Details = () => {
+export default function SeriesDetails() {
    const { id } = useParams();
-   const [movie, setMovie] = useState([]);
+   const [series, setSeries] = useState([]);
    const [similar, setSimilar] = useState([]);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`);
-            setMovie(response.data);
-            const similar = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar`);
+            const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?append_to_response=credits`);
+            setSeries(response.data);
+            const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/similar`);
             setSimilar(similar.data.results.slice(0, 6));
          } catch (error) {
             console.error(error);
@@ -25,9 +25,9 @@ export const Details = () => {
       };
 
       fetchData();
-   }, [id, setMovie]);
+   }, [id, setSeries]);
 
-   const SimilarMovies = useMovieCardList(similar, "Similar Movies");
+   const SimilarMovies = useSeriesCardList(similar, "Similar Series");
 
    return (
       <div className="home-container">
@@ -38,28 +38,28 @@ export const Details = () => {
             <div className="movie-details-container">
                <div className="movie-details-image-container">
                   <img
-                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                     alt={movie.title}
+                     src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
+                     alt={series.name}
                      className="movie-details-image"
                   />
                </div>
                <div className="movie-details-right">
                   <h1 className="movie-details-title">
-                     {movie.title} ({movie.release_date ? movie.release_date.split("-")[0] : ""})
+                     {series.name} ({series.first_air_date ? series.first_air_date.split("-")[0] : ""})
                   </h1>
 
                   <div className="movie-details-genre">
-                     {movie.genres && movie.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
+                     {series.genres && series.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
                   </div>
 
-                  <p className="movie-details-plot">{movie.overview}</p>
+                  <p className="movie-details-plot">{series.overview}</p>
                   <p className="movie-details-cast">Cast:</p>
                   <div className="cast-list-container">
-                     {movie.credits &&
-                        movie.credits.cast.map((actor) => (
+                     {series.credits &&
+                        series.credits.cast.map((actor) => (
                            <div className="cast-list-card" key={actor.id}>
                               <img
-                                 src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+                                 src={`https://image.tmdb.org/t/p/w200${actor.profile_path}` || ""}
                                  alt={actor.name}
                                  className="cast-image"
                               />
@@ -82,4 +82,4 @@ export const Details = () => {
          </div>
       </div>
    );
-};
+}
