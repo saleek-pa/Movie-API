@@ -19,17 +19,16 @@ export const useMovieCardList = (movies, heading) => {
                   className="movie-card"
                   key={movie.id}
                   onClick={() =>
-                     navigate(`/movie/${movie.id}-${movie.original_title.toLowerCase().replace(/\s+/g, "-")}`)
+                     navigate(`/movie/${movie.id}-${movie.title.toLowerCase().replace(/\s+/g, "-")}`)
                   }
                >
                   <img
                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                     alt={movie.original_title}
+                     alt={movie.title}
                      className="movie-image"
                   />
                   <div className="movie-title">
-                     {movie.media_type === "movie" ? movie.original_title : movie.name} (
-                     {movie.media_type === "movie" && movie.release_date.split("-")[0]})
+                     {movie.title} ({movie.release_date.split("-")[0]})
                   </div>
                   <div className="movie-review">{movie.vote_average.toFixed(1)}</div>
                </div>

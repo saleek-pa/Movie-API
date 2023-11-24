@@ -39,13 +39,13 @@ export const Details = () => {
                <div className="movie-details-image-container">
                   <img
                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                     alt={movie.original_title}
+                     alt={movie.title}
                      className="movie-details-image"
                   />
                </div>
                <div className="movie-details-right">
                   <h1 className="movie-details-title">
-                     {movie.original_title} ({movie.release_date ? movie.release_date.split("-")[0] : ""})
+                     {movie.title} ({movie.release_date ? movie.release_date.split("-")[0] : ""})
                   </h1>
 
                   <div className="movie-details-genre">
@@ -56,7 +56,7 @@ export const Details = () => {
                   <p className="movie-details-cast">Cast:</p>
                   <div className="cast-list-container">
                      {movie.credits &&
-                        movie.credits.cast.slice(0, 5).map((actor) => (
+                        movie.credits.cast.map((actor) => (
                            <div className="cast-list-card" key={actor.id}>
                               <img
                                  src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
