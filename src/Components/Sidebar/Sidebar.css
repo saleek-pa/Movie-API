@@ -2,7 +2,7 @@
    width: 250px;
    height: 100vh;
    color: white;
-   background-color: black;
+   background-color: #121212;
    position: fixed;
 }
 
@@ -14,8 +14,8 @@
 }
 
 .sidebar-list {
-    padding: 0;
-    margin-top: 50px;
+   padding: 0;
+   margin-top: 50px;
 }
 
 .sidebar-list li {
@@ -28,12 +28,12 @@
    font-size: 1.3rem;
    list-style: none;
    cursor: pointer;
-   transition: all 0.3s;
+   transition: all 0.1s;
    border-radius: 10px;
 }
 
 .sidebar-list li:hover {
-   background-color: #1a1a1a;
+   background-color: #232323;
    border-radius: 10px;
 }
 

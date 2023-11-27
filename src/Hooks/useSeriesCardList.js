@@ -5,7 +5,7 @@ import "./CardList.css";
 export const useSeriesCardList = (tvSeries, heading) => {
    const navigate = useNavigate();
 
-   const MovieCardList = () => (
+   const SeriesCardList = () => (
       <div className="movie-card-container">
          <div className="list-heading">
             <h3>{heading}</h3>
@@ -35,7 +35,7 @@ export const useSeriesCardList = (tvSeries, heading) => {
       </div>
    );
 
-   return MovieCardList;
+   return SeriesCardList;
 };
 
 export default useSeriesCardList;

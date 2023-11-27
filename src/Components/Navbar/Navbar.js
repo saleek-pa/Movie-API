@@ -11,8 +11,9 @@ export const Navbar = () => {
    const [searchTerm, setSearchTerm] = useState("");
    const [suggestions, setSuggestions] = useState([]);
 
-   const toggleMovieSeries = () => {
-      setIsMovie(!isMovie);
+   const toggleMovieSeries = (e) => {
+      const button = e.target.textContent;
+      setIsMovie(button === "Movie" ? true : false);
       isMovie ? navigate("/movie") : navigate("/tv");
    };
 
@@ -57,31 +58,19 @@ export const Navbar = () => {
          </div>
          <div className="navbar-right-section">
             <div>
-               <input
-                  id="checkbox_toggle"
-                  type="checkbox"
-                  className="check"
-                  value={isMovie}
-                  onClick={toggleMovieSeries}
-               />
-               <div className="checkbox">
-                  <label className="slide" htmlFor="checkbox_toggle">
-                     <label className="toggle" htmlFor="checkbox_toggle"></label>
-                     <label className="text" htmlFor="checkbox_toggle">
-                        Movie
-                     </label>
-                     <label className="text" htmlFor="checkbox_toggle">
-                        TV Show
-                     </label>
-                  </label>
-               </div>
+               <button className="navbar-movie-series" onClick={toggleMovieSeries}>
+                  Movie
+               </button>
+               <button className="navbar-movie-series" onClick={toggleMovieSeries}>
+                  Series
+               </button>
             </div>
             <div>
                <button className="sign-up-btn">
                   Sign up
-                  <div className="arrow-wrapper">
-                     <div className="arrow"></div>
-                  </div>
+                  <span>
+                     <MDBIcon fas icon="angle-right" />
+                  </span>
                </button>
             </div>
          </div>

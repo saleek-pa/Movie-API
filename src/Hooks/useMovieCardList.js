@@ -14,8 +14,7 @@ export const useMovieCardList = (movies, heading) => {
                   className="hover-underline-animation"
                   onClick={() => navigate(`/movie/discover/${heading.toLowerCase().replace(" ", "-")}`)}
                >
-                  {" "}
-                  View more{" "}
+                  View more
                </span>
             </button>
          </div>

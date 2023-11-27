@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import { MovieContext } from "../../App";
 import { useMovieCardList } from "../../Hooks/useMovieCardList";
+import useSeriesCardList from "../../Hooks/useSeriesCardList";
 import axios from "../../Configs/Axios";
 import "./MainContent.css";
-import useSeriesCardList from "../../Hooks/useSeriesCardList";
 
 export const MainContent = () => {
    const { isMovie } = useContext(MovieContext);

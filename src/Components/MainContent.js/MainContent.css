@@ -1,9 +1,9 @@
 .main-content-container {
    flex: 1;
-   background-color: black;
    color: white;
    height: auto;
    margin-left: 250px;
    display: flex;
+   padding: 0 30px;
    flex-direction: column;
 }
