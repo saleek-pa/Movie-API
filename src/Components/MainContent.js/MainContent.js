@@ -44,18 +44,10 @@ export const MainContent = () => {
                axios.get(endpoint4),
             ]);
 
-            isMovie
-               ? setTrendingMovies(response1.data.results.slice(0, 6))
-               : setTrendingSeries(response1.data.results.slice(0, 6));
-            isMovie
-               ? setNowPlayingMovies(response2.data.results.slice(0, 6))
-               : setAiringTodaySeries(response2.data.results.slice(0, 6));
-            isMovie
-               ? setUpcomingMovies(response3.data.results.slice(0, 6))
-               : setOnTheAirSeries(response3.data.results.slice(0, 6));
-            isMovie
-               ? setTopRatedMovies(response4.data.results.slice(0, 6))
-               : setTopRatedSeries(response4.data.results.slice(0, 6));
+            isMovie ? setTrendingMovies(response1.data.results) : setTrendingSeries(response1.data.results);
+            isMovie ? setNowPlayingMovies(response2.data.results) : setAiringTodaySeries(response2.data.results);
+            isMovie ? setUpcomingMovies(response3.data.results) : setOnTheAirSeries(response3.data.results);
+            isMovie ? setTopRatedMovies(response4.data.results) : setTopRatedSeries(response4.data.results);
          } catch (error) {
             console.error(error);
          }

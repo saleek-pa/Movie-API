@@ -24,7 +24,7 @@ export default function MovieDetails() {
             const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`);
             setMovie(response.data);
             const similar = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar`);
-            setSimilar(similar.data.results.slice(0, 6));
+            setSimilar(similar.data.results);
          } catch (error) {
             console.error(error);
          }

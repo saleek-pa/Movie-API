@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CardList.css";
+import { MDBIcon } from "mdb-react-ui-kit";
 
 export const useSeriesCardList = (tvSeries, heading) => {
    const navigate = useNavigate();
+   const movieListRef = useRef(null);
+
+   const handleScroll = (scrollOffset) => {
+      if (movieListRef.current) {
+         movieListRef.current.scrollLeft += scrollOffset;
+      }
+   };
 
    const SeriesCardList = () => (
       <div className="movie-card-container">
@@ -13,7 +21,7 @@ export const useSeriesCardList = (tvSeries, heading) => {
                <span className="hover-underline-animation"> View more </span>
             </button>
          </div>
-         <div className="movie-card-list">
+         <div className="movie-card-list" ref={movieListRef}>
             {tvSeries.map((series) => (
                <div
                   className="movie-card"
@@ -32,6 +40,12 @@ export const useSeriesCardList = (tvSeries, heading) => {
                </div>
             ))}
          </div>
+         <button className="scroll-button left" onClick={() => handleScroll(-1020)}>
+            <MDBIcon fas icon="chevron-left" />
+         </button>
+         <button className="scroll-button right" onClick={() => handleScroll(1020)}>
+            <MDBIcon fas icon="chevron-right" />
+         </button>
       </div>
    );
 
