@@ -143,14 +143,23 @@
 } */
 
 .series-season-container {
-   padding: 0 50px;
+   margin: 20px auto 10px;
 }
 
 .season-row {
    display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 10px;
+   margin-bottom: 25px;
+}
+
+.season-row-copy {
+   display: flex;
    justify-content: center;
    align-items: center;
    gap: 10px;
+   cursor: pointer;
 }
 
 .checkbox-wrapper * {
@@ -264,7 +273,7 @@
 }
 
 .progress-loader {
-   width: 150px;
+   width: 500px;
    background: rgba(236, 236, 238, 0.253);
    height: 10px;
    border-radius: 7px;
@@ -276,4 +285,32 @@
    border-radius: 7px;
    background: rgb(255, 255, 255);
    transition: 0.5s;
+}
+
+.episode-dropdown {
+   opacity: 0;
+   overflow: hidden;
+   width: 650px;
+   margin: 0 auto;
+   padding-top: 30px;
+   animation: fadeInOut 0.6s ease-in-out forwards;
+}
+
+.episode-list {
+   display: flex;
+   justify-content: space-between;
+}
+
+.episode-left-side {
+   display: flex;
+   flex-direction: column;
+}
+
+@keyframes fadeInOut {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
 }

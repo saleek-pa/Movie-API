@@ -10,6 +10,8 @@ export default function SeriesDetails() {
    const { id } = useParams();
    const [series, setSeries] = useState([]);
    const [similar, setSimilar] = useState([]);
+   const [seasonDetails, setSeasonDetails] = useState([]);
+   const [showEpisodes, setShowEpisodes] = useState(false);
 
    useEffect(() => {
       const fetchData = async () => {
@@ -18,6 +20,14 @@ export default function SeriesDetails() {
             setSeries(response.data);
             const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/similar`);
             setSimilar(similar.data.results);
+
+            const totalSeason = response.data.number_of_seasons;
+            const details = [];
+            for (let i = 1; i <= totalSeason; i++) {
+               const season = await axios.get(`https://api.themoviedb.org/3/tv/${id}/season/${i}`);
+               details.push(season.data);
+            }
+            setSeasonDetails(details);
          } catch (error) {
             console.error(error);
          }
@@ -26,7 +36,19 @@ export default function SeriesDetails() {
       fetchData();
    }, [id, setSeries]);
 
-   console.log(series);
+   // console.log(series);
+   console.log(seasonDetails[0].episodes);
+
+   const handleChevronClick = () => {
+      setShowEpisodes(!showEpisodes);
+   };
+
+   const dateConverter = (date) => {
+      const dateToConvert = new Date(date);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const formattedDate = new Intl.DateTimeFormat("en-US", options).format(dateToConvert);
+      return formattedDate;
+   };
 
    const SimilarMovies = useSeriesCardList(similar, "Similar Series");
 
@@ -79,21 +101,47 @@ export default function SeriesDetails() {
             </div>
          </div>
          <div className="series-season-container">
-            <h3>Seasons</h3>
-            <div className="season-row">
-               <div className="checkbox-wrapper">
-                  <input id="_checkbox-26" type="checkbox" />
-                  <label for="_checkbox-26">
-                     <div className="tick_mark"></div>
-                  </label>
+            {seasonDetails.map((value, index) => (
+               <div className="season-row" key={value.id}>
+                  <div className="checkbox-wrapper">
+                     <input id={`_checkbox-${value.id}`} type="checkbox" />
+                     <label htmlFor={`_checkbox-${value.id}`}>
+                        <div className="tick_mark"></div>
+                     </label>
+                  </div>
+                  <div className="season-row-copy" onClick={handleChevronClick}>
+                     <h4 style={{ margin: "0" }}>{value.name}</h4>
+                     <div className="progress-loader">
+                        <div className="progress"></div>
+                     </div>
+                     <h5 style={{ margin: "0" }}>0/{value.episodes.length}</h5>
+                     <MDBIcon fas icon="chevron-right" />
+                  </div>
+                  {showEpisodes && (
+                     <div className="episode-dropdown">
+                        {seasonDetails[index].episodes.map((ep) => (
+                           <div className="episode-list" key={ep.id}>
+                              <div className="episode-left-side">
+                                 <h5>{ep.name}</h5>
+                                 <div style={{ display: "flex" }}>
+                                    <p>
+                                       S0{ep.season_number}E0{ep.episode_number}
+                                    </p>
+                                    &nbsp;·&nbsp;<p>{dateConverter(ep.air_date)}</p>
+                                 </div>
+                              </div>
+                              <div className="checkbox-wrapper">
+                                 <input id="_checkbox-26" type="checkbox" />
+                                 <label htmlFor="_checkbox-26">
+                                    <div className="tick_mark"></div>
+                                 </label>
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                  )}
                </div>
-               <h4 style={{ margin: "0" }}>Season 1</h4>
-               <div class="progress-loader">
-                  <div class="progress"></div>
-               </div>
-               <h5 style={{ margin: "0" }}>0/8</h5>
-               <MDBIcon fas icon="chevron-right" />
-            </div>
+            ))}
          </div>
          <SimilarMovies />
       </div>
