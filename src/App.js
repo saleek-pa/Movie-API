@@ -4,6 +4,7 @@ import { Sidebar } from "./Components/Sidebar/Sidebar";
 import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
+import ViewMoreSeries from "./Pages/ViewMore/SeriesViewMore";
 import { MainContent } from "./Components/MainContent.js/MainContent";
 import "./App.css";
 
@@ -21,10 +22,9 @@ function App() {
                <Route path="/movie/:id" element={<MovieDetails />} />
                <Route path="/movie/discover" element={<MainContent />} />
                <Route path="/movie/discover/:title" element={<ViewMoreMovie />} />
-               <Route path="/movie/my-shows" element={<MainContent />} />
                <Route path="/tv" exact element={<MainContent />} />
                <Route path="/tv/:id" element={<SeriesDetails />} />
-               <Route path="/tv/discover/:title" element={<ViewMoreMovie />} />
+               <Route path="/tv/discover/:title" element={<ViewMoreSeries />} />
             </Routes>
          </MovieContext.Provider>
       </>

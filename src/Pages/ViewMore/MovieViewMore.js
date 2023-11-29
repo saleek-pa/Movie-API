@@ -60,7 +60,7 @@ export default function ViewMoreMovie() {
                   </span>
                </button>
             </div>
-            <div className="movie-card-list">
+            <div className="view-more-movie-card-list">
                {movies.map((movie) => (
                   <div
                      className="movie-card"

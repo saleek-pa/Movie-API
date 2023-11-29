@@ -17,7 +17,7 @@ export default function SeriesDetails() {
             const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?append_to_response=credits`);
             setSeries(response.data);
             const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/similar`);
-            setSimilar(similar.data.results.slice(0, 6));
+            setSimilar(similar.data.results);
          } catch (error) {
             console.error(error);
          }
@@ -76,6 +76,23 @@ export default function SeriesDetails() {
                         </div>
                      ))}
                </div>
+            </div>
+         </div>
+         <div className="series-season-container">
+            <h3>Seasons</h3>
+            <div className="season-row">
+               <div className="checkbox-wrapper">
+                  <input id="_checkbox-26" type="checkbox" />
+                  <label for="_checkbox-26">
+                     <div className="tick_mark"></div>
+                  </label>
+               </div>
+               <h4 style={{ margin: "0" }}>Season 1</h4>
+               <div class="progress-loader">
+                  <div class="progress"></div>
+               </div>
+               <h5 style={{ margin: "0" }}>0/8</h5>
+               <MDBIcon fas icon="chevron-right" />
             </div>
          </div>
          <SimilarMovies />

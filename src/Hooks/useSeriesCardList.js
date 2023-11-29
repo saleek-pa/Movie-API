@@ -18,7 +18,12 @@ export const useSeriesCardList = (tvSeries, heading) => {
          <div className="list-heading">
             <h3>{heading}</h3>
             <button className="cta">
-               <span className="hover-underline-animation"> View more </span>
+               <span
+                  className="hover-underline-animation"
+                  onClick={() => navigate(`/tv/discover/${heading.toLowerCase().replace(" ", "-")}`)}
+               >
+                  View more
+               </span>
             </button>
          </div>
          <div className="movie-card-list" ref={movieListRef}>
