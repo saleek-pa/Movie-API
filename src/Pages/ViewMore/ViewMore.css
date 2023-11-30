@@ -3,3 +3,7 @@
    flex-wrap: wrap;
    gap: 25px;
 }
+
+.view-more-loading {
+   margin: 20px auto 50px;
+}

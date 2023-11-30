@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
@@ -9,38 +9,44 @@ export default function ViewMoreMovie() {
    const { title } = useParams();
    const navigate = useNavigate();
    const [movies, setMovies] = useState([]);
+   const [pageNumber, setPageNumber] = useState(0);
+   const loadingRef = useRef(null);
+
+   const fetchData = useCallback(async () => {
+      try {
+         const MOVIE_ENDPOINTS = {
+            "trending-now": "trending/movie/day",
+            "now-playing": "movie/now_playing",
+            "upcoming": "movie/upcoming",
+            "top-rated": "movie/top_rated",
+         };
+
+         const endpoint = `https://api.themoviedb.org/3/${MOVIE_ENDPOINTS[title]}?page=${pageNumber}`;
+         const response = await axios.get(endpoint);
+         setMovies((prevMovies) => [...prevMovies, ...response.data.results]);
+      } catch (error) {
+         console.error(error);
+      }
+   }, [title, pageNumber]);
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            let endpoint = "";
-
-            switch (title) {
-               case "trending-now":
-                  endpoint = "https://api.themoviedb.org/3/trending/movie/day";
-                  break;
-               case "now-playing":
-                  endpoint = "https://api.themoviedb.org/3/movie/now_playing";
-                  break;
-               case "upcoming":
-                  endpoint = "https://api.themoviedb.org/3/movie/upcoming";
-                  break;
-               case "top-rated":
-                  endpoint = "https://api.themoviedb.org/3/movie/top_rated";
-                  break;
-               default:
-                  break;
-            }
-
-            const response = await axios.get(endpoint);
-            setMovies(response.data.results);
-         } catch (error) {
-            console.error(error);
-         }
-      };
-
       fetchData();
-   }, [title]);
+   }, [fetchData]);
+
+   useEffect(() => {
+      const observer = new IntersectionObserver(
+         (entries) => {
+            if (entries[0].isIntersecting) {
+               setPageNumber((page) => page + 1);
+            }
+         },
+         { threshold: 0.5 }
+      );
+
+      if (loadingRef.current) observer.observe(loadingRef.current);
+
+      return () => observer.disconnect();
+   }, [loadingRef]);
 
    const heading = title
       .split("-")
@@ -78,6 +84,9 @@ export default function ViewMoreMovie() {
                      <div className="movie-review">{movie.vote_average.toFixed(1)}</div>
                   </div>
                ))}
+            </div>
+            <div className="view-more-loading" ref={loadingRef}>
+               <h3>Loading....</h3>
             </div>
          </div>
       </div>
