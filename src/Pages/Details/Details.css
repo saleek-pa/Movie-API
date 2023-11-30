@@ -151,7 +151,7 @@
    justify-content: flex-start;
    align-items: center;
    gap: 10px;
-   margin-bottom: 25px;
+   margin-bottom: 35px;
 }
 
 .season-row-copy {
@@ -292,7 +292,7 @@
    overflow: hidden;
    width: 650px;
    margin: 0 auto;
-   padding-top: 30px;
+   margin-bottom: 20px;
    animation: fadeInOut 0.6s ease-in-out forwards;
 }
 

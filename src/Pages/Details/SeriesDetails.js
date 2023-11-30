@@ -11,7 +11,7 @@ export default function SeriesDetails() {
    const [series, setSeries] = useState([]);
    const [similar, setSimilar] = useState([]);
    const [seasonDetails, setSeasonDetails] = useState([]);
-   const [showEpisodes, setShowEpisodes] = useState(false);
+   const [selectedSeasonId, setSelectedSeasonId] = useState(false);
 
    useEffect(() => {
       const fetchData = async () => {
@@ -36,11 +36,10 @@ export default function SeriesDetails() {
       fetchData();
    }, [id, setSeries]);
 
-   // console.log(series);
-   console.log(seasonDetails[0].episodes);
+   console.log(series);
 
-   const handleChevronClick = () => {
-      setShowEpisodes(!showEpisodes);
+   const handleSeasonClick = (seasonId) => {
+      setSelectedSeasonId(selectedSeasonId === seasonId ? null : seasonId);
    };
 
    const dateConverter = (date) => {
@@ -101,25 +100,27 @@ export default function SeriesDetails() {
             </div>
          </div>
          <div className="series-season-container">
-            {seasonDetails.map((value, index) => (
-               <div className="season-row" key={value.id}>
-                  <div className="checkbox-wrapper">
-                     <input id={`_checkbox-${value.id}`} type="checkbox" />
-                     <label htmlFor={`_checkbox-${value.id}`}>
-                        <div className="tick_mark"></div>
-                     </label>
-                  </div>
-                  <div className="season-row-copy" onClick={handleChevronClick}>
-                     <h4 style={{ margin: "0" }}>{value.name}</h4>
-                     <div className="progress-loader">
-                        <div className="progress"></div>
+            {seasonDetails.map((value) => (
+               <div key={value.id}>
+                  <div className="season-row">
+                     <div className="checkbox-wrapper">
+                        <input id={`_checkbox-${value.id}`} type="checkbox" />
+                        <label htmlFor={`_checkbox-${value.id}`}>
+                           <div className="tick_mark"></div>
+                        </label>
                      </div>
-                     <h5 style={{ margin: "0" }}>0/{value.episodes.length}</h5>
-                     <MDBIcon fas icon="chevron-right" />
+                     <div className="season-row-copy" onClick={() => handleSeasonClick(value.id)}>
+                        <h4 style={{ margin: "0" }}>{value.name}</h4>
+                        <div className="progress-loader">
+                           <div className="progress"></div>
+                        </div>
+                        <h5 style={{ margin: "0" }}>0/{value.episodes.length}</h5>
+                        <MDBIcon fas icon="chevron-right" />
+                     </div>
                   </div>
-                  {showEpisodes && (
+                  {selectedSeasonId === value.id && (
                      <div className="episode-dropdown">
-                        {seasonDetails[index].episodes.map((ep) => (
+                        {value.episodes.map((ep) => (
                            <div className="episode-list" key={ep.id}>
                               <div className="episode-left-side">
                                  <h5>{ep.name}</h5>
@@ -131,8 +132,8 @@ export default function SeriesDetails() {
                                  </div>
                               </div>
                               <div className="checkbox-wrapper">
-                                 <input id="_checkbox-26" type="checkbox" />
-                                 <label htmlFor="_checkbox-26">
+                                 <input id={`_checkbox-${value.id}-${ep.id}`} type="checkbox" />
+                                 <label htmlFor={`_checkbox-${value.id}-${ep.id}`}>
                                     <div className="tick_mark"></div>
                                  </label>
                               </div>
