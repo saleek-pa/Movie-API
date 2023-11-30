@@ -12,9 +12,27 @@ export const MovieContext = createContext();
 
 function App() {
    const [isMovie, setIsMovie] = useState(true);
+
+   function getFormattedDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(today.getMonth() - 1);
+
+      const oneMonthAgoYear = oneMonthAgo.getFullYear();
+      const oneMonthAgoMonth = String(oneMonthAgo.getMonth() + 1).padStart(2, "0");
+      const oneMonthAgoDay = String(oneMonthAgo.getDate()).padStart(2, "0");
+
+      return [`${year}-${month}-${day}`, `${oneMonthAgoYear}-${oneMonthAgoMonth}-${oneMonthAgoDay}`];
+   }
+
+   const dates = getFormattedDate();
    return (
       <>
-         <MovieContext.Provider value={{ isMovie, setIsMovie }}>
+         <MovieContext.Provider value={{ isMovie, setIsMovie, dates }}>
             <Sidebar />
             <Routes>
                <Route path="/" exact element={<MainContent />} />

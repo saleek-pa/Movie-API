@@ -42,7 +42,11 @@ export default function MovieDetails() {
          <div className="movie-details-container">
             <div className="movie-details-image-container">
                <img
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  src={
+                     movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
+                  }
                   alt={movie.title}
                   className="movie-details-image"
                />
@@ -76,7 +80,11 @@ export default function MovieDetails() {
                      movie.credits.cast.map((actor) => (
                         <div className="cast-list-card" key={actor.id}>
                            <img
-                              src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+                              src={
+                                 actor.profile_path
+                                    ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                                    : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"
+                              }
                               alt={actor.name}
                               className="cast-image"
                            />

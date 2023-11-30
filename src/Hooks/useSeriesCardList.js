@@ -13,6 +13,24 @@ export const useSeriesCardList = (tvSeries, heading) => {
       }
    };
 
+   console.log(tvSeries)
+
+   function convertDateFormat(inputDate) {
+      console.log(inputDate)
+      const dateParts = inputDate.split("-");
+      const year = parseInt(dateParts[0]);
+      const month = parseInt(dateParts[1]) - 1;
+      const day = parseInt(dateParts[2]);
+
+      const formattedDate = new Date(year, month, day).toLocaleDateString("en-US", {
+         year: "numeric",
+         month: "short",
+         day: "numeric",
+      });
+
+      return formattedDate;
+   }
+
    const SeriesCardList = () => (
       <div className="movie-card-container">
          <div className="list-heading">
@@ -34,14 +52,20 @@ export const useSeriesCardList = (tvSeries, heading) => {
                   onClick={() => navigate(`/tv/${series.id}-${series.name.toLowerCase().replace(/\s+/g, "-")}`)}
                >
                   <img
-                     src={`https://image.tmdb.org/t/p/w200${series.poster_path}`}
+                     src={
+                        series.poster_path
+                           ? `https://image.tmdb.org/t/p/w200${series.poster_path}`
+                           : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
+                     }
                      alt={series.name}
                      className="movie-image"
                   />
                   <div className="movie-title">
                      {series.name} ({series.first_air_date.split("-")[0]})
                   </div>
-                  <div className="movie-review">{series.vote_average.toFixed(1)}</div>
+                  <div className="movie-review">
+                     {series.vote_average > 0 ? series.vote_average.toFixed(1) : convertDateFormat(series.first_air_date)}
+                  </div>
                </div>
             ))}
          </div>

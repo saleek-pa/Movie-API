@@ -7,31 +7,31 @@ import axios from "../../Configs/Axios";
 import "./MainContent.css";
 
 export const MainContent = () => {
-   const { isMovie } = useContext(MovieContext);
+   const { isMovie, dates } = useContext(MovieContext);
    const [trendingMovies, setTrendingMovies] = useState([]);
    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
    const [upcomingMovies, setUpcomingMovies] = useState([]);
    const [topRatedMovies, setTopRatedMovies] = useState([]);
 
    const [trendingSeries, setTrendingSeries] = useState([]);
-   const [airingTodaySeries, setAiringTodaySeries] = useState([]);
-   const [onTheAirSeries, setOnTheAirSeries] = useState([]);
+   const [ongoingSeries, setOngoingSeries] = useState([]);
+   const [upcomingSeries, setUpcomingSeries] = useState([]);
    const [topRatedSeries, setTopRatedSeries] = useState([]);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
             const endpoint1 = isMovie
-               ? "https://api.themoviedb.org/3/trending/movie/day"
-               : "https://api.themoviedb.org/3/trending/tv/day";
+               ? "https://api.themoviedb.org/3/trending/movie/week"
+               : "https://api.themoviedb.org/3/trending/tv/week";
 
             const endpoint2 = isMovie
-               ? "https://api.themoviedb.org/3/movie/now_playing"
-               : "https://api.themoviedb.org/3/tv/airing_today";
+               ? `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=In&sort_by=popularity.desc&vote_average.gte=0.1`
+               : `https://api.themoviedb.org/3/discover/tv?first_air_date.gte=${dates[1]}&first_air_date.lte=${dates[0]}&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&vote_average.gte=0.1`;
 
             const endpoint3 = isMovie
-               ? "https://api.themoviedb.org/3/movie/upcoming"
-               : "https://api.themoviedb.org/3/tv/on_the_air";
+               ? `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1`
+               : `https://api.themoviedb.org/3/discover/tv?first_air_date.gte=${dates[0]}&include_adult=true&include_null_first_air_dates=false&sort_by=first_air_date.asc&vote_average.lte=0.1`;
 
             const endpoint4 = isMovie
                ? "https://api.themoviedb.org/3/movie/top_rated"
@@ -45,8 +45,8 @@ export const MainContent = () => {
             ]);
 
             isMovie ? setTrendingMovies(response1.data.results) : setTrendingSeries(response1.data.results);
-            isMovie ? setNowPlayingMovies(response2.data.results) : setAiringTodaySeries(response2.data.results);
-            isMovie ? setUpcomingMovies(response3.data.results) : setOnTheAirSeries(response3.data.results);
+            isMovie ? setNowPlayingMovies(response2.data.results) : setOngoingSeries(response2.data.results);
+            isMovie ? setUpcomingMovies(response3.data.results) : setUpcomingSeries(response3.data.results);
             isMovie ? setTopRatedMovies(response4.data.results) : setTopRatedSeries(response4.data.results);
          } catch (error) {
             console.error(error);
@@ -62,8 +62,8 @@ export const MainContent = () => {
    const TopRatedMovies = useMovieCardList(topRatedMovies, "Top Rated");
 
    const TrendingSeries = useSeriesCardList(trendingSeries, "Trending Now");
-   const AiringTodaySeries = useSeriesCardList(airingTodaySeries, "Airing Today");
-   const OnTheAirSeries = useSeriesCardList(onTheAirSeries, "On The Air");
+   const OngoingSeries = useSeriesCardList(ongoingSeries, "Ongoing Series");
+   const UpcomingSeries = useSeriesCardList(upcomingSeries, "Upcoming Series");
    const TopRatedSeries = useSeriesCardList(topRatedSeries, "Top Rated");
 
    return (
@@ -80,8 +80,8 @@ export const MainContent = () => {
          ) : (
             <>
                <TrendingSeries />
-               <AiringTodaySeries />
-               <OnTheAirSeries />
+               <OngoingSeries />
+               <UpcomingSeries />
                <TopRatedSeries />
             </>
          )}
