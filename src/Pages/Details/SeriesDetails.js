@@ -18,7 +18,7 @@ export default function SeriesDetails() {
          try {
             const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?append_to_response=credits`);
             setSeries(response.data);
-            const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/similar`);
+            const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/recommendations`);
             setSimilar(similar.data.results);
 
             const totalSeason = response.data.number_of_seasons;

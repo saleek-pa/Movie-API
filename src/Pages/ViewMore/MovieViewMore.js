@@ -20,7 +20,7 @@ export default function ViewMoreMovie() {
          const MOVIE_ENDPOINTS = {
             "trending-now": `trending/movie/week?page=${pageNumber}`,
             "now-playing": `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=In&sort_by=popularity.desc&vote_average.gte=0.1&page=${pageNumber}`,
-            upcoming: `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1&page=${pageNumber}`,
+            "upcoming": `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1&page=${pageNumber}`,
             "top-rated": `movie/top_rated?page=${pageNumber}`,
          };
 
@@ -30,7 +30,7 @@ export default function ViewMoreMovie() {
       } catch (error) {
          console.error(error);
       }
-   }, [title, pageNumber]);
+   }, [title, pageNumber, dates]);
 
    console.log(movies);
 

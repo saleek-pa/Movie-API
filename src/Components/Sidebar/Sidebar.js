@@ -9,7 +9,7 @@ export const Sidebar = () => {
 
    const handleItemClick = (item) => {
       setSelectedItem(item);
-      navigate(`/movie/${item}`)
+      navigate(`/${item}`)
    };
 
    return (

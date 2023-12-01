@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { movies } from "../../DummyData";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
 import "./Navbar.css";
+import axios from "../../Configs/Axios";
 
 export const Navbar = () => {
    const navigate = useNavigate();
@@ -12,27 +12,32 @@ export const Navbar = () => {
    const [suggestions, setSuggestions] = useState([]);
 
    const toggleMovieSeries = (e) => {
-      const button = e.target.textContent;
-      setIsMovie(button === "Movie" ? true : false);
+      setIsMovie(e.target.textContent === "Movie" ? true : false);
       isMovie ? navigate("/movie") : navigate("/tv");
    };
 
-   const handleInputChange = (event) => {
-      const value = event.target.value;
-      setSearchTerm(value);
+   const handleSearchInput = async (event) => {
+      try {
+         const value = event.target.value;
+         setSearchTerm(value);
 
-      if (value === "") {
-         setSuggestions([]);
-      } else {
-         const filteredSuggestions = movies.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
-         setSuggestions(filteredSuggestions.slice(0, 3));
+         if (searchTerm !== "") {
+            const response = await axios.get(
+               `https://api.themoviedb.org/3/search/multi?query=${searchTerm}&include_adult=true`
+            );
+            setSuggestions(response.data.results.filter((data) => data.media_type !== "person").slice(0, 5));
+            console.log(suggestions);
+         } else setSuggestions([]);
+      } catch (error) {
+         console.error(error);
       }
    };
 
-   const handleSuggestionClick = (title) => {
+   const handleSuggestionClick = (type, id, title) => {
       setSearchTerm("");
-      navigate(`/movie/${title}`);
+      navigate(`/${type}/${id}-${title.toLowerCase().replace(/\s+/g, "-")}`);
    };
+
    return (
       <div className="navbar">
          <div className="search-input-container">
@@ -42,15 +47,36 @@ export const Navbar = () => {
                className="search-input"
                placeholder="search..."
                value={searchTerm}
-               onChange={handleInputChange}
+               onChange={handleSearchInput}
             />
             <MDBIcon fas icon="search" className="search-icon" />
             {searchTerm && (
                <ul className="suggestions-list">
-                  {suggestions.map((suggestion, index) => (
-                     <li key={index} onClick={() => handleSuggestionClick(suggestion.title)}>
-                        <img src={suggestion.image} alt={suggestion.title} className="search-movie-image" />
-                        {suggestion.title} ({suggestion.year})
+                  {suggestions.map((data) => (
+                     <li
+                        key={data.id}
+                        onClick={() =>
+                           handleSuggestionClick(
+                              data.media_type,
+                              data.id,
+                              data.media_type === "movie" ? data.title : data.name
+                           )
+                        }
+                     >
+                        <img
+                           src={
+                              data.poster_path
+                                 ? `https://image.tmdb.org/t/p/w200${data.poster_path}`
+                                 : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
+                           }
+                           alt={data.title || data.name}
+                           className="search-movie-image"
+                        />
+                        {data.title || data.name} (
+                        {data.media_type === "movie"
+                           ? data.release_date.split("-")[0]
+                           : data.first_air_date.split("-")[0]}
+                        )
                      </li>
                   ))}
                </ul>

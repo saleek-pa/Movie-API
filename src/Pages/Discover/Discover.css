@@ -1,0 +1,92 @@
+.genre-list {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   padding: 0 100px;
+   gap: 3px;
+}
+
+.genre-list li {
+   list-style-type: none;
+   border: 1px solid;
+   border-radius: 25px;
+   margin: 0 5px;
+   padding: 3px 10px;
+   margin-bottom: 10px;
+   transition: all 0.25s;
+   cursor: pointer;
+}
+
+.genre-list li:hover {
+    background-color: gray !important;
+    color: black !important;
+}
+
+.list-heading-copy {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 30px 0px 10px;
+}
+
+.discover-filters {
+   margin: 5px auto 5px;
+   display: flex;
+   gap: 15px;
+}
+
+.paste-button {
+   position: relative;
+   display: block;
+   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dropdown-button {
+   background-color: #000000;
+   color: white;
+   padding: 5px 15px;
+   font-size: 15px;
+   font-weight: bold;
+   border: 1px solid white;
+   border-radius: 15px;
+   cursor: pointer;
+}
+
+.dropdown-content {
+   display: none;
+   font-size: 13px;
+   position: absolute;
+   z-index: 1;
+   min-width: 200px;
+   background-color: #212121;
+   border: 1px solid white;
+   border-radius: 0px 15px 15px 15px;
+   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content li {
+   color: #ffffff;
+   padding: 8px 10px;
+   list-style-type: none;
+   display: block;
+   transition: 0.1s;
+}
+
+.dropdown-content li:hover {
+   background-color: gray;
+   color: black;
+   border-radius: 10px;
+}
+
+.dropdown-content li:focus {
+   background-color: #212121;
+   color: #4caf50;
+}
+
+.paste-button:hover button {
+   border-radius: 15px 15px 0px 0px;
+}
+
+.paste-button:hover .dropdown-content {
+   display: block;
+}

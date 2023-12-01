@@ -21,9 +21,7 @@ export const MainContent = () => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const endpoint1 = isMovie
-               ? "https://api.themoviedb.org/3/trending/movie/week"
-               : "https://api.themoviedb.org/3/trending/tv/week";
+            const endpoint1 = `https://api.themoviedb.org/3/trending/${isMovie ? "movie" : "tv"}/week`;
 
             const endpoint2 = isMovie
                ? `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=In&sort_by=popularity.desc&vote_average.gte=0.1`
@@ -33,9 +31,7 @@ export const MainContent = () => {
                ? `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1`
                : `https://api.themoviedb.org/3/discover/tv?first_air_date.gte=${dates[0]}&include_adult=true&include_null_first_air_dates=false&sort_by=first_air_date.asc&vote_average.lte=0.1`;
 
-            const endpoint4 = isMovie
-               ? "https://api.themoviedb.org/3/movie/top_rated"
-               : "https://api.themoviedb.org/3/tv/top_rated";
+            const endpoint4 = `https://api.themoviedb.org/3/${isMovie ? "movie" : "tv"}/top_rated`;
 
             const [response1, response2, response3, response4] = await Promise.all([
                axios.get(endpoint1),
@@ -54,7 +50,7 @@ export const MainContent = () => {
       };
 
       fetchData();
-   }, [isMovie]);
+   }, [isMovie, dates]);
 
    const TrendingMovies = useMovieCardList(trendingMovies, "Trending Now");
    const NowPlayingMovies = useMovieCardList(nowPlayingMovies, "Now Playing");
