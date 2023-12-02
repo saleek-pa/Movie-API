@@ -1,17 +1,21 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CardList.css";
 import { MDBIcon } from "mdb-react-ui-kit";
+import { MovieContext } from "../App";
+import "./CardList.css";
 
-export const useMovieCardList = (movies, heading) => {
+const useMovieCardList = (movies, heading) => {
    const navigate = useNavigate();
    const movieListRef = useRef(null);
+   const { isMovie } = useContext(MovieContext);
 
    const handleScroll = (scrollOffset) => {
       if (movieListRef.current) {
          movieListRef.current.scrollLeft += scrollOffset;
       }
    };
+
+   console.log(movies)
 
    function convertDateFormat(inputDate) {
       const dateParts = inputDate.split("-");
@@ -35,7 +39,7 @@ export const useMovieCardList = (movies, heading) => {
             <button className="cta">
                <span
                   className="hover-underline-animation"
-                  onClick={() => navigate(`/movie/discover/${heading.toLowerCase().replace(" ", "-")}`)}
+                  onClick={() => navigate(`/${isMovie ? "movie" : "tv"}/discover/${heading.toLowerCase().replace(" ", "-")}`)}
                >
                   View more
                </span>
@@ -46,7 +50,15 @@ export const useMovieCardList = (movies, heading) => {
                <div
                   className="movie-card"
                   key={movie.id}
-                  onClick={() => navigate(`/movie/${movie.id}-${movie.title.toLowerCase().replace(/\s+/g, "-")}`)}
+                  onClick={() =>
+                     navigate(
+                        `/${isMovie ? "movie" : "tv"}/${movie.id}-${
+                           isMovie
+                              ? movie.title.toLowerCase().replace(/\s+/g, "-")
+                              : movie.name.toLowerCase().replace(/\s+/g, "-")
+                        }`
+                     )
+                  }
                >
                   <img
                      src={
@@ -54,14 +66,17 @@ export const useMovieCardList = (movies, heading) => {
                            ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
                            : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
                      }
-                     alt={movie.title}
+                     alt={movie.title || movie.name}
                      className="movie-image"
                   />
                   <div className="movie-title">
-                     {movie.title} ({movie.release_date.split("-")[0]})
+                     {movie.title || movie.name} (
+                     {isMovie ? (movie.release_date || "").split("-")[0] : (movie.first_air_date || "").split("-")[0]})
                   </div>
                   <div className="movie-review">
-                     {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : convertDateFormat(movie.release_date)}
+                     {movie.vote_average > 0
+                        ? movie.vote_average.toFixed(1)
+                        : convertDateFormat(movie.release_date || movie.first_air_date || "")}
                   </div>
                </div>
             ))}

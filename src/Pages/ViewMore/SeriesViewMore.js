@@ -29,7 +29,7 @@ export default function ViewMoreMovie() {
       } catch (error) {
          console.error(error);
       }
-   }, [title, pageNumber]);
+   }, [title, pageNumber, dates]);
 
    useEffect(() => {
       fetchData();

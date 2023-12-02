@@ -6,7 +6,7 @@ import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
 import ViewMoreSeries from "./Pages/ViewMore/SeriesViewMore";
-import { MainContent } from "./Components/MainContent.js/MainContent";
+import { MainContent } from "./Components/MainContent/MainContent";
 import "./App.css";
 
 export const MovieContext = createContext();
@@ -36,14 +36,14 @@ function App() {
          <MovieContext.Provider value={{ isMovie, setIsMovie, dates }}>
             <Sidebar />
             <Routes>
-               <Route path="/" exact element={<MainContent />} />
-               <Route path="/movie" exact element={<MainContent />} />
+               <Route path="/" element={<MainContent />} />
+               <Route path="/movie" element={<MainContent />} />
                <Route path="/movie/:id" element={<MovieDetails />} />
-               <Route path="/discover" element={<Discover />} />
-               <Route path="/discover/:title" element={<ViewMoreMovie />} />
-               <Route path="/tv" exact element={<MainContent />} />
+               <Route path="/movie/discover/:title" element={<ViewMoreMovie />} />
+               <Route path="/tv" element={<MainContent />} />
                <Route path="/tv/:id" element={<SeriesDetails />} />
                <Route path="/tv/discover/:title" element={<ViewMoreSeries />} />
+               <Route path="/discover" element={<Discover />} />
             </Routes>
          </MovieContext.Provider>
       </>

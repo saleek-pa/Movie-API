@@ -8,12 +8,11 @@ import "./ViewMore.css";
 
 export default function ViewMoreMovie() {
    const { title } = useParams();
-   const navigate = useNavigate();
    const { dates } = useContext(MovieContext);
-   console.log(dates);
    const [movies, setMovies] = useState([]);
    const [pageNumber, setPageNumber] = useState(0);
    const loadingRef = useRef(null);
+   const navigate = useNavigate();
 
    const fetchData = useCallback(async () => {
       try {
@@ -31,8 +30,6 @@ export default function ViewMoreMovie() {
          console.error(error);
       }
    }, [title, pageNumber, dates]);
-
-   console.log(movies);
 
    useEffect(() => {
       fetchData();

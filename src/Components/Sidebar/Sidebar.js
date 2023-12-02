@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
    const navigate = useNavigate();
-   const [selectedItem, setSelectedItem] = useState("discover");
+   const [selectedItem, setSelectedItem] = useState("");
 
    const handleItemClick = (item) => {
       setSelectedItem(item);

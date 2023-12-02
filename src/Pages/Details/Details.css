@@ -306,6 +306,11 @@
    flex-direction: column;
 }
 
+.series-status {
+   text-align: center;
+   color: gray;
+}
+
 @keyframes fadeInOut {
    from {
       opacity: 0;

@@ -3,7 +3,7 @@ import axios from "../../Configs/Axios";
 import { useParams } from "react-router-dom";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
-import useSeriesCardList from "../../Hooks/useSeriesCardList";
+import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
 
 export default function SeriesDetails() {
@@ -12,12 +12,14 @@ export default function SeriesDetails() {
    const [similar, setSimilar] = useState([]);
    const [seasonDetails, setSeasonDetails] = useState([]);
    const [selectedSeasonId, setSelectedSeasonId] = useState(false);
+   const [trailer, setTrailer] = useState(null);
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?append_to_response=credits`);
+            const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?append_to_response=credits,videos`);
             setSeries(response.data);
+            setTrailer(response.data.videos.results.find((trailer) => trailer.name === "Official Trailer"));
             const similar = await axios.get(`https://api.themoviedb.org/3/tv/${id}/recommendations`);
             setSimilar(similar.data.results);
 
@@ -36,8 +38,6 @@ export default function SeriesDetails() {
       fetchData();
    }, [id, setSeries]);
 
-   console.log(series);
-
    const handleSeasonClick = (seasonId) => {
       setSelectedSeasonId(selectedSeasonId === seasonId ? null : seasonId);
    };
@@ -49,7 +49,7 @@ export default function SeriesDetails() {
       return formattedDate;
    };
 
-   const SimilarMovies = useSeriesCardList(similar, "Similar Series");
+   const SimilarMovies = useMovieCardList(similar, "Similar Series");
 
    return (
       <div className="main-content-container">
@@ -67,7 +67,10 @@ export default function SeriesDetails() {
                   className="movie-details-image"
                />
                <div className="details-button-container">
-                  <button className="watch-button">
+                  <button
+                     className="watch-button"
+                     onClick={() => window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
+                  >
                      <MDBIcon fas icon="play" className="me-2" />
                      Trailer
                   </button>
@@ -118,7 +121,7 @@ export default function SeriesDetails() {
                         </label>
                      </div>
                      <div className="season-row-copy" onClick={() => handleSeasonClick(value.id)}>
-                        <h4 style={{ margin: "0" }}>{value.name}</h4>
+                        <h4 style={{ margin: "0" }}>Season {value.season_number}</h4>
                         <div className="progress-loader">
                            <div className="progress"></div>
                         </div>
@@ -151,6 +154,7 @@ export default function SeriesDetails() {
                   )}
                </div>
             ))}
+            <h6 className="series-status">{(series.status || "").toUpperCase()}</h6>
          </div>
          <SimilarMovies />
       </div>

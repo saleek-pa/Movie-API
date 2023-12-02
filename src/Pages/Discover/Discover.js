@@ -21,11 +21,9 @@ export default function Discover() {
 
    const fetchData = useCallback(async () => {
       try {
-         const endpoint = `https://api.themoviedb.org/3/discover/${
-            isMovie ? "movie" : "tv"
-         }?include_adult=true&include_video=false&${isMovie ? "release" : "first_air"}_date.${
-            released ? "lte" : "gte"
-         }=${dates[0]}&sort_by=${sortBy}&vote_average.${
+         const endpoint = `https://api.themoviedb.org/3/discover/${isMovie ? "movie" : "tv"}?include_video=true&${
+            isMovie ? "release" : "first_air"
+         }_date.${released ? "lte" : "gte"}=${dates[0]}&sort_by=${sortBy}&vote_average.${
             released ? "gte" : "lte"
          }=0.1&with_original_language=${language}&with_genres=${filterByGenre.join(",")}&page=${pageNumber}`;
          const response = await axios.get(endpoint);
@@ -205,12 +203,16 @@ export default function Discover() {
                         className="movie-image"
                      />
                      <div className="movie-title">
-                        {movie.title || movie.name} ({isMovie ? movie.release_date.split("-")[0] : movie.first_air_date.split("-")[0]})
+                        {movie.title || movie.name} (
+                        {isMovie
+                           ? (movie.release_date || "").split("-")[0]
+                           : (movie.first_air_date || "").split("-")[0]}
+                        )
                      </div>
                      <div className="movie-review">
                         {movie.vote_average > 0
                            ? movie.vote_average.toFixed(1)
-                           : convertDateFormat(movie.release_date || movie.first_air_date)}
+                           : convertDateFormat(movie.release_date || movie.first_air_date || "N/A")}
                      </div>
                   </div>
                ))}

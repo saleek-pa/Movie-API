@@ -3,26 +3,25 @@ import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
-import { useMovieCardList } from "../../Hooks/useMovieCardList";
+import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
 
 export default function MovieDetails() {
    const { id } = useParams();
-   console.log("id", id);
    const [movie, setMovie] = useState({});
+   const [trailer, setTrailer] = useState(null);
    const [similar, setSimilar] = useState([]);
 
    const runtime = movie.runtime;
    const hour = Math.floor(runtime / 60);
    const minute = runtime % 60;
 
-   console.log(movie);
-
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits`);
+            const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos`);
             setMovie(response.data);
+            setTrailer(response.data.videos.results.find((trailer) => trailer.name === "Official Trailer"));
             const similar = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations`);
             setSimilar(similar.data.results);
          } catch (error) {
@@ -34,6 +33,8 @@ export default function MovieDetails() {
    }, [id, setMovie]);
 
    const SimilarMovies = useMovieCardList(similar, "Similar Movies");
+
+   console.log(trailer)
 
    return (
       <div className="main-content-container">
@@ -51,7 +52,10 @@ export default function MovieDetails() {
                   className="movie-details-image"
                />
                <div className="details-button-container">
-                  <button className="watch-button">
+                  <button
+                     className="watch-button"
+                     onClick={() => trailer && window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
+                  >
                      <MDBIcon fas icon="play" className="me-2" />
                      Trailer
                   </button>

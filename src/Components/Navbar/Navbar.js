@@ -26,7 +26,6 @@ export const Navbar = () => {
                `https://api.themoviedb.org/3/search/multi?query=${searchTerm}&include_adult=true`
             );
             setSuggestions(response.data.results.filter((data) => data.media_type !== "person").slice(0, 5));
-            console.log(suggestions);
          } else setSuggestions([]);
       } catch (error) {
          console.error(error);
