@@ -34,8 +34,6 @@ export default function MovieDetails() {
 
    const SimilarMovies = useMovieCardList(similar, "Similar Movies");
 
-   console.log(trailer)
-
    return (
       <div className="main-content-container">
          <Navbar />

@@ -77,14 +77,6 @@ export default function ViewMoreMovie() {
          <div className="movie-card-container">
             <div className="list-heading">
                <h3>{heading}</h3>
-               <button className="cta">
-                  <span
-                     className="hover-underline-animation"
-                     onClick={() => navigate(`/tv/discover/${heading.toLowerCase().replace(" ", "-")}`)}
-                  >
-                     View more
-                  </span>
-               </button>
             </div>
             <div className="view-more-movie-card-list">
                {series.map((series) => (

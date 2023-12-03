@@ -15,8 +15,6 @@ const useMovieCardList = (movies, heading) => {
       }
    };
 
-   console.log(movies)
-
    function convertDateFormat(inputDate) {
       const dateParts = inputDate.split("-");
       const year = parseInt(dateParts[0]);
@@ -36,14 +34,18 @@ const useMovieCardList = (movies, heading) => {
       <div className="movie-card-container">
          <div className="list-heading">
             <h3>{heading}</h3>
-            <button className="cta">
-               <span
-                  className="hover-underline-animation"
-                  onClick={() => navigate(`/${isMovie ? "movie" : "tv"}/discover/${heading.toLowerCase().replace(" ", "-")}`)}
-               >
-                  View more
-               </span>
-            </button>
+            {!heading.startsWith("Similar") && (
+               <button className="cta">
+                  <span
+                     className="hover-underline-animation"
+                     onClick={() =>
+                        navigate(`/${isMovie ? "movie" : "tv"}/discover/${heading.toLowerCase().replace(" ", "-")}`)
+                     }
+                  >
+                     View more
+                  </span>
+               </button>
+            )}
          </div>
          <div className="movie-card-list" ref={movieListRef}>
             {movies.map((movie) => (

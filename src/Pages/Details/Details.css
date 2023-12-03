@@ -280,7 +280,7 @@
 }
 
 .progress {
-   width: 0px;
+   width: 0;
    height: 10px;
    border-radius: 7px;
    background: rgb(255, 255, 255);
@@ -299,6 +299,8 @@
 .episode-list {
    display: flex;
    justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
 }
 
 .episode-left-side {

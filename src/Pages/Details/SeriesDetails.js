@@ -14,6 +14,10 @@ export default function SeriesDetails() {
    const [selectedSeasonId, setSelectedSeasonId] = useState(false);
    const [trailer, setTrailer] = useState(null);
 
+   const [seasonChecked, setSeasonChecked] = useState([]);
+   const [episodeChecked, setEpisodeChecked] = useState([]);
+   let completedEpisodes = 0;
+
    useEffect(() => {
       const fetchData = async () => {
          try {
@@ -40,6 +44,40 @@ export default function SeriesDetails() {
 
    const handleSeasonClick = (seasonId) => {
       setSelectedSeasonId(selectedSeasonId === seasonId ? null : seasonId);
+   };
+
+   const handleSeasonCheckbox = (seasonId) => {
+      const season = seasonDetails.find((season) => season.id === seasonId);
+      if (seasonChecked.includes(seasonId)) {
+         setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
+         setEpisodeChecked(episodeChecked.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)));
+      } else {
+         setSeasonChecked([...seasonChecked, seasonId]);
+         setEpisodeChecked([...episodeChecked, ...season.episodes.map((ep) => ep.id)]);
+      }
+   };
+
+   const handleEpisodeCheckbox = (seasonId, episodeId) => {
+      const season = seasonDetails.find((season) => season.id === seasonId);
+
+      if (episodeChecked.includes(episodeId)) {
+         episodeChecked.splice(episodeChecked.indexOf(episodeId), 1);
+      } else {
+         episodeChecked.push(episodeId);
+      }
+
+      if (season.episodes.every((ep) => episodeChecked.includes(ep.id))) {
+         setSeasonChecked([...seasonChecked, seasonId]);
+      } else {
+         setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
+      }
+   };
+
+   const calculateSeasonProgress = (seasonId) => {
+      const season = seasonDetails.find((season) => season.id === seasonId);
+      const totalEpisodes = season.episodes.length;
+      completedEpisodes = season.episodes.filter((ep) => episodeChecked.includes(ep.id)).length;
+      return (completedEpisodes / totalEpisodes) * 100;
    };
 
    const dateConverter = (date) => {
@@ -115,17 +153,24 @@ export default function SeriesDetails() {
                <div key={value.id}>
                   <div className="season-row">
                      <div className="checkbox-wrapper">
-                        <input id={`_checkbox-${value.id}`} type="checkbox" />
-                        <label htmlFor={`_checkbox-${value.id}`}>
+                        <input
+                           id={`${value.id}`}
+                           type="checkbox"
+                           checked={seasonChecked.includes(value.id)}
+                           onChange={() => handleSeasonCheckbox(value.id)}
+                        />
+                        <label htmlFor={`${value.id}`}>
                            <div className="tick_mark"></div>
                         </label>
                      </div>
                      <div className="season-row-copy" onClick={() => handleSeasonClick(value.id)}>
                         <h4 style={{ margin: "0" }}>Season {value.season_number}</h4>
                         <div className="progress-loader">
-                           <div className="progress"></div>
+                           <div className="progress" style={{ width: `${calculateSeasonProgress(value.id)}%` }}></div>
                         </div>
-                        <h5 style={{ margin: "0" }}>0/{value.episodes.length}</h5>
+                        <h5 style={{ margin: "0" }}>
+                           {completedEpisodes}/{value.episodes.length}
+                        </h5>
                         <MDBIcon fas icon="chevron-right" />
                      </div>
                   </div>
@@ -136,15 +181,20 @@ export default function SeriesDetails() {
                               <div className="episode-left-side">
                                  <h5>{ep.name}</h5>
                                  <div style={{ display: "flex" }}>
-                                    <p>
+                                    <p style={{ margin: "0" }}>
                                        S0{ep.season_number}E0{ep.episode_number}
                                     </p>
-                                    &nbsp;·&nbsp;<p>{dateConverter(ep.air_date)}</p>
+                                    &nbsp;·&nbsp;<p style={{ margin: "0" }}>{dateConverter(ep.air_date)}</p>
                                  </div>
                               </div>
                               <div className="checkbox-wrapper">
-                                 <input id={`_checkbox-${value.id}-${ep.id}`} type="checkbox" />
-                                 <label htmlFor={`_checkbox-${value.id}-${ep.id}`}>
+                                 <input
+                                    id={`${value.id}-${ep.id}`}
+                                    type="checkbox"
+                                    checked={episodeChecked.includes(ep.id)}
+                                    onChange={() => handleEpisodeCheckbox(value.id, ep.id)}
+                                 />
+                                 <label htmlFor={`${value.id}-${ep.id}`}>
                                     <div className="tick_mark"></div>
                                  </label>
                               </div>
