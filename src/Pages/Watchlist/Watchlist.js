@@ -8,9 +8,7 @@ import "../Discover/Discover.css";
 export default function Watchlist() {
    const { isMovie, setIsMovie, dates } = useContext(MovieContext);
    const [watchlist, setWatchlist] = useState([]);
-
    const [released, setReleased] = useState(true);
-
    const navigate = useNavigate();
 
    useEffect(() => {
@@ -41,8 +39,6 @@ export default function Watchlist() {
 
       fetchData();
    }, [isMovie, released, dates]);
-
-   console.log(watchlist);
 
    function convertDateFormat(inputDate) {
       const dateParts = inputDate.split("-");
