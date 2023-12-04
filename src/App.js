@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Sidebar } from "./Components/Sidebar/Sidebar";
 import Discover from "./Pages/Discover/Discover";
+import Watchlist from "./Pages/Watchlist/Watchlist";
 import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
@@ -44,6 +45,7 @@ function App() {
                <Route path="/tv/:id" element={<SeriesDetails />} />
                <Route path="/tv/discover/:title" element={<ViewMoreSeries />} />
                <Route path="/discover" element={<Discover />} />
+               <Route path="/watchlist" element={<Watchlist />} />
             </Routes>
          </MovieContext.Provider>
       </>

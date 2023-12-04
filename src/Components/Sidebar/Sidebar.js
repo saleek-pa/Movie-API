@@ -9,12 +9,14 @@ export const Sidebar = () => {
 
    const handleItemClick = (item) => {
       setSelectedItem(item);
-      navigate(`/${item}`)
+      navigate(`/${item}`);
    };
 
    return (
       <div className="sidebar-container">
-         <h1 className="logo">Hello.</h1>
+         <h1 className="logo" onClick={() => navigate("/")}>
+            Hello.
+         </h1>
          <div>
             <ul className="sidebar-list">
                <li
@@ -30,10 +32,10 @@ export const Sidebar = () => {
                   <MDBIcon far icon="heart" /> Watchlist
                </li>
                <li
-                  className={selectedItem === "my-shows" ? "selected" : ""}
-                  onClick={() => handleItemClick("my-shows")}
+                  className={selectedItem === "completed" ? "selected" : ""}
+                  onClick={() => handleItemClick("completed")}
                >
-                  <MDBIcon far icon="calendar-alt" /> My Shows
+                  <MDBIcon far icon="calendar-check" /> Completed
                </li>
                <li
                   className={selectedItem === "statistics" ? "selected" : ""}

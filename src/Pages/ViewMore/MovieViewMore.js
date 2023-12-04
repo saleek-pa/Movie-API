@@ -95,7 +95,14 @@ export default function ViewMoreMovie() {
                         className="movie-image"
                      />
                      <div className="movie-title">
-                        {movie.title} ({movie.release_date.split("-")[0]})
+                        {movie.title
+                           ? movie.title.length > 27
+                              ? `${movie.title.slice(0, 27)}...`
+                              : movie.title
+                           : movie.name.length > 27
+                           ? `${movie.name.slice(0, 27)}...`
+                           : movie.name}{" "}
+                        ({movie.release_date.split("-")[0]})
                      </div>
                      <div className="movie-review">
                         {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : convertDateFormat(movie.release_date)}
