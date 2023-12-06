@@ -5,6 +5,7 @@ import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
+import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 
 export default function SeriesDetails() {
    const { id } = useParams();
@@ -93,119 +94,128 @@ export default function SeriesDetails() {
       <div className="main-content-container">
          <Navbar />
 
-         <div className="movie-details-container">
-            <div className="movie-details-image-container">
-               <img
-                  src={
-                     series.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${series.poster_path}`
-                        : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
-                  }
-                  alt={series.title}
-                  className="movie-details-image"
-               />
-               <div className="details-button-container">
-                  <button
-                     className="watch-button"
-                     onClick={() => window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
-                  >
-                     <MDBIcon fas icon="play" className="me-2" />
-                     Trailer
-                  </button>
-                  <button className="add-list-button">
-                     <MDBIcon fas icon="plus" className="me-2" />
-                     Watchlist
-                  </button>
-               </div>
-            </div>
-            <div className="movie-details-right">
-               <h1 className="movie-details-title">
-                  {series.name} ({series.first_air_date ? series.first_air_date.split("-")[0] : ""})
-               </h1>
-
-               <div className="movie-details-genre">
-                  {series.genres && series.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
-               </div>
-
-               <p className="movie-details-plot">{series.overview}</p>
-               <p className="movie-details-cast">Cast:</p>
-               <div className="cast-list-container">
-                  {series.credits &&
-                     series.credits.cast.map((actor) => (
-                        <div className="cast-list-card" key={actor.id}>
-                           <img
-                              src={
-                                 actor.profile_path
-                                    ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                                    : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"
-                              }
-                              alt={actor.name}
-                              className="cast-image"
-                           />
-                           <p className="cast-name">{actor.name}</p>
-                        </div>
-                     ))}
-               </div>
-            </div>
-         </div>
-         <div className="series-season-container">
-            {seasonDetails.map((value) => (
-               <div key={value.id}>
-                  <div className="season-row">
-                     <div className="checkbox-wrapper">
-                        <input
-                           id={`${value.id}`}
-                           type="checkbox"
-                           checked={seasonChecked.includes(value.id)}
-                           onChange={() => handleSeasonCheckbox(value.id)}
-                        />
-                        <label htmlFor={`${value.id}`}>
-                           <div className="tick_mark"></div>
-                        </label>
-                     </div>
-                     <div className="season-row-copy" onClick={() => handleSeasonClick(value.id)}>
-                        <h4 style={{ margin: "0" }}>Season {value.season_number}</h4>
-                        <div className="progress-loader">
-                           <div className="progress" style={{ width: `${calculateSeasonProgress(value.id)}%` }}></div>
-                        </div>
-                        <h5 style={{ margin: "0" }}>
-                           {completedEpisodes}/{value.episodes.length}
-                        </h5>
-                        <MDBIcon fas icon="chevron-right" />
+         {series.poster_path ? (
+            <>
+               <div className="movie-details-container">
+                  <div className="movie-details-image-container">
+                     <img
+                        src={
+                           series.poster_path
+                              ? `https://image.tmdb.org/t/p/w500${series.poster_path}`
+                              : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
+                        }
+                        alt={series.title}
+                        className="movie-details-image"
+                     />
+                     <div className="details-button-container">
+                        <button
+                           className="watch-button"
+                           onClick={() => window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")}
+                        >
+                           <MDBIcon fas icon="play" className="me-2" />
+                           Trailer
+                        </button>
+                        <button className="add-list-button">
+                           <MDBIcon fas icon="plus" className="me-2" />
+                           Watchlist
+                        </button>
                      </div>
                   </div>
-                  {selectedSeasonId === value.id && (
-                     <div className="episode-dropdown">
-                        {value.episodes.map((ep) => (
-                           <div className="episode-list" key={ep.id}>
-                              <div className="episode-left-side">
-                                 <h5>{ep.name}</h5>
-                                 <div style={{ display: "flex" }}>
-                                    <p style={{ margin: "0" }}>
-                                       S0{ep.season_number}E0{ep.episode_number}
-                                    </p>
-                                    &nbsp;·&nbsp;<p style={{ margin: "0" }}>{dateConverter(ep.air_date)}</p>
-                                 </div>
-                              </div>
-                              <div className="checkbox-wrapper">
-                                 <input
-                                    id={`${value.id}-${ep.id}`}
-                                    type="checkbox"
-                                    checked={episodeChecked.includes(ep.id)}
-                                    onChange={() => handleEpisodeCheckbox(value.id, ep.id)}
-                                 />
-                                 <label htmlFor={`${value.id}-${ep.id}`}>
-                                    <div className="tick_mark"></div>
-                                 </label>
-                              </div>
-                           </div>
-                        ))}
+                  <div className="movie-details-right">
+                     <h1 className="movie-details-title">
+                        {series.name} ({series.first_air_date ? series.first_air_date.split("-")[0] : ""})
+                     </h1>
+
+                     <div className="movie-details-genre">
+                        {series.genres && series.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
                      </div>
-                  )}
+
+                     <p className="movie-details-plot">{series.overview}</p>
+                     <p className="movie-details-cast">Cast:</p>
+                     <div className="cast-list-container">
+                        {series.credits &&
+                           series.credits.cast.map((actor) => (
+                              <div className="cast-list-card" key={actor.id}>
+                                 <img
+                                    src={
+                                       actor.profile_path
+                                          ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                                          : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"
+                                    }
+                                    alt={actor.name}
+                                    className="cast-image"
+                                 />
+                                 <p className="cast-name">{actor.name}</p>
+                              </div>
+                           ))}
+                     </div>
+                  </div>
                </div>
-            ))}
-            <h6 className="series-status">{(series.status || "").toUpperCase()}</h6>
-         </div>
+               <div className="series-season-container">
+                  {seasonDetails.map((value) => (
+                     <div key={value.id}>
+                        <div className="season-row">
+                           <div className="checkbox-wrapper">
+                              <input
+                                 id={`${value.id}`}
+                                 type="checkbox"
+                                 checked={seasonChecked.includes(value.id)}
+                                 onChange={() => handleSeasonCheckbox(value.id)}
+                              />
+                              <label htmlFor={`${value.id}`}>
+                                 <div className="tick_mark"></div>
+                              </label>
+                           </div>
+                           <div className="season-row-copy" onClick={() => handleSeasonClick(value.id)}>
+                              <h4 style={{ margin: "0" }}>Season {value.season_number}</h4>
+                              <div className="progress-loader">
+                                 <div
+                                    className="progress"
+                                    style={{ width: `${calculateSeasonProgress(value.id)}%` }}
+                                 ></div>
+                              </div>
+                              <h5 style={{ margin: "0" }}>
+                                 {completedEpisodes}/{value.episodes.length}
+                              </h5>
+                              <MDBIcon fas icon="chevron-right" />
+                           </div>
+                        </div>
+                        {selectedSeasonId === value.id && (
+                           <div className="episode-dropdown">
+                              {value.episodes.map((ep) => (
+                                 <div className="episode-list" key={ep.id}>
+                                    <div className="episode-left-side">
+                                       <h5>{ep.name}</h5>
+                                       <div style={{ display: "flex" }}>
+                                          <p style={{ margin: "0" }}>
+                                             S0{ep.season_number}E0{ep.episode_number}
+                                          </p>
+                                          &nbsp;·&nbsp;<p style={{ margin: "0" }}>{dateConverter(ep.air_date)}</p>
+                                       </div>
+                                    </div>
+                                    <div className="checkbox-wrapper">
+                                       <input
+                                          id={`${value.id}-${ep.id}`}
+                                          type="checkbox"
+                                          checked={episodeChecked.includes(ep.id)}
+                                          onChange={() => handleEpisodeCheckbox(value.id, ep.id)}
+                                       />
+                                       <label htmlFor={`${value.id}-${ep.id}`}>
+                                          <div className="tick_mark"></div>
+                                       </label>
+                                    </div>
+                                 </div>
+                              ))}
+                           </div>
+                        )}
+                     </div>
+                  ))}
+                  <h6 className="series-status">{(series.status || "").toUpperCase()}</h6>
+               </div>
+            </>
+         ) : (
+            <MovieDetailsLoading />
+         )}
          <SimilarMovies />
       </div>
    );

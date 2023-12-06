@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../App";
-import SkeletonLoading from "../Components/SkeletonLoading/SkeletonLoading";
+import { MovieCardListLoading } from "../Components/SkeletonLoading/SkeletonLoading";
 import "./CardList.css";
 
 const useMovieCardList = (movies, heading) => {
@@ -98,7 +98,7 @@ const useMovieCardList = (movies, heading) => {
          ) : (
             <div style={{ display: "flex" }}>
                {[...Array(6)].map((_, index) => (
-                  <SkeletonLoading key={index} />
+                  <MovieCardListLoading key={index} />
                ))}
             </div>
          )}

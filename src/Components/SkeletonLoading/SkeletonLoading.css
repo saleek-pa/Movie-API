@@ -24,6 +24,52 @@
    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
+.skeleton-movie-details-image {
+   width: 300px;
+   height: 450px;
+   border-radius: 20px;
+   margin-bottom: 20px;
+   background-color: gray;
+   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+}
+
+.skeleton-movie-details-title {
+   width: 450px;
+   height: 40px;
+   border-radius: 10px;
+   margin: 15px 0;
+   background-color: gray;
+   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+}
+
+.skeleton-movie-details-genre {
+   width: 100px;
+   height: 35px;
+   border-radius: 30px;
+   margin-right: 10px;
+   margin-bottom: 40px;
+   background-color: gray;
+   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+}
+
+.skeleton-movie-details-plot {
+   height: 15px;
+   border-radius: 10px;
+   margin-bottom: 10px;
+   width: 750px;
+   background-color: gray;
+   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+}
+
+.skeleton-cast-image {
+   width: 100px;
+   height: 150px;
+   margin-bottom: 5px;
+   border-radius: 10px;
+   background-color: gray;
+   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+}
+
 @keyframes pulse {
    to {
       opacity: 0.2;
