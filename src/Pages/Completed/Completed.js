@@ -6,7 +6,7 @@ import { MovieContext } from "../../App";
 import "../ViewMore/ViewMore.css";
 
 export default function Completed() {
-   const { isMovie, setIsMovie, dates } = useContext(MovieContext);
+   const { isMovie, setIsMovie, dates, user } = useContext(MovieContext);
    const [completed, setCompleted] = useState([]);
    const [released, setReleased] = useState(true);
    const navigate = useNavigate();
@@ -14,10 +14,7 @@ export default function Completed() {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const userWatchlistID = [
-               { movies: [872585, 475946, 19995, 572802], series: [202411, 84958, 204082, 209479] },
-            ];
-            const ids = isMovie ? userWatchlistID[0].movies : userWatchlistID[0].series;
+            const ids = isMovie ? user.completed.movies.map((movie) => movie.id) : user.Completed.series;
             const details = await Promise.all(
                ids.map((id) =>
                   axios
@@ -38,7 +35,7 @@ export default function Completed() {
       };
 
       fetchData();
-   }, [isMovie, released, dates]);
+   }, [isMovie, released, dates, user]);
 
    function convertDateFormat(inputDate) {
       const dateParts = inputDate.split("-");

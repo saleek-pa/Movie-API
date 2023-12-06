@@ -14,7 +14,13 @@ export const Sidebar = () => {
 
    return (
       <div className="sidebar-container">
-         <h1 className="logo" onClick={() => navigate("/")}>
+         <h1
+            className="logo"
+            onClick={() => {
+               navigate("/");
+               setSelectedItem("");
+            }}
+         >
             Hello.
          </h1>
          <div>

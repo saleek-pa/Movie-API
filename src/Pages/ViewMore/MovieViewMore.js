@@ -110,9 +110,7 @@ export default function ViewMoreMovie() {
                   </div>
                ))}
             </div>
-            <div className="view-more-loading" ref={loadingRef}>
-               <h3>Loading....</h3>
-            </div>
+            <div class="loader" ref={loadingRef} />
          </div>
       </div>
    );

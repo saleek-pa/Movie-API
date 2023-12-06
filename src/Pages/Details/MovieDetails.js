@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
+import { MovieContext } from "../../App";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
 
@@ -12,14 +13,12 @@ export default function MovieDetails() {
    const [trailer, setTrailer] = useState(null);
    const [similar, setSimilar] = useState([]);
 
-   const runtime = movie.runtime;
-   const hour = Math.floor(runtime / 60);
-   const minute = runtime % 60;
-
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos`);
+            const response = await axios.get(
+               `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos`
+            );
             setMovie(response.data);
             setTrailer(response.data.videos.results.find((trailer) => trailer.name === "Official Trailer"));
             const similar = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations`);
@@ -31,6 +30,48 @@ export default function MovieDetails() {
 
       fetchData();
    }, [id, setMovie]);
+
+   const { user, setUser } = useContext(MovieContext);
+   const userWatchlist = user.watchlist.movies;
+   const userCompleted = user.completed.movies;
+
+   const handleWatchlistClick = (movieId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         watchlist: {
+            ...prevUser.watchlist,
+            movies: [...prevUser.watchlist.movies, movieId],
+         },
+      }));
+   };
+
+   const handleCompletedClick = (movieId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         completed: {
+            ...prevUser.completed,
+            movies: [...prevUser.completed.movies, { id: movieId, rating: 1 }],
+         },
+         watchlist: {
+            ...prevUser.watchlist,
+            movies: prevUser.watchlist.movies.filter((id) => id !== movieId),
+         },
+      }));
+   };
+
+   const handleRatingChange = (movieId, rating) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         completed: {
+            ...prevUser.completed,
+            movies: prevUser.completed.movies.map((movie) => (movie.id === movieId ? { ...movie, rating } : movie)),
+         },
+      }));
+   };
+
+   const runtime = movie.runtime;
+   const hour = Math.floor(runtime / 60);
+   const minute = runtime % 60;
 
    const SimilarMovies = useMovieCardList(similar, "Similar Movies");
 
@@ -57,10 +98,49 @@ export default function MovieDetails() {
                      <MDBIcon fas icon="play" className="me-2" />
                      Trailer
                   </button>
-                  <button className="add-list-button">
-                     <MDBIcon fas icon="plus" className="me-2" />
-                     Watchlist
-                  </button>
+                  {!userWatchlist.includes(movie.id) && !userCompleted.some((value) => value.id === movie.id) && (
+                     <button className="add-list-button" onClick={() => handleWatchlistClick(movie.id)}>
+                        <MDBIcon fas icon="plus" className="me-2" />
+                        Watchlist
+                     </button>
+                  )}
+                  {userWatchlist.includes(movie.id) && (
+                     <button className="add-list-button" onClick={() => handleCompletedClick(movie.id)}>
+                        <MDBIcon fas icon="check" className="me-2" />
+                        Mark as watched
+                     </button>
+                  )}
+                  {userCompleted.some((value) => value.id === movie.id) && (
+                     <div class="rating">
+                        <input
+                           value="3"
+                           checked={userCompleted.some((value) => value.id === movie.id && value.rating === 3)}
+                           name="rating"
+                           id="star3"
+                           type="radio"
+                           onChange={() => handleRatingChange(movie.id, 3)}
+                        />
+                        <label for="star3"></label>
+                        <input
+                           value="2"
+                           name="rating"
+                           id="star2"
+                           type="radio"
+                           checked={userCompleted.some((value) => value.id === movie.id && value.rating === 2)}
+                           onChange={() => handleRatingChange(movie.id, 2)}
+                        />
+                        <label for="star2"></label>
+                        <input
+                           value="1"
+                           name="rating"
+                           id="star1"
+                           type="radio"
+                           checked={userCompleted.some((value) => value.id === movie.id && value.rating === 0)}
+                           onChange={() => handleRatingChange(movie.id, 0)}
+                        />
+                        <label for="star1"></label>
+                     </div>
+                  )}
                </div>
             </div>
             <div className="movie-details-right">

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Sidebar } from "./Components/Sidebar/Sidebar";
 import Discover from "./Pages/Discover/Discover";
@@ -15,6 +15,25 @@ export const MovieContext = createContext();
 
 function App() {
    const [isMovie, setIsMovie] = useState(true);
+   const [user, setUser] = useState(() => {
+      const storedUser = localStorage.getItem("user");
+      return storedUser
+         ? JSON.parse(storedUser)
+         : {
+              watchlist: {
+                 movies: [],
+                 series: [],
+              },
+              completed: {
+                 movies: [],
+                 series: [],
+              },
+           };
+   });
+
+   useEffect(() => {
+      localStorage.setItem("user", JSON.stringify(user));
+   }, [user]);
 
    function getFormattedDate() {
       const today = new Date();
@@ -35,7 +54,7 @@ function App() {
    const dates = getFormattedDate();
    return (
       <>
-         <MovieContext.Provider value={{ isMovie, setIsMovie, dates }}>
+         <MovieContext.Provider value={{ isMovie, setIsMovie, dates, user, setUser }}>
             <Sidebar />
             <Routes>
                <Route path="/" element={<MainContent />} />

@@ -8,6 +8,7 @@ import "./Discover.css";
 export default function Discover() {
    const { isMovie, setIsMovie, dates } = useContext(MovieContext);
    const [movieSeries, setMovieSeries] = useState([]);
+   console.log(movieSeries)
    const [pageNumber, setPageNumber] = useState(0);
    const [genres, setGenres] = useState([]);
 
@@ -218,9 +219,7 @@ export default function Discover() {
                ))}
             </div>
 
-            <div className="view-more-loading" ref={loadingRef}>
-               <h3>Loading....</h3>
-            </div>
+            <div class="loader" ref={loadingRef} />
          </div>
       </div>
    );
