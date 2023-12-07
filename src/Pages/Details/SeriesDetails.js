@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { useParams } from "react-router-dom";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
+import { MovieContext } from "../../App";
+import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
-import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 
 export default function SeriesDetails() {
    const { id } = useParams();
+   const { user, setUser, dates } = useContext(MovieContext);
    const [series, setSeries] = useState([]);
    const [similar, setSimilar] = useState([]);
    const [seasonDetails, setSeasonDetails] = useState([]);
    const [selectedSeasonId, setSelectedSeasonId] = useState(false);
    const [trailer, setTrailer] = useState(null);
 
-   const [seasonChecked, setSeasonChecked] = useState([]);
-   const [episodeChecked, setEpisodeChecked] = useState([]);
+   const [seasonChecked, setSeasonChecked] = useState(user.season);
+   const [episodeChecked, setEpisodeChecked] = useState(user.episode);
    let completedEpisodes = 0;
 
    useEffect(() => {
@@ -43,6 +45,45 @@ export default function SeriesDetails() {
       fetchData();
    }, [id, setSeries]);
 
+   const userWatchlist = user?.watchlist?.series;
+   const userCompleted = user?.completed?.series;
+
+   const handleWatchlistClick = (seriesId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         watchlist: {
+            ...prevUser.watchlist,
+            series: [...prevUser.watchlist.series, seriesId],
+         },
+      }));
+   };
+
+   const handleCompletedClick = (seriesId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         completed: {
+            ...prevUser.completed,
+            series: [...prevUser.completed.series, { id: seriesId, rating: 1 }],
+         },
+         watchlist: {
+            ...prevUser.watchlist,
+            series: prevUser.watchlist.series.filter((id) => id !== seriesId),
+         },
+      }));
+   };
+
+   const handleRatingChange = (seriesId, rating) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         completed: {
+            ...prevUser.completed,
+            series: prevUser.completed.series.map((series) =>
+               series.id === seriesId ? { ...series, rating } : series
+            ),
+         },
+      }));
+   };
+
    const handleSeasonClick = (seasonId) => {
       setSelectedSeasonId(selectedSeasonId === seasonId ? null : seasonId);
    };
@@ -51,9 +92,19 @@ export default function SeriesDetails() {
       const season = seasonDetails.find((season) => season.id === seasonId);
       if (seasonChecked.includes(seasonId)) {
          setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
+         setUser((prevUser) => ({
+            ...prevUser,
+            season: prevUser.season.filter((id) => id !== seasonId),
+            episode: prevUser.episode.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)),
+         }));
          setEpisodeChecked(episodeChecked.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)));
       } else {
          setSeasonChecked([...seasonChecked, seasonId]);
+         setUser((prevUser) => ({
+            ...prevUser,
+            season: [...prevUser.season, seasonId],
+            episode: [...prevUser.episode, ...season.episodes.map((ep) => ep.id)],
+         }));
          setEpisodeChecked([...episodeChecked, ...season.episodes.map((ep) => ep.id)]);
       }
    };
@@ -63,8 +114,16 @@ export default function SeriesDetails() {
 
       if (episodeChecked.includes(episodeId)) {
          episodeChecked.splice(episodeChecked.indexOf(episodeId), 1);
+         setUser((prevUser) => ({
+            ...prevUser,
+            episode: prevUser.episode.filter((id) => id !== episodeId),
+         }));
       } else {
          episodeChecked.push(episodeId);
+         setUser((prevUser) => ({
+            ...prevUser,
+            episode: [...prevUser.episode, episodeId],
+         }));
       }
 
       if (season.episodes.every((ep) => episodeChecked.includes(ep.id))) {
@@ -89,6 +148,15 @@ export default function SeriesDetails() {
    };
 
    const SimilarMovies = useMovieCardList(similar, "Similar Series");
+
+   const episodeRuntime = (runtime) => {
+      if (runtime === null) return "";
+
+      const hour = Math.floor(runtime / 60);
+      const minute = runtime % 60;
+      const formattedRuntime = `${hour}h ${minute}m`;
+      return formattedRuntime;
+   };
 
    return (
       <div className="main-content-container">
@@ -115,10 +183,60 @@ export default function SeriesDetails() {
                            <MDBIcon fas icon="play" className="me-2" />
                            Trailer
                         </button>
-                        <button className="add-list-button">
-                           <MDBIcon fas icon="plus" className="me-2" />
-                           Watchlist
-                        </button>
+                        {userWatchlist &&
+                           !userWatchlist.includes(series.id) &&
+                           !userCompleted.some((value) => value.id === series.id) && (
+                              <button className="add-list-button" onClick={() => handleWatchlistClick(series.id)}>
+                                 <MDBIcon fas icon="plus" className="me-2" />
+                                 Watchlist
+                              </button>
+                           )}
+                        {userWatchlist && userWatchlist.includes(series.id) && (
+                           <button
+                              className="add-list-button"
+                              onClick={() => {
+                                 series.last_episode_to_air !== null
+                                    ? series.last_episode_to_air.air_date <= dates[0]
+                                       ? handleCompletedClick(series.id)
+                                       : alert("Series not released")
+                                    : alert("Series not released");
+                              }}
+                           >
+                              <MDBIcon fas icon="check" className="me-2" />
+                              Mark as watched
+                           </button>
+                        )}
+                        {userWatchlist && userCompleted.some((value) => value.id === series.id) && (
+                           <div class="rating">
+                              <input
+                                 value="3"
+                                 checked={userCompleted.some((value) => value.id === series.id && value.rating === 3)}
+                                 name="rating"
+                                 id="star3"
+                                 type="radio"
+                                 onChange={() => handleRatingChange(series.id, 3)}
+                              />
+                              <label for="star3"></label>
+                              <input
+                                 value="2"
+                                 name="rating"
+                                 id="star2"
+                                 type="radio"
+                                 checked={userCompleted.some((value) => value.id === series.id && value.rating === 2)}
+                                 onChange={() => handleRatingChange(series.id, 2)}
+                              />
+                              <label for="star2"></label>
+                              <input
+                                 value="1"
+                                 name="rating"
+                                 id="star1"
+                                 type="radio"
+                                 checked={userCompleted.some((value) => value.id === series.id && value.rating === 0)}
+                                 onChange={() => handleRatingChange(series.id, 0)}
+                              />
+                              <label for="star1"></label>
+                           </div>
+                        )}
                      </div>
                   </div>
                   <div className="movie-details-right">
@@ -185,7 +303,16 @@ export default function SeriesDetails() {
                               {value.episodes.map((ep) => (
                                  <div className="episode-list" key={ep.id}>
                                     <div className="episode-left-side">
-                                       <h5>{ep.name}</h5>
+                                       <h5>
+                                          {ep.name}
+                                          <span className="movie-runtime fs-6">
+                                             {ep.runtime !== null
+                                                ? ep.runtime < 60
+                                                   ? `${ep.runtime}m`
+                                                   : episodeRuntime(ep.runtime)
+                                                : ""}
+                                          </span>
+                                       </h5>
                                        <div style={{ display: "flex" }}>
                                           <p style={{ margin: "0" }}>
                                              S0{ep.season_number}E0{ep.episode_number}
@@ -216,7 +343,7 @@ export default function SeriesDetails() {
          ) : (
             <MovieDetailsLoading />
          )}
-         <SimilarMovies />
+         {similar.length > 0 && <SimilarMovies />}
       </div>
    );
 }

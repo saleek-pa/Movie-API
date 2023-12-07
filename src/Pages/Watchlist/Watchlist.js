@@ -14,7 +14,7 @@ export default function Watchlist() {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const ids = isMovie ? user.watchlist.movies : user.Watchlist.series;
+            const ids = isMovie ? user.watchlist.movies : user.watchlist.series;
             const details = await Promise.all(
                ids.map((id) =>
                   axios

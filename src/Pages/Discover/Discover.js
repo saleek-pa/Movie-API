@@ -8,7 +8,6 @@ import "./Discover.css";
 export default function Discover() {
    const { isMovie, setIsMovie, dates } = useContext(MovieContext);
    const [movieSeries, setMovieSeries] = useState([]);
-   console.log(movieSeries)
    const [pageNumber, setPageNumber] = useState(0);
    const [genres, setGenres] = useState([]);
 

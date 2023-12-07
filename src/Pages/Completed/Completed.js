@@ -8,13 +8,14 @@ import "../ViewMore/ViewMore.css";
 export default function Completed() {
    const { isMovie, setIsMovie, dates, user } = useContext(MovieContext);
    const [completed, setCompleted] = useState([]);
-   const [released, setReleased] = useState(true);
    const navigate = useNavigate();
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const ids = isMovie ? user.completed.movies.map((movie) => movie.id) : user.Completed.series;
+            const ids = isMovie
+               ? user.completed.movies.map((movie) => movie.id)
+               : user.completed.series.map((series) => series.id);
             const details = await Promise.all(
                ids.map((id) =>
                   axios
@@ -24,20 +25,20 @@ export default function Completed() {
                )
             );
             const releaseDateKey = isMovie ? "release_date" : "first_air_date";
-            setCompleted(
-               details.filter((movie) =>
-                  released ? movie[releaseDateKey] <= dates[0] : movie[releaseDateKey] >= dates[0]
-               )
-            );
+            setCompleted(details.filter((movie) => movie[releaseDateKey] <= dates[0]));
          } catch (error) {
             console.error(error);
          }
       };
 
       fetchData();
-   }, [isMovie, released, dates, user]);
+   }, [isMovie, dates, user]);
+
+   const returning = completed.filter((series) => series.status === "Returning Series");
+   const ended = completed.filter((series) => series.status === "Ended");
 
    function convertDateFormat(inputDate) {
+      if (inputDate === undefined) return "";
       const dateParts = inputDate.split("-");
       const year = parseInt(dateParts[0]);
       const month = parseInt(dateParts[1]) - 1;
@@ -56,10 +57,6 @@ export default function Completed() {
       setIsMovie(e.target.textContent === "Movie" ? true : false);
    };
 
-   const toggleReleasedUpcoming = (e) => {
-      setReleased(e.target.textContent === "Released" ? true : false);
-   };
-
    return (
       <div className="main-content-container">
          <Navbar />
@@ -73,13 +70,6 @@ export default function Completed() {
                      <div className="dropdown-content">
                         <li onClick={toggleMovieSeries}>Movie</li>
                         <li onClick={toggleMovieSeries}>Series</li>
-                     </div>
-                  </div>
-                  <div className="paste-button">
-                     <button className="dropdown-button">{released ? "Released" : "Upcoming"} &nbsp; ▼</button>
-                     <div className="dropdown-content">
-                        <li onClick={toggleReleasedUpcoming}>Released</li>
-                        <li onClick={toggleReleasedUpcoming}>Upcoming</li>
                      </div>
                   </div>
                </div>
@@ -118,7 +108,7 @@ export default function Completed() {
                      <h3>Returning Series</h3>
                   </div>
                   <div className="view-more-movie-card-list">
-                     {completed.slice(0, 5).map((movie) => (
+                     {returning.map((movie) => (
                         <div
                            className="movie-card"
                            key={movie.id}
@@ -149,7 +139,7 @@ export default function Completed() {
                         <h3>Ended</h3>
                      </div>
                      <div className="view-more-movie-card-list">
-                        {completed.slice(0, 9).map((movie) => (
+                        {ended.map((movie) => (
                            <div
                               className="movie-card"
                               key={movie.id}

@@ -4,9 +4,9 @@ import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
 import { MovieContext } from "../../App";
+import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
-import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 
 export default function MovieDetails() {
    const { id } = useParams();
@@ -31,12 +31,12 @@ export default function MovieDetails() {
 
       fetchData();
    }, [id, setMovie]);
-   
+
    const SimilarMovies = useMovieCardList(similar, "Similar Movies");
 
    const { user, setUser } = useContext(MovieContext);
-   const userWatchlist = user.watchlist.movies;
-   const userCompleted = user.completed.movies;
+   const userWatchlist = user?.watchlist?.movies;
+   const userCompleted = user?.completed?.movies;
 
    const handleWatchlistClick = (movieId) => {
       setUser((prevUser) => ({
@@ -76,11 +76,9 @@ export default function MovieDetails() {
    const hour = Math.floor(runtime / 60);
    const minute = runtime % 60;
 
-
    return (
       <div className="main-content-container">
          <Navbar />
-
          {movie.poster_path ? (
             <div className="movie-details-container">
                <div className="movie-details-image-container">
@@ -103,19 +101,28 @@ export default function MovieDetails() {
                         <MDBIcon fas icon="play" className="me-2" />
                         Trailer
                      </button>
-                     {!userWatchlist.includes(movie.id) && !userCompleted.some((value) => value.id === movie.id) && (
-                        <button className="add-list-button" onClick={() => handleWatchlistClick(movie.id)}>
-                           <MDBIcon fas icon="plus" className="me-2" />
-                           Watchlist
-                        </button>
-                     )}
-                     {userWatchlist.includes(movie.id) && (
-                        <button className="add-list-button" onClick={() => handleCompletedClick(movie.id)}>
+                     {userWatchlist &&
+                        !userWatchlist.includes(movie.id) &&
+                        !userCompleted.some((value) => value.id === movie.id) && (
+                           <button className="add-list-button" onClick={() => handleWatchlistClick(movie.id)}>
+                              <MDBIcon fas icon="plus" className="me-2" />
+                              Watchlist
+                           </button>
+                        )}
+                     {userWatchlist && userWatchlist.includes(movie.id) && (
+                        <button
+                           className="add-list-button"
+                           onClick={() => {
+                              movie.status === "Released"
+                                 ? handleCompletedClick(movie.id)
+                                 : alert("Movie not released");
+                           }}
+                        >
                            <MDBIcon fas icon="check" className="me-2" />
                            Mark as watched
                         </button>
                      )}
-                     {userCompleted.some((value) => value.id === movie.id) && (
+                     {userWatchlist && userCompleted.some((value) => value.id === movie.id) && (
                         <div class="rating">
                            <input
                               value="3"
@@ -185,7 +192,7 @@ export default function MovieDetails() {
          ) : (
             <MovieDetailsLoading />
          )}
-         <SimilarMovies />
+         {similar.length > 0 && <SimilarMovies />}
       </div>
    );
 }

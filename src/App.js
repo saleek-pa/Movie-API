@@ -28,6 +28,8 @@ function App() {
                  movies: [],
                  series: [],
               },
+              season: [],
+              episode: [],
            };
    });
 
