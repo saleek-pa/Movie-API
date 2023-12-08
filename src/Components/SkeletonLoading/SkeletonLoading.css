@@ -1,10 +1,10 @@
 .skeleton-movie-card {
-   width: 200px;
-   height: 270px;
-   cursor: pointer;
    display: flex;
    flex-direction: column;
    align-items: center;
+   width: 200px;
+   height: 270px;
+   cursor: pointer;
 }
 
 .skeleton-movie-image {
@@ -36,8 +36,8 @@
 .skeleton-movie-details-title {
    width: 450px;
    height: 40px;
-   border-radius: 10px;
    margin: 15px 0;
+   border-radius: 10px;
    background-color: gray;
    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
@@ -54,9 +54,9 @@
 
 .skeleton-movie-details-plot {
    height: 15px;
+   width: 750px;
    border-radius: 10px;
    margin-bottom: 10px;
-   width: 750px;
    background-color: gray;
    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }

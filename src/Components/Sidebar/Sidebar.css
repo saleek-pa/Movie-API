@@ -1,9 +1,9 @@
 .sidebar-container {
    width: 250px;
    height: 100vh;
+   position: fixed;
    color: white;
    background-color: #121212;
-   position: fixed;
 }
 
 .logo {
@@ -20,21 +20,21 @@
 
 .sidebar-list li {
    display: flex;
-   justify-content: flex-start;
    align-items: center;
+   justify-content: flex-start;
    gap: 15px;
    margin: 20px 40px;
    padding: 10px 0px 10px 22px;
    font-size: 1.3rem;
    list-style: none;
+   border-radius: 10px;
    cursor: pointer;
    transition: all 0.1s;
-   border-radius: 10px;
 }
 
 .sidebar-list li:hover {
-   background-color: #232323;
    border-radius: 10px;
+   background-color: #232323;
 }
 
 .sidebar-list li.selected {

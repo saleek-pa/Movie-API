@@ -30,6 +30,7 @@ export const MovieDetailsLoading = () => {
                </button>
             </div>
          </div>
+
          <div className="movie-details-right">
             <div className="skeleton-movie-details-title" />
             <div style={{ display: "flex" }}>

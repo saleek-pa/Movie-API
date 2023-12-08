@@ -6,10 +6,10 @@ import "./Navbar.css";
 import axios from "../../Configs/Axios";
 
 export const Navbar = () => {
-   const navigate = useNavigate();
    const { isMovie, setIsMovie } = useContext(MovieContext);
    const [searchTerm, setSearchTerm] = useState("");
    const [suggestions, setSuggestions] = useState([]);
+   const navigate = useNavigate();
 
    const toggleMovieSeries = (e) => {
       setIsMovie(e.target.textContent === "Movie" ? true : false);
@@ -81,6 +81,7 @@ export const Navbar = () => {
                </ul>
             )}
          </div>
+
          <div className="navbar-right-section">
             <div>
                <button className="navbar-movie-series" onClick={toggleMovieSeries}>

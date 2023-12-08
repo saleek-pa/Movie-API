@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
 import "./Sidebar.css";
-import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
    const navigate = useNavigate();
@@ -23,6 +23,7 @@ export const Sidebar = () => {
          >
             Hello.
          </h1>
+
          <div>
             <ul className="sidebar-list">
                <li
