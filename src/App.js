@@ -9,6 +9,7 @@ import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
 import ViewMoreSeries from "./Pages/ViewMore/SeriesViewMore";
 import { MainContent } from "./Components/MainContent/MainContent";
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 
 export const MovieContext = createContext();
@@ -58,6 +59,7 @@ function App() {
       <>
          <MovieContext.Provider value={{ isMovie, setIsMovie, dates, user, setUser }}>
             <Sidebar />
+            <Toaster />
             <Routes>
                <Route path="/" element={<MainContent />} />
                <Route path="/movie" element={<MainContent />} />

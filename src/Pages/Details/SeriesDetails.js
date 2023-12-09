@@ -6,6 +6,7 @@ import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import { useNavigate, useParams } from "react-router-dom";
 import useMovieCardList from "../../Hooks/useMovieCardList";
+import toast from "react-hot-toast";
 import "./Details.css";
 
 export default function SeriesDetails() {
@@ -57,6 +58,7 @@ export default function SeriesDetails() {
             series: [...prevUser.watchlist.series, seriesId],
          },
       }));
+      toast.success("Added to Watchlist");
    };
 
    const handleCompletedClick = (seriesId) => {
@@ -71,6 +73,7 @@ export default function SeriesDetails() {
             series: prevUser.watchlist.series.filter((id) => id !== seriesId),
          },
       }));
+      toast.success("Marked as watched");
    };
 
    const handleRatingChange = (seriesId, rating) => {
@@ -83,6 +86,7 @@ export default function SeriesDetails() {
             ),
          },
       }));
+      toast("We'll recommend series\nbased on your rating.");
    };
 
    const handleSeasonClick = (seasonId) => {

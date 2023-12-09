@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import axios from "../../Configs/Axios";
+import toast from "react-hot-toast";
 import "./Navbar.css";
 
 export const Navbar = () => {
@@ -76,8 +77,24 @@ export const Navbar = () => {
          </div>
 
          <div className="navbar-right-section">
-            <MDBIcon fas icon="bell" />
-            <MDBIcon fas icon="user-circle" />
+            <MDBIcon
+               fas
+               icon="bell"
+               onClick={() =>
+                  toast("It's not yet implemented. Stay tuned!", {
+                     duration: 3000,
+                  })
+               }
+            />
+            <MDBIcon
+               fas
+               icon="user-circle"
+               onClick={() =>
+                  toast("It's not yet implemented. Stay tuned!\nBut you can still use all functionalities :).                  ", {
+                     duration: 5000,
+                  })
+               }
+            />
          </div>
       </div>
    );

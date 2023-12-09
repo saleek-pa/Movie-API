@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import useMovieCardList from "../../Hooks/useMovieCardList";
+import toast from "react-hot-toast";
 import "./Details.css";
 
 export default function MovieDetails() {
@@ -47,6 +48,7 @@ export default function MovieDetails() {
             movies: [...prevUser.watchlist.movies, movieId],
          },
       }));
+      toast.success("Added to Watchlist");
    };
 
    const handleCompletedClick = (movieId) => {
@@ -61,6 +63,7 @@ export default function MovieDetails() {
             movies: prevUser.watchlist.movies.filter((id) => id !== movieId),
          },
       }));
+      toast.success("Marked as watched");
    };
 
    const handleRatingChange = (movieId, rating) => {
@@ -71,6 +74,7 @@ export default function MovieDetails() {
             movies: prevUser.completed.movies.map((movie) => (movie.id === movieId ? { ...movie, rating } : movie)),
          },
       }));
+      toast("We'll recommend movies\nbased on your rating.");
    };
 
    const runtime = movie.runtime;
@@ -116,7 +120,7 @@ export default function MovieDetails() {
                            onClick={() => {
                               movie.status === "Released"
                                  ? handleCompletedClick(movie.id)
-                                 : alert("Movie not released");
+                                 : toast.error("Movie not released");
                            }}
                         >
                            <MDBIcon fas icon="check" className="me-2" />

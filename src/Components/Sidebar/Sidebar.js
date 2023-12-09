@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../../App";
+import toast from "react-hot-toast";
 import "./Sidebar.css";
 
 export const Sidebar = () => {
@@ -66,7 +67,12 @@ export const Sidebar = () => {
                </li>
                <li
                   className={selectedItem === "statistics" ? "selected" : ""}
-                  onClick={() => handleItemClick("statistics")}
+                  onClick={() => {
+                     setSelectedItem("statistics");
+                     toast("It's not yet implemented. Stay tuned!", {
+                        duration: 3000,
+                     });
+                  }}
                >
                   <MDBIcon fas icon="chart-pie" /> Statistics
                </li>
