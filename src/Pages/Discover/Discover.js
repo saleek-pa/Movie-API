@@ -203,7 +203,14 @@ export default function Discover() {
                         className="movie-image"
                      />
                      <div className="movie-title">
-                        {movie.title || movie.name} (
+                        {movie.title
+                           ? movie.title.length > 27
+                              ? `${movie.title.slice(0, 22)}...`
+                              : movie.title
+                           : movie.name.length > 27
+                           ? `${movie.name.slice(0, 27)}...`
+                           : movie.name}{" "}
+                        (
                         {isMovie
                            ? (movie.release_date || "").split("-")[0]
                            : (movie.first_air_date || "").split("-")[0]}

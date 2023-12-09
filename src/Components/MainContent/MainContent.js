@@ -3,6 +3,7 @@ import { Navbar } from "../Navbar/Navbar";
 import { MovieContext } from "../../App";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import axios from "../../Configs/Axios";
+import "./MainContent.css"
 
 export const MainContent = () => {
    const { isMovie, dates } = useContext(MovieContext);
@@ -48,7 +49,7 @@ export const MainContent = () => {
    const TopRated = useMovieCardList(topRatedMovies, "Top Rated");
 
    return (
-      <div style={{ color: "white", marginLeft: "250px", padding: "0 30px" }}>
+      <div className="main-content-container">
          <Navbar />
 
          <TrendingNow />

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
+import { MovieContext } from "../../App";
 import "./Sidebar.css";
 
 export const Sidebar = () => {
    const navigate = useNavigate();
-   const [selectedItem, setSelectedItem] = useState("");
+   const { setIsMovie } = useContext(MovieContext);
+   const [selectedItem, setSelectedItem] = useState("movie");
 
    const handleItemClick = (item) => {
       setSelectedItem(item);
@@ -26,6 +28,24 @@ export const Sidebar = () => {
 
          <div>
             <ul className="sidebar-list">
+               <li
+                  className={selectedItem === "movie" ? "selected" : ""}
+                  onClick={() => {
+                     handleItemClick("movie");
+                     setIsMovie(true);
+                  }}
+               >
+                  <MDBIcon fas icon="film" /> Movie
+               </li>
+               <li
+                  className={selectedItem === "tv" ? "selected" : ""}
+                  onClick={() => {
+                     handleItemClick("tv");
+                     setIsMovie(false);
+                  }}
+               >
+                  <MDBIcon fas icon="tv" /> Series
+               </li>
                <li
                   className={selectedItem === "discover" ? "selected" : ""}
                   onClick={() => handleItemClick("discover")}
@@ -49,12 +69,6 @@ export const Sidebar = () => {
                   onClick={() => handleItemClick("statistics")}
                >
                   <MDBIcon fas icon="chart-pie" /> Statistics
-               </li>
-               <li
-                  className={selectedItem === "settings" ? "selected" : ""}
-                  onClick={() => handleItemClick("settings")}
-               >
-                  <MDBIcon fas icon="cog" /> Settings
                </li>
             </ul>
          </div>

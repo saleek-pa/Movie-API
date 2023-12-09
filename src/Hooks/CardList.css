@@ -54,6 +54,7 @@
    flex-wrap: nowrap;
    justify-content: flex-start;
    gap: 25px;
+   margin-bottom: 15px;
    position: relative;
    overflow-x: auto;
    overflow-y: hidden;

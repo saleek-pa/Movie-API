@@ -1,20 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
-import { MovieContext } from "../../App";
-import "./Navbar.css";
 import axios from "../../Configs/Axios";
+import "./Navbar.css";
 
 export const Navbar = () => {
-   const { isMovie, setIsMovie } = useContext(MovieContext);
    const [searchTerm, setSearchTerm] = useState("");
    const [suggestions, setSuggestions] = useState([]);
    const navigate = useNavigate();
-
-   const toggleMovieSeries = (e) => {
-      setIsMovie(e.target.textContent === "Movie" ? true : false);
-      isMovie ? navigate("/movie") : navigate("/tv");
-   };
 
    const handleSearchInput = async (event) => {
       try {
@@ -83,22 +76,8 @@ export const Navbar = () => {
          </div>
 
          <div className="navbar-right-section">
-            <div>
-               <button className="navbar-movie-series" onClick={toggleMovieSeries}>
-                  Movie
-               </button>
-               <button className="navbar-movie-series" onClick={toggleMovieSeries}>
-                  Series
-               </button>
-            </div>
-            <div>
-               <button className="sign-up-btn">
-                  Sign up
-                  <span>
-                     <MDBIcon fas icon="angle-right" />
-                  </span>
-               </button>
-            </div>
+            <MDBIcon fas icon="bell" />
+            <MDBIcon fas icon="user-circle" />
          </div>
       </div>
    );
