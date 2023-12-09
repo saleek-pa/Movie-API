@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
-import { useParams } from "react-router-dom";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
+import { useNavigate, useParams } from "react-router-dom";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import "./Details.css";
 
@@ -16,6 +16,7 @@ export default function SeriesDetails() {
    const [seasonDetails, setSeasonDetails] = useState([]);
    const [selectedSeasonId, setSelectedSeasonId] = useState(false);
    const [trailer, setTrailer] = useState(null);
+   const navigate = useNavigate();
 
    const [seasonChecked, setSeasonChecked] = useState(user.season);
    const [episodeChecked, setEpisodeChecked] = useState(user.episode);
@@ -243,6 +244,17 @@ export default function SeriesDetails() {
                      <h1 className="movie-details-title">
                         {series.name} ({series.first_air_date ? series.first_air_date.split("-")[0] : ""})
                      </h1>
+
+                     <button
+                        className="details-close-button"
+                        onClick={(e) => {
+                           e.preventDefault();
+                           navigate(-1);
+                        }}
+                     >
+                        <span className="X"></span>
+                        <span className="Y"></span>
+                     </button>
 
                      <div className="movie-details-genre">
                         {series.genres && series.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}

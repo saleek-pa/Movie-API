@@ -55,18 +55,59 @@
 .movie-details-right {
    flex: 1;
    padding-left: 40px;
+   position: relative;
 }
 
 .movie-details-title {
    font-size: 40px;
    margin-bottom: 15px;
+   width: 95%;
 }
 
 .movie-runtime {
    font-size: 20px;
-   margin-left: 10px;
+   display: inline-block;
+   margin: 0 10px;
    color: gray;
    word-spacing: -2px;
+}
+
+.details-close-button {
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 3rem;
+   height: 3rem;
+   border: none;
+   background: rgba(180, 83, 107, 0.11);
+   border-radius: 5px;
+   transition: all 0.5s;
+}
+
+.X {
+   content: "";
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 2em;
+   height: 1.5px;
+   background-color: rgb(255, 255, 255);
+   transform: translateX(-50%) rotate(45deg);
+}
+
+.Y {
+   content: "";
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 2em;
+   height: 1.5px;
+   background-color: #fff;
+   transform: translateX(-50%) rotate(-45deg);
+}
+
+.details-close-button:hover {
+   background-color: rgb(56, 56, 56);
 }
 
 .movie-details-genre {

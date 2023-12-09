@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import useMovieCardList from "../../Hooks/useMovieCardList";
@@ -13,6 +13,7 @@ export default function MovieDetails() {
    const [movie, setMovie] = useState({});
    const [trailer, setTrailer] = useState(null);
    const [similar, setSimilar] = useState([]);
+   const navigate = useNavigate();
 
    useEffect(() => {
       const fetchData = async () => {
@@ -162,6 +163,17 @@ export default function MovieDetails() {
                         {hour}h {minute}m
                      </span>
                   </h1>
+
+                  <button
+                     className="details-close-button"
+                     onClick={(e) => {
+                        e.preventDefault();
+                        navigate(-1);
+                     }}
+                  >
+                     <span className="X"></span>
+                     <span className="Y"></span>
+                  </button>
 
                   <div className="movie-details-genre">
                      {movie.genres && movie.genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
