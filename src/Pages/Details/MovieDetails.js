@@ -120,15 +120,15 @@ export default function MovieDetails() {
                            onClick={() => {
                               movie.status === "Released"
                                  ? handleCompletedClick(movie.id)
-                                 : toast.error("Movie not released");
+                                 : toast("Movie not released");
                            }}
                         >
                            <MDBIcon fas icon="check" className="me-2" />
-                           Mark as watched
+                           Watched
                         </button>
                      )}
                      {userWatchlist && userCompleted.some((value) => value.id === movie.id) && (
-                        <div class="rating">
+                        <div className="rating">
                            <input
                               value="3"
                               checked={userCompleted.some((value) => value.id === movie.id && value.rating === 3)}
@@ -137,7 +137,7 @@ export default function MovieDetails() {
                               type="radio"
                               onChange={() => handleRatingChange(movie.id, 3)}
                            />
-                           <label for="star3"></label>
+                           <label htmlFor="star3"></label>
                            <input
                               value="2"
                               name="rating"
@@ -146,7 +146,7 @@ export default function MovieDetails() {
                               checked={userCompleted.some((value) => value.id === movie.id && value.rating === 2)}
                               onChange={() => handleRatingChange(movie.id, 2)}
                            />
-                           <label for="star2"></label>
+                           <label htmlFor="star2"></label>
                            <input
                               value="1"
                               name="rating"
@@ -155,7 +155,7 @@ export default function MovieDetails() {
                               checked={userCompleted.some((value) => value.id === movie.id && value.rating === 0)}
                               onChange={() => handleRatingChange(movie.id, 0)}
                            />
-                           <label for="star1"></label>
+                           <label htmlFor="star1"></label>
                         </div>
                      )}
                   </div>

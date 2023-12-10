@@ -203,8 +203,8 @@ export default function SeriesDetails() {
                                  series.last_episode_to_air !== null
                                     ? series.last_episode_to_air.air_date <= dates[0]
                                        ? handleCompletedClick(series.id)
-                                       : alert("Series not released")
-                                    : alert("Series not released");
+                                       : toast("Series not released")
+                                    : toast("Series not released");
                               }}
                            >
                               <MDBIcon fas icon="check" className="me-2" />
@@ -212,7 +212,7 @@ export default function SeriesDetails() {
                            </button>
                         )}
                         {userWatchlist && userCompleted.some((value) => value.id === series.id) && (
-                           <div class="rating">
+                           <div className="rating">
                               <input
                                  value="3"
                                  checked={userCompleted.some((value) => value.id === series.id && value.rating === 3)}
@@ -221,7 +221,7 @@ export default function SeriesDetails() {
                                  type="radio"
                                  onChange={() => handleRatingChange(series.id, 3)}
                               />
-                              <label for="star3"></label>
+                              <label htmlFor="star3"></label>
                               <input
                                  value="2"
                                  name="rating"
@@ -230,7 +230,7 @@ export default function SeriesDetails() {
                                  checked={userCompleted.some((value) => value.id === series.id && value.rating === 2)}
                                  onChange={() => handleRatingChange(series.id, 2)}
                               />
-                              <label for="star2"></label>
+                              <label htmlFor="star2"></label>
                               <input
                                  value="1"
                                  name="rating"
@@ -239,7 +239,7 @@ export default function SeriesDetails() {
                                  checked={userCompleted.some((value) => value.id === series.id && value.rating === 0)}
                                  onChange={() => handleRatingChange(series.id, 0)}
                               />
-                              <label for="star1"></label>
+                              <label htmlFor="star1"></label>
                            </div>
                         )}
                      </div>

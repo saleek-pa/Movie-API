@@ -4,6 +4,7 @@ import { Sidebar } from "./Components/Sidebar/Sidebar";
 import Discover from "./Pages/Discover/Discover";
 import Watchlist from "./Pages/Watchlist/Watchlist";
 import Completed from "./Pages/Completed/Completed";
+import Recommend from "./Pages/Recommend/Recommend";
 import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
@@ -71,6 +72,7 @@ function App() {
                <Route path="/discover" element={<Discover />} />
                <Route path="/watchlist" element={<Watchlist />} />
                <Route path="/completed" element={<Completed />} />
+               <Route path="/recommend" element={<Recommend />} />
             </Routes>
          </MovieContext.Provider>
       </>

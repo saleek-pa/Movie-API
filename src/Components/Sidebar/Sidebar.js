@@ -66,6 +66,12 @@ export const Sidebar = () => {
                   <MDBIcon far icon="calendar-check" /> Completed
                </li>
                <li
+                  className={selectedItem === "recommend" ? "selected" : ""}
+                  onClick={() => handleItemClick("recommend")}
+               >
+                  <MDBIcon far icon="comment-alt" /> Recommend
+               </li>
+               <li
                   className={selectedItem === "statistics" ? "selected" : ""}
                   onClick={() => {
                      setSelectedItem("statistics");
