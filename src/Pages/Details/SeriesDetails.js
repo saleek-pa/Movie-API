@@ -61,6 +61,17 @@ export default function SeriesDetails() {
       toast.success("Added to Watchlist");
    };
 
+   const removeFromWatchlist = (seriesId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         watchlist: {
+            ...prevUser.watchlist,
+            series: prevUser.watchlist.series.filter((id) => id !== seriesId),
+         },
+      }));
+      toast("Removed from watchlist");
+   };
+
    const handleCompletedClick = (seriesId) => {
       setUser((prevUser) => ({
          ...prevUser,
@@ -180,6 +191,14 @@ export default function SeriesDetails() {
                         alt={series.title}
                         className="movie-details-image"
                      />
+                     {userWatchlist.includes(series.id) && (
+                        <MDBIcon
+                           fas
+                           icon="heart"
+                           className="details-watchlist-toggle"
+                           onClick={() => removeFromWatchlist(series.id)}
+                        />
+                     )}
                      <div className="details-button-container">
                         <button
                            className="watch-button"
@@ -208,7 +227,7 @@ export default function SeriesDetails() {
                               }}
                            >
                               <MDBIcon fas icon="check" className="me-2" />
-                              Mark as watched
+                              Watched
                            </button>
                         )}
                         {userWatchlist && userCompleted.some((value) => value.id === series.id) && (

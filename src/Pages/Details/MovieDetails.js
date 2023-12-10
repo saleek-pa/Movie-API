@@ -51,6 +51,17 @@ export default function MovieDetails() {
       toast.success("Added to Watchlist");
    };
 
+   const removeFromWatchlist = (movieId) => {
+      setUser((prevUser) => ({
+         ...prevUser,
+         watchlist: {
+            ...prevUser.watchlist,
+            movies: prevUser.watchlist.movies.filter((id) => id !== movieId),
+         },
+      }));
+      toast("Removed from watchlist");
+   };
+
    const handleCompletedClick = (movieId) => {
       setUser((prevUser) => ({
          ...prevUser,
@@ -96,6 +107,14 @@ export default function MovieDetails() {
                      alt={movie.title}
                      className="movie-details-image"
                   />
+                  {userWatchlist.includes(movie.id) && (
+                     <MDBIcon
+                        fas
+                        icon="heart"
+                        className="details-watchlist-toggle"
+                        onClick={() => removeFromWatchlist(movie.id)}
+                     />
+                  )}
                   <div className="details-button-container">
                      <button
                         className="watch-button"
