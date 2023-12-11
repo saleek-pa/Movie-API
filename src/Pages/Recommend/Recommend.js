@@ -63,9 +63,12 @@ export default function Recommend() {
                      a.genre_ids.filter((gen) => allGenreIds.includes(gen)).length
                );
 
-            const uniqueSimilarMovies = Array.from(new Set(sortedByGenreMatch.map((movie) => movie.id))).map((id) =>
-               similarMovies.find((movie) => movie.id === id)
-            );
+            const watchlistIds = isMovie ? user.watchlist.movies : user.watchlist.series;
+            const completedAndWatchlistIds = [...ids, ...watchlistIds];
+
+            const uniqueSimilarMovies = Array.from(new Set(sortedByGenreMatch.map((movie) => movie.id)))
+               .map((id) => similarMovies.find((movie) => movie.id === id))
+               .filter((movie) => !completedAndWatchlistIds.includes(movie.id));
 
             setWatchlist(uniqueSimilarMovies);
          } catch (error) {
