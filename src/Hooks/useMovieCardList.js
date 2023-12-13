@@ -92,6 +92,10 @@ const useMovieCardList = (movies, heading) => {
                            ? movie.vote_average.toFixed(1)
                            : convertDateFormat(movie.release_date || movie.first_air_date || "")}
                      </div>
+                     <div className="card-hover-icon">
+                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon fas icon="check" className="card-completed" />
+                     </div>
                   </div>
                ))}
             </div>

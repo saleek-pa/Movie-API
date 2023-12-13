@@ -58,7 +58,7 @@
    position: relative;
    overflow-x: auto;
    overflow-y: hidden;
-   scroll-behavior: smooth; 
+   scroll-behavior: smooth;
    &::-webkit-scrollbar {
       display: none;
    }
@@ -82,6 +82,7 @@
    object-fit: cover;
    border-radius: 10px;
    transition: all 0.3s;
+   position: relative;
 }
 
 .movie-title {
@@ -98,6 +99,38 @@
    background-color: rgba(100, 100, 100, 0.5);
    padding: 3px 6px;
    border-radius: 10px;
+}
+
+.card-watchlist {
+   position: absolute;
+   top: 240px;
+   left: 25%;
+   font-size: 25px;
+   opacity: 0;
+   transition: all 0.5s;
+}
+
+.card-completed {
+   position: absolute;
+   top: 240px;
+   right: 25%;
+   font-size: 25px;
+   opacity: 0;
+   transition: all 0.5s;
+}
+
+.movie-card:hover .card-watchlist,
+.movie-card:hover .card-completed {
+   opacity: 1;
+   z-index: 10;
+}
+
+.card-watchlist:hover {
+   color: red;
+}
+
+.card-completed:hover {
+   color: greenyellow;
 }
 
 .scroll-button {
