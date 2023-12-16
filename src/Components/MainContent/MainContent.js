@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { dates } from "../../Redux/utils";
 import { Navbar } from "../Navbar/Navbar";
 import { MovieContext } from "../../App";
 import useMovieCardList from "../../Hooks/useMovieCardList";
@@ -6,7 +7,7 @@ import axios from "../../Configs/Axios";
 import "./MainContent.css"
 
 export const MainContent = () => {
-   const { isMovie, dates } = useContext(MovieContext);
+   const { isMovie } = useContext(MovieContext);
    const [trendingMovies, setTrendingMovies] = useState([]);
    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
    const [upcomingMovies, setUpcomingMovies] = useState([]);
@@ -41,7 +42,7 @@ export const MainContent = () => {
       };
 
       fetchData();
-   }, [isMovie, dates]);
+   }, [isMovie]);
 
    const TrendingNow = useMovieCardList(trendingMovies, "Trending Now");
    const NowPlaying = useMovieCardList(nowPlayingMovies, `${isMovie ? "Now Playing" : "Ongoing Series"}`);

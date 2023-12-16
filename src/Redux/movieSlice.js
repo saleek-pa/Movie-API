@@ -38,8 +38,28 @@ const userSlice = createSlice({
          saveState(action.payload);
          return action.payload;
       },
+      // const handleWatchlistClick = (contentId, contentType) => {
+      //    setUser((prevUser) => {
+      //      const updatedWatchlist = {
+      //        ...prevUser.watchlist,
+      //        [contentType]: [...prevUser.watchlist[contentType], contentId],
+      //      };
+
+      //      return {
+      //        ...prevUser,
+      //        watchlist: updatedWatchlist,
+      //      };
+      //    });
+
+      //    toast.success("Added to Watchlist");
+      //  };
+      // For movies
+      // handleWatchlistClick(movieId, 'movies');
+
+      // // For series
+      // handleWatchlistClick(seriesId, 'series');
    },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, getFormattedDate } = userSlice.actions;
 export default userSlice.reducer;

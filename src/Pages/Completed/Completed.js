@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
+import { dates } from "../../Redux/utils";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
 import "../ViewMore/ViewMore.css";
 
 export default function Completed() {
-   const { isMovie, setIsMovie, dates, user } = useContext(MovieContext);
+   const { isMovie, setIsMovie, user } = useContext(MovieContext);
    const [completed, setCompleted] = useState([]);
    const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ export default function Completed() {
       };
 
       fetchData();
-   }, [isMovie, dates, user]);
+   }, [isMovie, user]);
 
    const returning = completed.filter((series) => series.status === "Returning Series");
    const ended = completed.filter((series) => series.status === "Ended");
