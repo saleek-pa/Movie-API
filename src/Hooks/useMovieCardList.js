@@ -2,6 +2,7 @@ import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../App";
+import { convertDateFormat } from "../Redux/utils";
 import { MovieCardListLoading } from "../Components/SkeletonLoading/SkeletonLoading";
 import "./CardList.css";
 
@@ -15,21 +16,6 @@ const useMovieCardList = (movies, heading) => {
          movieListRef.current.scrollLeft += scrollOffset;
       }
    };
-
-   function convertDateFormat(inputDate) {
-      const dateParts = inputDate.split("-");
-      const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1;
-      const day = parseInt(dateParts[2]);
-
-      const formattedDate = new Date(year, month, day).toLocaleDateString("en-US", {
-         year: "numeric",
-         month: "short",
-         day: "numeric",
-      });
-
-      return formattedDate;
-   }
 
    const MovieCardList = () => (
       <div className="movie-card-container">

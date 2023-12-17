@@ -4,6 +4,7 @@ import { Navbar } from "../../Components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
+import { convertDateFormat } from "../../Redux/utils";
 import "./ViewMore.css";
 
 export default function ViewMoreMovie() {
@@ -54,21 +55,6 @@ export default function ViewMoreMovie() {
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-
-   function convertDateFormat(inputDate) {
-      const dateParts = inputDate.split("-");
-      const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1;
-      const day = parseInt(dateParts[2]);
-
-      const formattedDate = new Date(year, month, day).toLocaleDateString("en-US", {
-         year: "numeric",
-         month: "short",
-         day: "numeric",
-      });
-
-      return formattedDate;
-   }
 
    return (
       <div className="main-content-container">

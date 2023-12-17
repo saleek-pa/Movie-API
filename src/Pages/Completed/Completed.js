@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
-import { dates } from "../../Redux/utils";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
+import { convertDateFormat, dates } from "../../Redux/utils";
 import "../ViewMore/ViewMore.css";
 
 export default function Completed() {
@@ -37,22 +37,6 @@ export default function Completed() {
 
    const returning = completed.filter((series) => series.status === "Returning Series");
    const ended = completed.filter((series) => series.status === "Ended");
-
-   function convertDateFormat(inputDate) {
-      if (inputDate === undefined) return "";
-      const dateParts = inputDate.split("-");
-      const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1;
-      const day = parseInt(dateParts[2]);
-
-      const formattedDate = new Date(year, month, day).toLocaleDateString("en-US", {
-         year: "numeric",
-         month: "short",
-         day: "numeric",
-      });
-
-      return formattedDate;
-   }
 
    const toggleMovieSeries = (e) => {
       setIsMovie(e.target.textContent === "Movie" ? true : false);

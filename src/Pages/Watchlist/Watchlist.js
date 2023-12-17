@@ -3,6 +3,7 @@ import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
+import { convertDateFormat } from "../../Redux/utils";
 import "../Discover/Discover.css";
 
 export default function Watchlist() {
@@ -36,21 +37,6 @@ export default function Watchlist() {
 
       fetchData();
    }, [isMovie, released, dates, user]);
-
-   function convertDateFormat(inputDate) {
-      const dateParts = inputDate.split("-");
-      const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1;
-      const day = parseInt(dateParts[2]);
-
-      const formattedDate = new Date(year, month, day).toLocaleDateString("en-US", {
-         year: "numeric",
-         month: "short",
-         day: "numeric",
-      });
-
-      return formattedDate;
-   }
 
    const toggleMovieSeries = (e) => {
       setIsMovie(e.target.textContent === "Movie" ? true : false);
