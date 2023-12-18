@@ -72,8 +72,9 @@
 }
 
 .movie-card:hover .movie-image {
-   scale: 1.05;
+   transform: scale(1.05);
    border-radius: 20px;
+   mask-image: linear-gradient(to top, transparent 0%, black 60%);
 }
 
 .movie-image {
@@ -83,6 +84,7 @@
    border-radius: 10px;
    transition: all 0.3s;
    position: relative;
+   overflow: hidden;
 }
 
 .movie-title {
