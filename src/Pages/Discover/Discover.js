@@ -1,13 +1,14 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
-import { convertDateFormat } from "../../Redux/utils";
+import { dates, convertDateFormat } from "../../Redux/utils";
 import "./Discover.css";
 
 export default function Discover() {
-   const { isMovie, setIsMovie, dates } = useContext(MovieContext);
+   const { isMovie, setIsMovie } = useContext(MovieContext);
    const [movieSeries, setMovieSeries] = useState([]);
    const [pageNumber, setPageNumber] = useState(0);
    const [genres, setGenres] = useState([]);
@@ -35,7 +36,7 @@ export default function Discover() {
       } catch (error) {
          console.error(error);
       }
-   }, [isMovie, released, pageNumber, language, sortBy, dates, filterByGenre]);
+   }, [isMovie, released, pageNumber, language, sortBy, filterByGenre]);
 
    useEffect(() => {
       fetchData();
@@ -207,11 +208,15 @@ export default function Discover() {
                            ? movie.vote_average.toFixed(1)
                            : convertDateFormat(movie.release_date || movie.first_air_date || "N/A")}
                      </div>
+                     <div className="card-hover-icon">
+                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon fas icon="check" className="card-completed" />
+                     </div>
                   </div>
                ))}
             </div>
 
-            <div class="loader" ref={loadingRef} />
+            <div className="loader" ref={loadingRef} />
          </div>
       </div>
    );

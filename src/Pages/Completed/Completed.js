@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
 import { convertDateFormat, dates } from "../../Redux/utils";
@@ -84,6 +85,10 @@ export default function Completed() {
                               ? movie.vote_average.toFixed(1)
                               : convertDateFormat(movie.release_date || "N/A")}
                         </div>
+                        <div className="card-hover-icon">
+                           <MDBIcon fas icon="heart" className="card-watchlist" />
+                           <MDBIcon fas icon="check" className="card-completed" />
+                        </div>
                      </div>
                   ))}
                </div>
@@ -115,6 +120,10 @@ export default function Completed() {
                               {movie.vote_average > 0
                                  ? movie.vote_average.toFixed(1)
                                  : convertDateFormat(movie.first_air_date)}
+                           </div>
+                           <div className="card-hover-icon">
+                              <MDBIcon fas icon="heart" className="card-watchlist" />
+                              <MDBIcon fas icon="check" className="card-completed" />
                            </div>
                         </div>
                      ))}
@@ -148,6 +157,10 @@ export default function Completed() {
                                  {movie.vote_average > 0
                                     ? movie.vote_average.toFixed(1)
                                     : convertDateFormat(movie.first_air_date)}
+                              </div>
+                              <div className="card-hover-icon">
+                                 <MDBIcon fas icon="heart" className="card-watchlist" />
+                                 <MDBIcon fas icon="check" className="card-completed" />
                               </div>
                            </div>
                         ))}

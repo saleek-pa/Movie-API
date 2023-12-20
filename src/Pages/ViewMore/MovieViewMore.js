@@ -1,15 +1,14 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { MovieContext } from "../../App";
-import { convertDateFormat } from "../../Redux/utils";
+import { dates, convertDateFormat } from "../../Redux/utils";
 import "./ViewMore.css";
 
 export default function ViewMoreMovie() {
    const { title } = useParams();
-   const { dates } = useContext(MovieContext);
    const [movies, setMovies] = useState([]);
    const [pageNumber, setPageNumber] = useState(0);
    const loadingRef = useRef(null);
@@ -20,7 +19,7 @@ export default function ViewMoreMovie() {
          const MOVIE_ENDPOINTS = {
             "trending-now": `trending/movie/week?page=${pageNumber}`,
             "now-playing": `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=In&sort_by=popularity.desc&vote_average.gte=0.1&page=${pageNumber}`,
-            upcoming: `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1&page=${pageNumber}`,
+            "upcoming": `discover/movie?include_adult=true&include_video=false&release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1&page=${pageNumber}`,
             "top-rated": `movie/top_rated?page=${pageNumber}`,
          };
 
@@ -30,11 +29,13 @@ export default function ViewMoreMovie() {
       } catch (error) {
          console.error(error);
       }
-   }, [title, pageNumber, dates]);
+   }, [title, pageNumber]);
 
    useEffect(() => {
       fetchData();
    }, [fetchData]);
+
+   console.log(movies)
 
    useEffect(() => {
       const observer = new IntersectionObserver(
@@ -93,10 +94,14 @@ export default function ViewMoreMovie() {
                      <div className="movie-review">
                         {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : convertDateFormat(movie.release_date)}
                      </div>
+                     <div className="card-hover-icon">
+                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon fas icon="check" className="card-completed" />
+                     </div>
                   </div>
                ))}
             </div>
-            <div class="loader" ref={loadingRef} />
+            <div className="loader" ref={loadingRef} />
          </div>
       </div>
    );

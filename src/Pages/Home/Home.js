@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { dates } from "../../Redux/utils";
-import { Navbar } from "../Navbar/Navbar";
+import { Navbar } from "../../Components/Navbar/Navbar";
 import { MovieContext } from "../../App";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import axios from "../../Configs/Axios";
-import "./MainContent.css"
+import "./Home.css"
 
 export const MainContent = () => {
    const { isMovie } = useContext(MovieContext);

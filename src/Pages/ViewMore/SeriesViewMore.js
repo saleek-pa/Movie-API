@@ -1,16 +1,15 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { MovieContext } from "../../App";
-import { convertDateFormat } from "../../Redux/utils";
+import { dates, convertDateFormat } from "../../Redux/utils";
 import "./ViewMore.css";
 
 export default function ViewMoreMovie() {
    const { title } = useParams();
    const navigate = useNavigate();
-   const { dates } = useContext(MovieContext);
    const [series, setSeries] = useState([]);
    const [pageNumber, setPageNumber] = useState(0);
    const loadingRef = useRef(null);
@@ -30,7 +29,7 @@ export default function ViewMoreMovie() {
       } catch (error) {
          console.error(error);
       }
-   }, [title, pageNumber, dates]);
+   }, [title, pageNumber]);
 
    useEffect(() => {
       fetchData();
@@ -88,10 +87,14 @@ export default function ViewMoreMovie() {
                            ? series.vote_average.toFixed(1)
                            : convertDateFormat(series.first_air_date)}
                      </div>
+                     <div className="card-hover-icon">
+                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon fas icon="check" className="card-completed" />
+                     </div>
                   </div>
                ))}
             </div>
-            <div class="loader" ref={loadingRef} />
+            <div className="loader" ref={loadingRef} />
          </div>
       </div>
    );

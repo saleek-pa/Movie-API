@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const loadState = () => {
    try {
-      const serializedState = localStorage.getItem("user");
-      return serializedState ? JSON.parse(serializedState) : undefined;
+      const userData = localStorage.getItem("user");
+      return userData ? JSON.parse(userData) : undefined;
    } catch (error) {
       console.error("Error loading state from localStorage:", error);
       return undefined;
@@ -12,14 +12,13 @@ const loadState = () => {
 
 const saveState = (state) => {
    try {
-      const serializedState = JSON.stringify(state);
-      localStorage.setItem("user", serializedState);
+      localStorage.setItem("user", JSON.stringify(state));
    } catch (error) {
       console.error("Error saving state to localStorage:", error);
    }
 };
 
-const userSlice = createSlice({
+const movieSlice = createSlice({
    name: "user",
    initialState: loadState() || {
       watchlist: {
@@ -38,28 +37,96 @@ const userSlice = createSlice({
          saveState(action.payload);
          return action.payload;
       },
-      // const handleWatchlistClick = (contentId, contentType) => {
-      //    setUser((prevUser) => {
-      //      const updatedWatchlist = {
-      //        ...prevUser.watchlist,
-      //        [contentType]: [...prevUser.watchlist[contentType], contentId],
-      //      };
 
-      //      return {
-      //        ...prevUser,
-      //        watchlist: updatedWatchlist,
-      //      };
-      //    });
+      handleWatchlistClick: (state, action) => {
+         const { id, type } = action.payload;
+         const updatedWatchlist = state.watchlist[type].includes(id)
+            ? state.watchlist[type].filter((ids) => ids !== id)
+            : [...state.watchlist[type], id];
 
-      //    toast.success("Added to Watchlist");
-      //  };
-      // For movies
-      // handleWatchlistClick(movieId, 'movies');
+         state.watchlist = {
+            ...state.watchlist,
+            [type]: updatedWatchlist,
+         };
 
-      // // For series
-      // handleWatchlistClick(seriesId, 'series');
+         saveState(state);
+      },
+
+      handleCompletedClick: (state, action) => {
+         const { id, type, rating = 1 } = action.payload;
+         const updatedCompleted = {
+            ...state.completed,
+            [type]: [...state.completed[type], { id, rating }],
+         };
+
+         const updatedWatchlist = {
+            ...state.watchlist,
+            [type]: state.watchlist[type].filter((itemId) => itemId !== id),
+         };
+
+         state.completed = updatedCompleted;
+         state.watchlist = updatedWatchlist;
+         saveState(state);
+      },
+
+      handleRatingChange: (state, action) => {
+         const { id, type, rating } = action.payload;
+         const updatedCompleted = {
+            ...state.completed,
+            [type]: state.completed[type].map((item) => (item.id === id ? { ...item, rating } : item)),
+         };
+
+         state.completed = updatedCompleted;
+         saveState(state);
+      },
+
+      handleSeasonCheckbox: (state, action) => {
+         const { seasonId, seasonDetails, seasonChecked, setSeasonChecked, episodeChecked, setEpisodeChecked } =
+            action.payload;
+         const season = seasonDetails.find((season) => season.id === seasonId);
+
+         if (seasonChecked.includes(seasonId)) {
+            setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
+            state.season = state.season.filter((id) => id !== seasonId);
+            state.episode = state.episode.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId));
+            setEpisodeChecked(episodeChecked.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)));
+         } else {
+            setSeasonChecked([...seasonChecked, seasonId]);
+            state.season = [...state.season, seasonId];
+            state.episode = [...state.episode, ...season.episodes.map((ep) => ep.id)];
+            setEpisodeChecked([...episodeChecked, ...season.episodes.map((ep) => ep.id)]);
+         }
+         saveState(state);
+      },
+
+      handleEpisodeCheckbox: (state, action) => {
+         const { seasonId, episodeId, seasonDetails, episodeChecked, seasonChecked, setSeasonChecked } = action.payload;
+         const season = seasonDetails.find((season) => season.id === seasonId);
+
+         if (episodeChecked.includes(episodeId)) {
+            episodeChecked.splice(episodeChecked.indexOf(episodeId), 1);
+            state.episode = state.episode.filter((id) => id !== episodeId);
+         } else {
+            episodeChecked.push(episodeId);
+            state.episode = [...state.episode, episodeId];
+         }
+
+         if (season.episodes.every((ep) => episodeChecked.includes(ep.id))) {
+            setSeasonChecked([...seasonChecked, seasonId]);
+         } else {
+            setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
+         }
+         saveState(state);
+      },
    },
 });
 
-export const { setUser, getFormattedDate } = userSlice.actions;
-export default userSlice.reducer;
+export const {
+   setUser,
+   handleWatchlistClick,
+   handleCompletedClick,
+   handleRatingChange,
+   handleSeasonCheckbox,
+   handleEpisodeCheckbox,
+} = movieSlice.actions;
+export default movieSlice.reducer;

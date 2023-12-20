@@ -4,7 +4,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../App";
 import { convertDateFormat } from "../Redux/utils";
 import { MovieCardListLoading } from "../Components/SkeletonLoading/SkeletonLoading";
-import "./CardList.css";
+import "./MovieCardList.css";
 
 const useMovieCardList = (movies, heading) => {
    const navigate = useNavigate();

@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
+import { dates } from "../../Redux/utils";
 import { Navbar } from "../../Components/Navbar/Navbar";
+import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../App";
 import { convertDateFormat } from "../../Redux/utils";
 import "../Discover/Discover.css";
 
 export default function Watchlist() {
-   const { isMovie, setIsMovie, dates, user } = useContext(MovieContext);
+   const { isMovie, setIsMovie, user } = useContext(MovieContext);
    const [watchlist, setWatchlist] = useState([]);
    const [released, setReleased] = useState(true);
    const navigate = useNavigate();
@@ -36,7 +38,7 @@ export default function Watchlist() {
       };
 
       fetchData();
-   }, [isMovie, released, dates, user]);
+   }, [isMovie, released, user]);
 
    const toggleMovieSeries = (e) => {
       setIsMovie(e.target.textContent === "Movie" ? true : false);
@@ -106,6 +108,10 @@ export default function Watchlist() {
                         {movie.vote_average > 0
                            ? movie.vote_average.toFixed(1)
                            : convertDateFormat(movie.release_date || movie.first_air_date || "N/A")}
+                     </div>
+                     <div className="card-hover-icon">
+                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon fas icon="check" className="card-completed" />
                      </div>
                   </div>
                ))}

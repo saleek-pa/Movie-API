@@ -75,7 +75,7 @@ export const Sidebar = () => {
                   className={selectedItem === "statistics" ? "selected" : ""}
                   onClick={() => {
                      setSelectedItem("statistics");
-                     toast("It's not yet implemented. Stay tuned!", {
+                     toast("It's not yet implemented", {
                         duration: 3000,
                      });
                   }}

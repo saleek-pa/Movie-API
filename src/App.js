@@ -9,31 +9,17 @@ import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
 import ViewMoreSeries from "./Pages/ViewMore/SeriesViewMore";
-import { MainContent } from "./Components/MainContent/MainContent";
+import { MainContent } from "./Pages/Home/Home";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
+import { useSelector } from "react-redux";
 
 export const MovieContext = createContext();
 
 function App() {
    const [isMovie, setIsMovie] = useState(true);
-   const [user, setUser] = useState(() => {
-      const storedUser = localStorage.getItem("user");
-      return storedUser
-         ? JSON.parse(storedUser)
-         : {
-              watchlist: {
-                 movies: [],
-                 series: [],
-              },
-              completed: {
-                 movies: [],
-                 series: [],
-              },
-              season: [],
-              episode: [],
-           };
-   });
+
+   const user = useSelector((state) => state.user);
 
    useEffect(() => {
       localStorage.setItem("user", JSON.stringify(user));
@@ -41,7 +27,7 @@ function App() {
 
    return (
       <>
-         <MovieContext.Provider value={{ isMovie, setIsMovie, user, setUser }}>
+         <MovieContext.Provider value={{ isMovie, setIsMovie, user }}>
             <Sidebar />
             <Toaster />
             <Routes>

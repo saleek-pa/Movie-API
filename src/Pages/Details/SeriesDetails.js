@@ -2,22 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
+import { useDispatch } from "react-redux";
 import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
 import { useNavigate, useParams } from "react-router-dom";
+import { dates, dateConverter, episodeRuntime } from "../../Redux/utils";
+import {
+   handleWatchlistClick,
+   handleCompletedClick,
+   handleRatingChange,
+   handleSeasonCheckbox,
+   handleEpisodeCheckbox,
+} from "../../Redux/movieSlice";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import toast from "react-hot-toast";
 import "./Details.css";
 
 export default function SeriesDetails() {
    const { id } = useParams();
-   const { user, setUser, dates } = useContext(MovieContext);
+   const { user } = useContext(MovieContext);
    const [series, setSeries] = useState([]);
    const [similar, setSimilar] = useState([]);
    const [seasonDetails, setSeasonDetails] = useState([]);
    const [selectedSeasonId, setSelectedSeasonId] = useState(false);
    const [trailer, setTrailer] = useState(null);
    const navigate = useNavigate();
+   const dispatch = useDispatch();
 
    const [seasonChecked, setSeasonChecked] = useState(user.season);
    const [episodeChecked, setEpisodeChecked] = useState(user.episode);
@@ -50,103 +60,8 @@ export default function SeriesDetails() {
    const userWatchlist = user?.watchlist?.series;
    const userCompleted = user?.completed?.series;
 
-   const handleWatchlistClick = (seriesId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         watchlist: {
-            ...prevUser.watchlist,
-            series: [...prevUser.watchlist.series, seriesId],
-         },
-      }));
-      toast.success("Added to Watchlist");
-   };
-
-   const removeFromWatchlist = (seriesId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         watchlist: {
-            ...prevUser.watchlist,
-            series: prevUser.watchlist.series.filter((id) => id !== seriesId),
-         },
-      }));
-      toast("Removed from watchlist");
-   };
-
-   const handleCompletedClick = (seriesId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         completed: {
-            ...prevUser.completed,
-            series: [...prevUser.completed.series, { id: seriesId, rating: 1 }],
-         },
-         watchlist: {
-            ...prevUser.watchlist,
-            series: prevUser.watchlist.series.filter((id) => id !== seriesId),
-         },
-      }));
-      toast.success("Marked as watched");
-   };
-
-   const handleRatingChange = (seriesId, rating) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         completed: {
-            ...prevUser.completed,
-            series: prevUser.completed.series.map((series) =>
-               series.id === seriesId ? { ...series, rating } : series
-            ),
-         },
-      }));
-      toast("We'll recommend series\nbased on your rating.");
-   };
-
    const handleSeasonClick = (seasonId) => {
       setSelectedSeasonId(selectedSeasonId === seasonId ? null : seasonId);
-   };
-
-   const handleSeasonCheckbox = (seasonId) => {
-      const season = seasonDetails.find((season) => season.id === seasonId);
-      if (seasonChecked.includes(seasonId)) {
-         setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
-         setUser((prevUser) => ({
-            ...prevUser,
-            season: prevUser.season.filter((id) => id !== seasonId),
-            episode: prevUser.episode.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)),
-         }));
-         setEpisodeChecked(episodeChecked.filter((epId) => !season.episodes.map((ep) => ep.id).includes(epId)));
-      } else {
-         setSeasonChecked([...seasonChecked, seasonId]);
-         setUser((prevUser) => ({
-            ...prevUser,
-            season: [...prevUser.season, seasonId],
-            episode: [...prevUser.episode, ...season.episodes.map((ep) => ep.id)],
-         }));
-         setEpisodeChecked([...episodeChecked, ...season.episodes.map((ep) => ep.id)]);
-      }
-   };
-
-   const handleEpisodeCheckbox = (seasonId, episodeId) => {
-      const season = seasonDetails.find((season) => season.id === seasonId);
-
-      if (episodeChecked.includes(episodeId)) {
-         episodeChecked.splice(episodeChecked.indexOf(episodeId), 1);
-         setUser((prevUser) => ({
-            ...prevUser,
-            episode: prevUser.episode.filter((id) => id !== episodeId),
-         }));
-      } else {
-         episodeChecked.push(episodeId);
-         setUser((prevUser) => ({
-            ...prevUser,
-            episode: [...prevUser.episode, episodeId],
-         }));
-      }
-
-      if (season.episodes.every((ep) => episodeChecked.includes(ep.id))) {
-         setSeasonChecked([...seasonChecked, seasonId]);
-      } else {
-         setSeasonChecked(seasonChecked.filter((id) => id !== seasonId));
-      }
    };
 
    const calculateSeasonProgress = (seasonId) => {
@@ -156,23 +71,7 @@ export default function SeriesDetails() {
       return (completedEpisodes / totalEpisodes) * 100;
    };
 
-   const dateConverter = (date) => {
-      const dateToConvert = new Date(date);
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      const formattedDate = new Intl.DateTimeFormat("en-US", options).format(dateToConvert);
-      return formattedDate;
-   };
-
    const SimilarMovies = useMovieCardList(similar, "Similar Series");
-
-   const episodeRuntime = (runtime) => {
-      if (runtime === null) return "";
-
-      const hour = Math.floor(runtime / 60);
-      const minute = runtime % 60;
-      const formattedRuntime = `${hour}h ${minute}m`;
-      return formattedRuntime;
-   };
 
    return (
       <div className="main-content-container">
@@ -196,7 +95,10 @@ export default function SeriesDetails() {
                            fas
                            icon="heart"
                            className="details-watchlist-toggle"
-                           onClick={() => removeFromWatchlist(series.id)}
+                           onClick={() => {
+                              toast("Removed from watchlist");
+                              dispatch(handleWatchlistClick({ id: series.id, type: "series" }));
+                           }}
                         />
                      )}
                      <div className="details-button-container">
@@ -210,7 +112,13 @@ export default function SeriesDetails() {
                         {userWatchlist &&
                            !userWatchlist.includes(series.id) &&
                            !userCompleted.some((value) => value.id === series.id) && (
-                              <button className="add-list-button" onClick={() => handleWatchlistClick(series.id)}>
+                              <button
+                                 className="add-list-button"
+                                 onClick={() => {
+                                    toast.success("Added to watchlist");
+                                    dispatch(handleWatchlistClick({ id: series.id, type: "series" }));
+                                 }}
+                              >
                                  <MDBIcon fas icon="plus" className="me-2" />
                                  Watchlist
                               </button>
@@ -219,11 +127,16 @@ export default function SeriesDetails() {
                            <button
                               className="add-list-button"
                               onClick={() => {
-                                 series.last_episode_to_air !== null
-                                    ? series.last_episode_to_air.air_date <= dates[0]
-                                       ? handleCompletedClick(series.id)
-                                       : toast("Series not released")
-                                    : toast("Series not released");
+                                 if (series.last_episode_to_air !== null) {
+                                    if (series.last_episode_to_air.air_date <= dates[0]) {
+                                       toast.success("Marked as watched");
+                                       dispatch(handleCompletedClick({ id: series.id, type: "series" }));
+                                    } else {
+                                       toast.error("Series not released");
+                                    }
+                                 } else {
+                                    toast.error("Series not released");
+                                 }
                               }}
                            >
                               <MDBIcon fas icon="check" className="me-2" />
@@ -238,7 +151,9 @@ export default function SeriesDetails() {
                                  name="rating"
                                  id="star3"
                                  type="radio"
-                                 onChange={() => handleRatingChange(series.id, 3)}
+                                 onChange={() =>
+                                    dispatch(handleRatingChange({ id: series.id, type: "series", rating: 3 }))
+                                 }
                               />
                               <label htmlFor="star3"></label>
                               <input
@@ -247,7 +162,9 @@ export default function SeriesDetails() {
                                  id="star2"
                                  type="radio"
                                  checked={userCompleted.some((value) => value.id === series.id && value.rating === 2)}
-                                 onChange={() => handleRatingChange(series.id, 2)}
+                                 onChange={() =>
+                                    dispatch(handleRatingChange({ id: series.id, type: "series", rating: 2 }))
+                                 }
                               />
                               <label htmlFor="star2"></label>
                               <input
@@ -256,7 +173,9 @@ export default function SeriesDetails() {
                                  id="star1"
                                  type="radio"
                                  checked={userCompleted.some((value) => value.id === series.id && value.rating === 0)}
-                                 onChange={() => handleRatingChange(series.id, 0)}
+                                 onChange={() =>
+                                    dispatch(handleRatingChange({ id: series.id, type: "series", rating: 0 }))
+                                 }
                               />
                               <label htmlFor="star1"></label>
                            </div>
@@ -313,7 +232,18 @@ export default function SeriesDetails() {
                                  id={`${value.id}`}
                                  type="checkbox"
                                  checked={seasonChecked.includes(value.id)}
-                                 onChange={() => handleSeasonCheckbox(value.id)}
+                                 onChange={() =>
+                                    dispatch(
+                                       handleSeasonCheckbox({
+                                          seasonId: value.id,
+                                          seasonDetails,
+                                          seasonChecked,
+                                          setSeasonChecked,
+                                          episodeChecked,
+                                          setEpisodeChecked,
+                                       })
+                                    )
+                                 }
                               />
                               <label htmlFor={`${value.id}`}>
                                  <div className="tick_mark"></div>
@@ -360,7 +290,18 @@ export default function SeriesDetails() {
                                           id={`${value.id}-${ep.id}`}
                                           type="checkbox"
                                           checked={episodeChecked.includes(ep.id)}
-                                          onChange={() => handleEpisodeCheckbox(value.id, ep.id)}
+                                          onChange={() =>
+                                             dispatch(
+                                                handleEpisodeCheckbox({
+                                                   seasonId: value.id,
+                                                   episodeId: ep.id,
+                                                   seasonDetails,
+                                                   episodeChecked,
+                                                   seasonChecked,
+                                                   setSeasonChecked,
+                                                })
+                                             )
+                                          }
                                        />
                                        <label htmlFor={`${value.id}-${ep.id}`}>
                                           <div className="tick_mark"></div>

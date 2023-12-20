@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
 import { Navbar } from "../../Components/Navbar/Navbar";
 import { MDBIcon } from "mdb-react-ui-kit";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { MovieContext } from "../../App";
 import { MovieDetailsLoading } from "../../Components/SkeletonLoading/SkeletonLoading";
+import { useNavigate, useParams } from "react-router-dom";
+import { handleWatchlistClick, handleCompletedClick, handleRatingChange } from "../../Redux/movieSlice";
 import useMovieCardList from "../../Hooks/useMovieCardList";
 import toast from "react-hot-toast";
 import "./Details.css";
@@ -15,6 +17,7 @@ export default function MovieDetails() {
    const [trailer, setTrailer] = useState(null);
    const [similar, setSimilar] = useState([]);
    const navigate = useNavigate();
+   const dispatch = useDispatch();
 
    useEffect(() => {
       const fetchData = async () => {
@@ -36,57 +39,9 @@ export default function MovieDetails() {
 
    const SimilarMovies = useMovieCardList(similar, "Similar Movies");
 
-   const { user, setUser } = useContext(MovieContext);
+   const { user } = useContext(MovieContext);
    const userWatchlist = user?.watchlist?.movies;
    const userCompleted = user?.completed?.movies;
-
-   const handleWatchlistClick = (movieId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         watchlist: {
-            ...prevUser.watchlist,
-            movies: [...prevUser.watchlist.movies, movieId],
-         },
-      }));
-      toast.success("Added to Watchlist");
-   };
-
-   const removeFromWatchlist = (movieId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         watchlist: {
-            ...prevUser.watchlist,
-            movies: prevUser.watchlist.movies.filter((id) => id !== movieId),
-         },
-      }));
-      toast("Removed from watchlist");
-   };
-
-   const handleCompletedClick = (movieId) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         completed: {
-            ...prevUser.completed,
-            movies: [...prevUser.completed.movies, { id: movieId, rating: 1 }],
-         },
-         watchlist: {
-            ...prevUser.watchlist,
-            movies: prevUser.watchlist.movies.filter((id) => id !== movieId),
-         },
-      }));
-      toast.success("Marked as watched");
-   };
-
-   const handleRatingChange = (movieId, rating) => {
-      setUser((prevUser) => ({
-         ...prevUser,
-         completed: {
-            ...prevUser.completed,
-            movies: prevUser.completed.movies.map((movie) => (movie.id === movieId ? { ...movie, rating } : movie)),
-         },
-      }));
-      toast("We'll recommend movies\nbased on your rating.");
-   };
 
    const runtime = movie.runtime;
    const hour = Math.floor(runtime / 60);
@@ -112,7 +67,10 @@ export default function MovieDetails() {
                         fas
                         icon="heart"
                         className="details-watchlist-toggle"
-                        onClick={() => removeFromWatchlist(movie.id)}
+                        onClick={() => {
+                           toast("Removed from watchlist");
+                           dispatch(handleWatchlistClick({ id: movie.id, type: "movies" }));
+                        }}
                      />
                   )}
                   <div className="details-button-container">
@@ -128,7 +86,13 @@ export default function MovieDetails() {
                      {userWatchlist &&
                         !userWatchlist.includes(movie.id) &&
                         !userCompleted.some((value) => value.id === movie.id) && (
-                           <button className="add-list-button" onClick={() => handleWatchlistClick(movie.id)}>
+                           <button
+                              className="add-list-button"
+                              onClick={() => {
+                                 toast.success("Added to watchlist");
+                                 dispatch(handleWatchlistClick({ id: movie.id, type: "movies" }));
+                              }}
+                           >
                               <MDBIcon fas icon="plus" className="me-2" />
                               Watchlist
                            </button>
@@ -137,9 +101,10 @@ export default function MovieDetails() {
                         <button
                            className="add-list-button"
                            onClick={() => {
-                              movie.status === "Released"
-                                 ? handleCompletedClick(movie.id)
-                                 : toast("Movie not released");
+                              if (movie.status === "Released") {
+                                 toast.success("Marked as watched");
+                                 dispatch(handleCompletedClick({ id: movie.id, type: "movies" }));
+                              } else toast("Movie not released");
                            }}
                         >
                            <MDBIcon fas icon="check" className="me-2" />
@@ -154,7 +119,7 @@ export default function MovieDetails() {
                               name="rating"
                               id="star3"
                               type="radio"
-                              onChange={() => handleRatingChange(movie.id, 3)}
+                              onChange={() => dispatch(handleRatingChange({ id: movie.id, type: "movies", rating: 3 }))}
                            />
                            <label htmlFor="star3"></label>
                            <input
@@ -163,7 +128,7 @@ export default function MovieDetails() {
                               id="star2"
                               type="radio"
                               checked={userCompleted.some((value) => value.id === movie.id && value.rating === 2)}
-                              onChange={() => handleRatingChange(movie.id, 2)}
+                              onChange={() => dispatch(handleRatingChange({ id: movie.id, type: "movies", rating: 2 }))}
                            />
                            <label htmlFor="star2"></label>
                            <input
@@ -172,7 +137,7 @@ export default function MovieDetails() {
                               id="star1"
                               type="radio"
                               checked={userCompleted.some((value) => value.id === movie.id && value.rating === 0)}
-                              onChange={() => handleRatingChange(movie.id, 0)}
+                              onChange={() => dispatch(handleRatingChange({ id: movie.id, type: "movies", rating: 0 }))}
                            />
                            <label htmlFor="star1"></label>
                         </div>
