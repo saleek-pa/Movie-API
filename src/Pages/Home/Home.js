@@ -6,7 +6,7 @@ import useMovieCardList from "../../Hooks/useMovieCardList";
 import axios from "../../Configs/Axios";
 import "./Home.css"
 
-export const MainContent = () => {
+export const Home = () => {
    const { isMovie } = useContext(MovieContext);
    const [trendingMovies, setTrendingMovies] = useState([]);
    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);

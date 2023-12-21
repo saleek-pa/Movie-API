@@ -4,7 +4,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { MovieContext } from "../App";
 import { convertDateFormat } from "../Redux/utils";
 import { MovieCardListLoading } from "../Components/SkeletonLoading/SkeletonLoading";
-import "./MovieCardList.css";
+import "../Components/MovieCardList/MovieCardList.css";
 
 const useMovieCardList = (movies, heading) => {
    const navigate = useNavigate();
@@ -79,7 +79,7 @@ const useMovieCardList = (movies, heading) => {
                            : convertDateFormat(movie.release_date || movie.first_air_date || "")}
                      </div>
                      <div className="card-hover-icon">
-                        <MDBIcon fas icon="heart" className="card-watchlist" />
+                        <MDBIcon far icon="heart" className="card-watchlist" />
                         <MDBIcon fas icon="check" className="card-completed" />
                      </div>
                   </div>
@@ -92,12 +92,16 @@ const useMovieCardList = (movies, heading) => {
                ))}
             </div>
          )}
-         <button className="scroll-button left" onClick={() => handleScroll(-1020)}>
-            <MDBIcon fas icon="chevron-left" />
-         </button>
-         <button className="scroll-button right" onClick={() => handleScroll(1020)}>
-            <MDBIcon fas icon="chevron-right" />
-         </button>
+         { movies.length > 6 &&
+            <>
+               <button className="scroll-button left" onClick={() => handleScroll(-1020)}>
+                  <MDBIcon fas icon="chevron-left" />
+               </button>
+               <button className="scroll-button right" onClick={() => handleScroll(1020)}>
+                  <MDBIcon fas icon="chevron-right" />
+               </button>
+            </>
+         }
       </div>
    );
 

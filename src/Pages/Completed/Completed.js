@@ -1,16 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../../Configs/Axios";
+import { dates } from "../../Redux/utils";
 import { Navbar } from "../../Components/Navbar/Navbar";
-import { MDBIcon } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
+import { CardList } from "../../Components/MovieCardList/MovieCardList";
 import { MovieContext } from "../../App";
-import { convertDateFormat, dates } from "../../Redux/utils";
 import "../ViewMore/ViewMore.css";
 
 export default function Completed() {
    const { isMovie, setIsMovie, user } = useContext(MovieContext);
    const [completed, setCompleted] = useState([]);
-   const navigate = useNavigate();
 
    useEffect(() => {
       const fetchData = async () => {
@@ -61,110 +59,19 @@ export default function Completed() {
                </div>
             </div>
             {isMovie ? (
-               <div className="view-more-movie-card-list">
-                  {completed.map((movie) => (
-                     <div
-                        className="movie-card"
-                        key={movie.id}
-                        onClick={() => navigate(`/movie/${movie.id}-${movie.title.toLowerCase().replace(/\s+/g, "-")}`)}
-                     >
-                        <img
-                           src={
-                              movie.poster_path
-                                 ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                                 : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
-                           }
-                           alt={movie.title}
-                           className="movie-image"
-                        />
-                        <div className="movie-title">
-                           {movie.title} ({(movie.release_date || "").split("-")[0]})
-                        </div>
-                        <div className="movie-review">
-                           {movie.vote_average > 0
-                              ? movie.vote_average.toFixed(1)
-                              : convertDateFormat(movie.release_date || "N/A")}
-                        </div>
-                        <div className="card-hover-icon">
-                           <MDBIcon fas icon="heart" className="card-watchlist" />
-                           <MDBIcon fas icon="check" className="card-completed" />
-                        </div>
-                     </div>
-                  ))}
-               </div>
+               <CardList movies={completed} />
             ) : (
                <>
                   <div className="list-heading">
                      <h3>Returning Series</h3>
                   </div>
-                  <div className="view-more-movie-card-list">
-                     {returning.map((movie) => (
-                        <div
-                           className="movie-card"
-                           key={movie.id}
-                           onClick={() => navigate(`/tv/${movie.id}-${movie.name.toLowerCase().replace(/\s+/g, "-")}`)}
-                        >
-                           <img
-                              src={
-                                 movie.poster_path
-                                    ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                                    : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
-                              }
-                              alt={movie.name}
-                              className="movie-image"
-                           />
-                           <div className="movie-title">
-                              {movie.name} ({movie.first_air_date?.split("-")[0]})
-                           </div>
-                           <div className="movie-review">
-                              {movie.vote_average > 0
-                                 ? movie.vote_average.toFixed(1)
-                                 : convertDateFormat(movie.first_air_date)}
-                           </div>
-                           <div className="card-hover-icon">
-                              <MDBIcon fas icon="heart" className="card-watchlist" />
-                              <MDBIcon fas icon="check" className="card-completed" />
-                           </div>
-                        </div>
-                     ))}
-                  </div>
+                  <CardList movies={returning} />
                   <div className="movie-card-container">
                      <div className="list-heading">
                         <h3>Ended</h3>
                      </div>
-                     <div className="view-more-movie-card-list">
-                        {ended.map((movie) => (
-                           <div
-                              className="movie-card"
-                              key={movie.id}
-                              onClick={() =>
-                                 navigate(`/tv/${movie.id}-${movie.name.toLowerCase().replace(/\s+/g, "-")}`)
-                              }
-                           >
-                              <img
-                                 src={
-                                    movie.poster_path
-                                       ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                                       : "https://www.tgv.com.my/assets/images/404/movie-poster.jpg"
-                                 }
-                                 alt={movie.name}
-                                 className="movie-image"
-                              />
-                              <div className="movie-title">
-                                 {movie.name} ({movie.first_air_date?.split("-")[0]})
-                              </div>
-                              <div className="movie-review">
-                                 {movie.vote_average > 0
-                                    ? movie.vote_average.toFixed(1)
-                                    : convertDateFormat(movie.first_air_date)}
-                              </div>
-                              <div className="card-hover-icon">
-                                 <MDBIcon fas icon="heart" className="card-watchlist" />
-                                 <MDBIcon fas icon="check" className="card-completed" />
-                              </div>
-                           </div>
-                        ))}
-                     </div>
+                     <CardList movies={ended} />
+                     {completed.length === 0 && <h3 className="text-center text-muted">Its empty!</h3>}
                   </div>
                </>
             )}

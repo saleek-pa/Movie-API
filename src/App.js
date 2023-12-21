@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Home } from "./Pages/Home/Home";
+import { Toaster } from "react-hot-toast";
 import { Sidebar } from "./Components/Sidebar/Sidebar";
+import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Discover from "./Pages/Discover/Discover";
 import Watchlist from "./Pages/Watchlist/Watchlist";
 import Completed from "./Pages/Completed/Completed";
@@ -9,10 +12,7 @@ import MovieDetails from "./Pages/Details/MovieDetails";
 import SeriesDetails from "./Pages/Details/SeriesDetails";
 import ViewMoreMovie from "./Pages/ViewMore/MovieViewMore";
 import ViewMoreSeries from "./Pages/ViewMore/SeriesViewMore";
-import { MainContent } from "./Pages/Home/Home";
-import { Toaster } from "react-hot-toast";
 import "./App.css";
-import { useSelector } from "react-redux";
 
 export const MovieContext = createContext();
 
@@ -31,11 +31,11 @@ function App() {
             <Sidebar />
             <Toaster />
             <Routes>
-               <Route path="/" element={<MainContent />} />
-               <Route path="/movie" element={<MainContent />} />
+               <Route path="/" element={<Home />} />
+               <Route path="/movie" element={<Home />} />
                <Route path="/movie/:id" element={<MovieDetails />} />
                <Route path="/movie/discover/:title" element={<ViewMoreMovie />} />
-               <Route path="/tv" element={<MainContent />} />
+               <Route path="/tv" element={<Home />} />
                <Route path="/tv/:id" element={<SeriesDetails />} />
                <Route path="/tv/discover/:title" element={<ViewMoreSeries />} />
                <Route path="/discover" element={<Discover />} />

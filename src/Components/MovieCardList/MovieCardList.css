@@ -79,7 +79,7 @@
 
 .movie-image {
    width: 180px;
-   height: auto;
+   height: 270px;
    object-fit: cover;
    border-radius: 10px;
    transition: all 0.5s;
@@ -103,28 +103,27 @@
    border-radius: 10px;
 }
 
-.card-watchlist {
-   position: absolute;
-   top: 240px;
-   left: 25%;
+.card-hover-icon {
+   display: flex;
+   justify-content: center;
+   gap: 30px;
    font-size: 25px;
-   opacity: 0;
+   position: absolute;
+   top: 235px;
+   left: 50%;
+   transform: translate(-50%);
+   align-items: center;
    transition: all 0.5s;
+   opacity: 0;
 }
 
-.card-completed {
-   position: absolute;
-   top: 240px;
-   right: 25%;
-   font-size: 25px;
-   opacity: 0;
-   transition: all 0.5s;
-}
-
-.movie-card:hover .card-watchlist,
-.movie-card:hover .card-completed {
+.movie-card:hover .card-hover-icon {
    opacity: 1;
    z-index: 10;
+}
+
+.card-watchlist, .card-completed, .card-close {
+   transition: all 0.5s;
 }
 
 .card-watchlist:hover {
@@ -133,6 +132,10 @@
 
 .card-completed:hover {
    color: greenyellow;
+}
+
+.card-close:hover {
+   color: gray;
 }
 
 .scroll-button {

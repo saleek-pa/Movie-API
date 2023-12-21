@@ -80,8 +80,9 @@ export const Navbar = () => {
             <MDBIcon
                fas
                icon="bell"
+               style={{ cursor: "pointer" }}
                onClick={() =>
-                  toast("It's not yet implemented. Stay tuned!", {
+                  toast("It's not yet implemented", {
                      duration: 3000,
                   })
                }
@@ -89,8 +90,9 @@ export const Navbar = () => {
             <MDBIcon
                fas
                icon="user-circle"
+               style={{ cursor: "pointer" }}
                onClick={() =>
-                  toast("It's not yet implemented. Stay tuned!\nBut you can still use all functionalities :).                  ", {
+                  toast("It's not yet implemented.\nBut you can still use all functionalities :)", {
                      duration: 5000,
                   })
                }
