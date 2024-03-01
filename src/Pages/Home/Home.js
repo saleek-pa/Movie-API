@@ -21,10 +21,10 @@ export const Home = () => {
                `https://api.themoviedb.org/3/${isMovie ? "movie" : "tv"}/top_rated`,
 
                isMovie
-                  ? `https://api.themoviedb.org/3/discover/movie?release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=In&sort_by=popularity.desc&vote_average.gte=0.1`
+                  ? `https://api.themoviedb.org/3/discover/movie?release_date.gte=${dates[1]}&release_date.lte=${dates[0]}&region=IN&sort_by=popularity.desc&vote_average.gte=0.1`
                   : `https://api.themoviedb.org/3/discover/tv?first_air_date.gte=${dates[1]}&first_air_date.lte=${dates[0]}&sort_by=popularity.desc&vote_average.gte=0.1`,
                isMovie
-                  ? `https://api.themoviedb.org/3/discover/movie?release_date.gte=${dates[0]}&region=In&sort_by=release_date.asc&vote_average.lte=0.1`
+                  ? `https://api.themoviedb.org/3/discover/movie?release_date.gte=${dates[0]}&region=IN&sort_by=release_date.asc&vote_average.lte=0.1`
                   : `https://api.themoviedb.org/3/discover/tv?first_air_date.gte=${dates[0]}&sort_by=first_air_date.asc&vote_average.lte=0.1`,
             ];
 
