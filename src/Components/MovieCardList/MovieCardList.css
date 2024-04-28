@@ -1,158 +1,296 @@
 .movie-card-container {
-   flex: 1;
-   display: flex;
-   flex-direction: column;
-   position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 80vw;
+}
+
+.movie-card-width {
+  width: 88vw;
 }
 
 .list-heading {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 30px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2% 0 1.5%;
+}
+
+.list-heading h3 {
+  font-size: 1.8vw;
 }
 
 .cta {
-   border: none;
-   background: none;
+  border: none;
+  background: none;
 }
 
 .cta span {
-   padding-bottom: 7px;
-   letter-spacing: 4px;
-   font-size: 14px;
-   margin-right: 15px;
-   text-transform: uppercase;
+  padding-bottom: 7px;
+  letter-spacing: 4px;
+  font-size: 0.9vw;
+  margin-right: 15px;
+  text-transform: uppercase;
 }
 
 .hover-underline-animation {
-   position: relative;
-   color: white;
-   padding-bottom: 20px;
+  position: relative;
+  color: white;
+  padding-bottom: 20px;
 }
 
 .hover-underline-animation:after {
-   content: "";
-   position: absolute;
-   width: 100%;
-   transform: scaleX(0);
-   height: 2px;
-   bottom: 0;
-   left: 0;
-   background-color: white;
-   transform-origin: bottom right;
-   transition: transform 0.25s ease-out;
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
 }
 
 .cta:hover .hover-underline-animation:after {
-   transform: scaleX(1);
-   transform-origin: bottom left;
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .movie-card-list {
-   display: flex;
-   flex-wrap: nowrap;
-   justify-content: flex-start;
-   gap: 25px;
-   margin-bottom: 15px;
-   position: relative;
-   overflow-x: auto;
-   overflow-y: hidden;
-   scroll-behavior: smooth;
-   &::-webkit-scrollbar {
-      display: none;
-   }
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.6vw;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  margin-bottom: 1.5%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .movie-card {
-   width: 180px;
-   height: auto;
-   position: relative;
-   cursor: pointer;
+  width: 25vh;
+  position: relative;
+  cursor: pointer;
 }
 
 .movie-card:hover .movie-image {
-   transform: scale(1.05);
-   border-radius: 20px;
-   mask-image: linear-gradient(to top, transparent 0%, black 60%);
+  transform: scale(1.05);
+  border-radius: 20px;
+  /* mask-image: linear-gradient(to top, transparent 0%, black 60%); */
 }
 
 .movie-image {
-   width: 180px;
-   height: 270px;
-   object-fit: cover;
-   border-radius: 10px;
-   transition: all 0.5s;
-   position: relative;
-   overflow: hidden;
+  width: 12vw;
+  height: 18vw;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: all 0.5s;
+  position: relative;
+  overflow: hidden;
 }
 
 .movie-title {
-   margin-top: 10px;
-   text-align: center;
-   font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.2vw;
 }
 
 .movie-review {
-   position: absolute;
-   font-size: 14px;
-   top: 10px;
-   right: 10px;
-   background-color: rgba(100, 100, 100, 0.5);
-   padding: 3px 6px;
-   border-radius: 10px;
+  position: absolute;
+  font-size: 0.9vw;
+  top: 3%;
+  right: 7%;
+  background-color: rgba(100, 100, 100, 0.5);
+  padding: 3px 6px;
+  border-radius: 10px;
 }
 
-.card-hover-icon {
-   display: flex;
-   justify-content: center;
-   gap: 30px;
-   font-size: 25px;
-   position: absolute;
-   top: 235px;
-   left: 50%;
-   transform: translate(-50%);
-   align-items: center;
-   transition: all 0.5s;
-   opacity: 0;
+/* .card-hover-icon {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 25px;
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  align-items: center;
+  transition: all 0.5s;
+  opacity: 0;
 }
 
 .movie-card:hover .card-hover-icon {
-   opacity: 1;
-   z-index: 10;
+  opacity: 1;
+  z-index: 10;
 }
 
-.card-watchlist, .card-completed, .card-close {
-   transition: all 0.5s;
+.card-watchlist,
+.card-completed,
+.card-close {
+  transition: all 0.5s;
 }
 
 .card-watchlist:hover {
-   color: red;
+  color: red;
 }
 
 .card-completed:hover {
-   color: greenyellow;
-}
+  color: greenyellow;
+} */
 
 .card-close:hover {
-   color: gray;
+  color: gray;
 }
 
 .scroll-button {
-   position: absolute;
-   top: 50%;
-   transform: translateY(-50%);
-   background-color: transparent;
-   border: none;
-   cursor: pointer;
-   font-size: 1.5em;
-   color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #fff;
 }
 
 .scroll-button.left {
-   left: 0px;
+  left: 0px;
 }
 
 .scroll-button.right {
-   right: 0px;
+  right: 0px;
+}
+
+@media (max-width: 992px) {
+  .movie-card-container {
+    width: 75vw;
+  }
+
+  .movie-card-width {
+    width: 88vw;
+  }
+
+  .list-heading h3 {
+    font-size: 2vw;
+  }
+
+  .cta span {
+    font-size: 1.2vw;
+  }
+
+  .movie-image {
+    width: 16vw;
+    height: 22vw;
+  }
+
+  .movie-title {
+    font-size: 1.5vw;
+  }
+
+  .movie-review {
+    font-size: 1.3vw;
+  }
+}
+@media (max-width: 768px) {
+  .movie-card-container {
+    width: 88vw;
+    margin: 6vw;
+  }
+
+  .movie-card-width {
+    width: 88vw;
+  }
+
+  .list-heading h3 {
+    font-size: 2.5vw;
+  }
+
+  .cta span {
+    font-size: 1.5vw;
+  }
+
+  .movie-image {
+    width: 20vw;
+    height: 28vw;
+  }
+
+  .movie-title {
+    font-size: 2vw;
+  }
+
+  .movie-review {
+    font-size: 1.5vw;
+  }
+
+  .scroll-button {
+    display: none;
+  }
+}
+@media (max-width: 576px) {
+  .movie-card-container {
+    width: 85vw;
+  }
+
+  .movie-card-width {
+    width: 87vw;
+  }
+
+  .list-heading h3 {
+    font-size: 3.3vw;
+  }
+
+  .cta span {
+    font-size: 2vw;
+  }
+
+  .movie-image {
+    width: 25vw;
+    height: 34vw;
+  }
+
+  .movie-title {
+    font-size: 2.5vw;
+  }
+
+  .movie-review {
+    font-size: 2vw;
+  }
+}
+@media (max-width: 480px) {
+  .movie-card-container {
+    width: 87vw;
+  }
+
+  .movie-card-width {
+    width: 88vw;
+  }
+
+  .movie-card-list {
+    gap: 16vw;
+  }
+
+  .list-heading h3 {
+    font-size: 4.5vw;
+  }
+
+  .cta span {
+    font-size: 2.5vw;
+  }
+
+  .movie-image {
+    width: 38vw;
+    height: 53vw;
+  }
+
+  .movie-title {
+    font-size: 3.5vw;
+  }
+
+  .movie-review {
+    display: none;
+  }
 }

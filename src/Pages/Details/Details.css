@@ -1,182 +1,187 @@
 .movie-details-container {
-   display: flex;
-   margin: 30px 10px;
+  display: flex;
+  gap: 2.7vw;
+  margin: 2vw 0.5vw;
+  transition: all 0.25s;
 }
 
 .movie-details-image-container {
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
-   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .movie-details-image {
-   width: 300px;
-   height: auto;
-   border-radius: 20px;
-   margin-bottom: 20px;
+  width: 19vw;
+  height: auto;
+  border-radius: 20px;
+  margin-bottom: 1.3vw;
+  transition: all 0.25s;
 }
 
 .details-watchlist-toggle {
-   position: absolute;
-   top: 10px;
-   right: 10px;
-   font-size: 25px;
-   color: red;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
+  color: red;
 }
 
 .details-button-container {
-   display: flex;
-   justify-content: center;
-   gap: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  font-size: 1vw;
 }
 
 .watch-button {
-   background-color: red;
-   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-   border-radius: 20px;
-   padding: 8px 20px;
-   color: white;
-   border: none;
-   outline: none;
-   transition: all 0.3s;
+  background-color: red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 2% 8%;
+  color: white;
+  border: none;
+  outline: none;
+  transition: all 0.3s;
 }
 
 .watch-button:hover {
-   background-color: rgb(196, 0, 0);
+  background-color: rgb(196, 0, 0);
 }
 
 .add-list-button {
-   background-color: rgb(69, 69, 69);
-   box-shadow: 0 0 10px rgba(87, 87, 87, 0.5);
-   border-radius: 20px;
-   padding: 8px 20px;
-   color: white;
-   border: none;
-   outline: none;
-   transition: all 0.3s;
+  background-color: rgb(69, 69, 69);
+  box-shadow: 0 0 10px rgba(87, 87, 87, 0.5);
+  border-radius: 20px;
+  padding: 2% 8%;
+  color: white;
+  border: none;
+  outline: none;
+  transition: all 0.3s;
 }
 
 .add-list-button:hover {
-   background-color: rgb(56, 56, 56);
+  background-color: rgb(56, 56, 56);
 }
 
 .movie-details-right {
-   flex: 1;
-   padding-left: 40px;
-   position: relative;
+  flex: 1;
+  position: relative;
 }
 
 .movie-details-title {
-   font-size: 40px;
-   margin-bottom: 15px;
-   width: 95%;
+  font-size: 2.6vw;
+  margin-bottom: 1.5vw;
+  width: 90%;
 }
 
 .movie-runtime {
-   font-size: 20px;
-   display: inline-block;
-   margin: 0 10px;
-   color: gray;
-   word-spacing: -2px;
+  font-size: 1.3vw;
+  display: inline-block;
+  margin: 0 0.7vw;
+  color: gray;
+  word-spacing: -2px;
 }
 
 .details-close-button {
-   position: absolute;
-   top: 0;
-   right: 0;
-   width: 3rem;
-   height: 3rem;
-   border: none;
-   background: rgba(180, 83, 107, 0.11);
-   border-radius: 5px;
-   transition: all 0.5s;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  background: rgba(180, 83, 107, 0.11);
+  border-radius: 5px;
+  transition: all 0.5s;
 }
 
 .X {
-   content: "";
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   width: 2em;
-   height: 1.5px;
-   background-color: rgb(255, 255, 255);
-   transform: translateX(-50%) rotate(45deg);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: rgb(255, 255, 255);
+  transform: translateX(-50%) rotate(45deg);
 }
 
 .Y {
-   content: "";
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   width: 2em;
-   height: 1.5px;
-   background-color: #fff;
-   transform: translateX(-50%) rotate(-45deg);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(-45deg);
 }
 
 .details-close-button:hover {
-   background-color: rgb(56, 56, 56);
+  background-color: rgb(56, 56, 56);
 }
 
 .movie-details-genre {
-   margin-bottom: 25px;
+  margin-bottom: 1.3vw;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8vw;
 }
 
 .movie-details-genre p {
-   border: 1px solid white;
-   border-radius: 30px;
-   display: inline;
-   padding: 5px 10px;
-   margin-right: 10px;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 0.3vw 0.8vw;
+  font-size: 1.9vh;
+  margin: 0;
 }
 
 .movie-details-plot {
-   font-size: 18px;
-   margin-bottom: 15px;
-   overflow-wrap: break-word;
+  font-size: 2.1vh;
+  margin: 0 3vw 1vw 0;
+  overflow-wrap: break-word;
 }
 
 .movie-details-cast {
-   font-size: 25px;
-   margin-bottom: 5px;
+  font-size: 1.6vw;
+  margin-bottom: 5px;
 }
 
 .cast-list-container {
-   width: 700px;
-   display: flex;
-   flex-wrap: nowrap;
-   gap: 20px;
-   justify-content: flex-start;
-   overflow-x: auto;
-   overflow-y: hidden;
-   &::-webkit-scrollbar {
-      display: none;
-   }
+  width: 46vw;
+  display: flex;
+  gap: 1.3vw;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .cast-list-card {
-   display: flex;
-   flex-direction: column;
-   position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .cast-image {
-   width: 100px;
-   height: 150px;
-   object-fit: cover;
-   margin-bottom: 5px;
-   border-radius: 10px;
-   transition: all 0.5s;
+  width: 6.5vw;
+  height: 9.7vw;
+  object-fit: cover;
+  margin-bottom: 0.3vw;
+  border-radius: 10px;
+  transition: all 0.5s;
 }
 
 .cast-name {
-   width: 100px;
-   text-align: center;
+  font-size: 1.1vw;
+  text-align: center;
 }
 
 .cast-list-card:hover .cast-image {
-   transform: scale(1.03, 1.03);
+  transform: scale(1.03, 1.03);
 }
 
 /* .cast-character-name {
@@ -192,214 +197,532 @@
    display: none;
 } */
 
-.series-season-container {
-   margin: 20px auto 10px;
-}
-
 .season-row {
-   display: flex;
-   justify-content: flex-start;
-   align-items: center;
-   gap: 10px;
-   margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8vw;
+  margin-bottom: 2.5vw;
 }
 
 .season-row-copy {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   gap: 10px;
-   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8vw;
+  cursor: pointer;
+}
+
+.season-row-copy h4 {
+  font-size: 1.5vw;
+  margin: 0;
 }
 
 .checkbox-wrapper * {
-   -webkit-tap-highlight-color: transparent;
-   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
-.checkbox-wrapper input[type="checkbox"] {
-   display: none;
+.checkbox-wrapper input[type='checkbox'] {
+  display: none;
 }
 
 .checkbox-wrapper label {
-   --size: 30px;
-   --shadow: calc(var(--size) * 0.07) calc(var(--size) * 0.1);
-   position: relative;
-   display: block;
-   width: var(--size);
-   height: var(--size);
-   margin: 0 auto;
-   background-color: #4158d0;
-   background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
-   border-radius: 50%;
-   box-shadow: 0 var(--shadow) #ffbeb8;
-   cursor: pointer;
-   transition: 0.2s ease transform, 0.2s ease background-color, 0.2s ease box-shadow;
-   overflow: hidden;
-   z-index: 1;
+  --size: 2vw;
+  --shadow: calc(var(--size) * 0.07) calc(var(--size) * 0.1);
+  position: relative;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  background-color: #4158d0;
+  background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+  border-radius: 50%;
+  box-shadow: 0 var(--shadow) #ffbeb8;
+  cursor: pointer;
+  transition: 0.2s ease transform, 0.2s ease background-color, 0.2s ease box-shadow;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .checkbox-wrapper label:before {
-   content: "";
-   position: absolute;
-   top: 50%;
-   right: 0;
-   left: 0;
-   width: calc(var(--size) * 0.9);
-   height: calc(var(--size) * 0.9);
-   margin: 0 auto;
-   background-color: black;
-   transform: translateY(-50%);
-   border-radius: 50%;
-   box-shadow: inset 0 var(--shadow) #ffbeb8;
-   transition: 0.2s ease width, 0.2s ease height;
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  width: calc(var(--size) * 0.9);
+  height: calc(var(--size) * 0.9);
+  margin: 0 auto;
+  background-color: black;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  box-shadow: inset 0 var(--shadow) #ffbeb8;
+  transition: 0.2s ease width, 0.2s ease height;
 }
 
 .checkbox-wrapper label:hover:before {
-   width: calc(var(--size) * 0.55);
-   height: calc(var(--size) * 0.55);
-   box-shadow: inset 0 var(--shadow) #ff9d96;
+  width: calc(var(--size) * 0.55);
+  height: calc(var(--size) * 0.55);
+  box-shadow: inset 0 var(--shadow) #ff9d96;
 }
 
 .checkbox-wrapper label:active {
-   transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .checkbox-wrapper .tick_mark {
-   position: absolute;
-   top: -1px;
-   right: 0;
-   left: calc(var(--size) * -0.05);
-   width: calc(var(--size) * 0.6);
-   height: calc(var(--size) * 0.6);
-   margin: 0 auto;
-   margin-left: calc(var(--size) * 0.14);
-   transform: rotateZ(-40deg);
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: calc(var(--size) * -0.05);
+  width: calc(var(--size) * 0.6);
+  height: calc(var(--size) * 0.6);
+  margin: 0 auto;
+  margin-left: calc(var(--size) * 0.14);
+  transform: rotateZ(-40deg);
 }
 
 .checkbox-wrapper .tick_mark:before,
 .checkbox-wrapper .tick_mark:after {
-   content: "";
-   position: absolute;
-   background-color: #fff;
-   border-radius: 2px;
-   opacity: 0;
-   transition: 0.2s ease transform, 0.2s ease opacity;
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  border-radius: 2px;
+  opacity: 0;
+  transition: 0.2s ease transform, 0.2s ease opacity;
 }
 
 .checkbox-wrapper .tick_mark:before {
-   left: 0;
-   bottom: 0;
-   width: calc(var(--size) * 0.1);
-   height: calc(var(--size) * 0.3);
-   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
-   transform: translateY(calc(var(--size) * -0.68));
+  left: 0;
+  bottom: 0;
+  width: calc(var(--size) * 0.1);
+  height: calc(var(--size) * 0.3);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
+  transform: translateY(calc(var(--size) * -0.68));
 }
 
 .checkbox-wrapper .tick_mark:after {
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   height: calc(var(--size) * 0.1);
-   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
-   transform: translateX(calc(var(--size) * 0.78));
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--size) * 0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
+  transform: translateX(calc(var(--size) * 0.78));
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked + label {
-   background-color: #4158d0;
-   background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
-   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+.checkbox-wrapper input[type='checkbox']:checked + label {
+  background-color: #4158d0;
+  background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked + label:before {
-   width: 0;
-   height: 0;
+.checkbox-wrapper input[type='checkbox']:checked + label:before {
+  width: 0;
+  height: 0;
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:before,
-.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:after {
-   transform: translate(0);
-   opacity: 1;
+.checkbox-wrapper input[type='checkbox']:checked + label .tick_mark:before,
+.checkbox-wrapper input[type='checkbox']:checked + label .tick_mark:after {
+  transform: translate(0);
+  opacity: 1;
 }
 
 .progress-loader {
-   width: 500px;
-   background: rgba(236, 236, 238, 0.253);
-   height: 10px;
-   border-radius: 7px;
+  width: 33vw;
+  background: rgba(236, 236, 238, 0.253);
+  height: 0.7vw;
+  border-radius: 7px;
 }
 
 .progress {
-   width: 0;
-   height: 10px;
-   border-radius: 7px;
-   background: rgb(255, 255, 255);
-   transition: 0.5s;
+  width: 0;
+  height: 10px;
+  border-radius: 7px;
+  background: rgb(255, 255, 255);
+  transition: 0.5s;
 }
 
 .episode-dropdown {
-   opacity: 0;
-   overflow: hidden;
-   width: 650px;
-   margin: 0 auto;
-   margin-bottom: 20px;
-   animation: fadeInOut 0.6s ease-in-out forwards;
-}
-
-.episode-list {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   margin-bottom: 20px;
-}
-
-.episode-left-side {
-   display: flex;
-   flex-direction: column;
-}
-
-.series-status {
-   text-align: center;
-   color: gray;
+  opacity: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0 21vw;
+  margin-bottom: 20px;
+  animation: fadeInOut 0.6s ease-in-out forwards;
 }
 
 @keyframes fadeInOut {
-   from {
-      opacity: 0;
-   }
-   to {
-      opacity: 1;
-   }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.episode-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.episode-left-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-left-side h5 {
+  font-size: 1.3vw;
+}
+
+.episode-left-side p {
+  font-size: 1vw;
+}
+
+.series-status {
+  text-align: center;
+  color: gray;
+  font-size: 1.1vw;
 }
 
 .rating {
-   display: inline-block;
-   background-color: rgb(41, 41, 41);
-   box-shadow: 0 0 10px rgba(87, 87, 87, 0.5);
-   border-radius: 20px;
-   padding: 0 20px;
+  display: inline-block;
+  background-color: rgb(41, 41, 41);
+  box-shadow: 0 0 10px rgba(87, 87, 87, 0.5);
+  border-radius: 20px;
+  padding: 0 20px;
 }
 
 .rating input {
-   display: none;
+  display: none;
 }
 
 .rating label {
-   padding: 0 5px;
-   float: right;
-   cursor: pointer;
-   color: #ccc;
-   transition: color 0.3s;
+  padding: 0 5px;
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s;
 }
 
 .rating label:before {
-   content: "\2605";
-   font-size: 30px;
+  content: '\2605';
+  font-size: 30px;
 }
 
 .rating input:checked ~ label,
 .rating label:hover,
 .rating label:hover ~ label {
-   color: #e58e09;
-   transition: color 0.3s;
+  color: #e58e09;
+  transition: color 0.3s;
+}
+
+@media (max-width: 992px) {
+  .movie-details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-close-button {
+    display: none;
+  }
+
+  .cast-list-container {
+    width: 77vw;
+  }
+
+  .sidebar-list li {
+    font-size: 1.7vw;
+  }
+
+  .movie-details-title {
+    font-size: 3vw;
+  }
+
+  .movie-runtime {
+    font-size: 1.7vw;
+  }
+
+  .movie-details-cast {
+    font-size: 2.5vw;
+  }
+
+  .cast-list-container {
+    width: 77vw;
+    gap: 1.3vw;
+  }
+
+  .cast-image {
+    width: 8.5vw;
+    height: 11.7vw;
+    margin-bottom: 0.5vw;
+  }
+
+  .cast-name {
+    font-size: 1.3vw;
+  }
+
+  .season-row-copy h4 {
+    font-size: 1.8vw;
+  }
+
+  .episode-left-side h5 {
+    font-size: 1.7vw;
+  }
+
+  .episode-left-side p {
+    font-size: 1.5vw;
+  }
+
+  .checkbox-wrapper label {
+    --size: 3vw;
+  }
+
+  .series-status {
+    font-size: 2.5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-details-right {
+    padding: 0 5vw;
+  }
+
+  .movie-details-image {
+    width: 30vw;
+  }
+
+  .movie-details-title {
+    font-size: 3.5vw;
+  }
+
+  .movie-runtime {
+    font-size: 2vw;
+  }
+
+  .details-button-container {
+    font-size: 1.7vw;
+  }
+
+  .sidebar-container {
+    position: absolute;
+    z-index: 1;
+    justify-content: center;
+    height: 90vh;
+    top: 70px;
+    background-color: black;
+    width: 100vw;
+  }
+
+  .sidebar-list li {
+    font-size: 2.5vw;
+  }
+
+  .small-sidebar {
+    display: none;
+  }
+
+  .cast-list-container {
+    width: 88vw;
+  }
+
+  .cast-image {
+    width: 10.5vw;
+    height: 14.7vw;
+  }
+
+  .cast-name {
+    font-size: 1.5vw;
+  }
+
+  .season-row-copy h4 {
+    font-size: 2vw;
+  }
+
+  .episode-left-side h5 {
+    font-size: 2vw;
+  }
+
+  .episode-left-side p {
+    font-size: 1.8vw;
+  }
+
+  .checkbox-wrapper label {
+    --size: 3.5vw;
+  }
+
+  .progress-loader {
+    width: 45vw;
+    height: 1vw;
+  }
+
+  .series-status {
+    font-size: 3vw;
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-details-image {
+    width: 40vw;
+  }
+
+  .movie-details-right {
+    padding: 0 5vw;
+  }
+
+  .movie-details-title {
+    font-size: 5vw;
+    margin-top: 2vw;
+  }
+
+  .movie-runtime {
+    font-size: 2.5vw;
+  }
+
+  .movie-details-plot {
+    font-size: 2.1vh;
+    margin: 0 0 2vw;
+    overflow-wrap: break-word;
+  }
+
+  .details-button-container {
+    font-size: 2.3vw;
+  }
+
+  .sidebar-list li {
+    font-size: 3.5vw;
+  }
+
+  .cast-list-container {
+    width: 88vw;
+  }
+
+  .movie-details-cast {
+    font-size: 3.3vw;
+  }
+
+  .cast-image {
+    width: 13.5vw;
+    height: 17.7vw;
+  }
+
+  .cast-name {
+    font-size: 2vw;
+  }
+
+  .season-row {
+    margin-bottom: 20px;
+  }
+
+  .season-row-copy h4 {
+    font-size: 2.7vw;
+  }
+
+  .episode-left-side h5 {
+    font-size: 2.7vw;
+  }
+
+  .episode-left-side p {
+    font-size: 2.3vw;
+  }
+
+  .checkbox-wrapper label {
+    --size: 4vw;
+  }
+
+  .progress-loader {
+    width: 50vw;
+    height: 1.5vw;
+  }
+
+  .series-status {
+    font-size: 3.5vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-details-image {
+    width: 60vw;
+  }
+
+  .movie-details-right {
+    padding: 0 5vw;
+  }
+
+  .movie-details-title {
+    font-size: 6vw;
+    margin-bottom: 3vw;
+  }
+
+  .movie-runtime {
+    font-size: 3.5vw;
+  }
+
+  .movie-details-genre {
+    margin-bottom: 3vw;
+  }
+
+  .movie-details-genre p {
+    padding: 0.3vw 3vw;
+    font-size: 1.7vh;
+    margin: 0;
+  }
+
+  .details-button-container {
+    font-size: 3.5vw;
+    margin-bottom: 5vw;
+  }
+
+  .movie-details-plot {
+    font-size: 3.5vw;
+  }
+
+  .sidebar-list li {
+    font-size: 5vw;
+  }
+
+  .cast-list-container {
+    width: 88vw;
+    gap: 3vw;
+  }
+
+  .movie-details-cast {
+    font-size: 4vw;
+  }
+
+  .cast-image {
+    width: 20vw;
+    height: 28vw;
+  }
+
+  .cast-name {
+    font-size: 3.5vw;
+  }
+
+  .episode-dropdown {
+    margin: 0 10vw;
+  }
+
+  .season-row-copy h4 {
+    font-size: 3.7vw;
+  }
+
+  .episode-left-side h5 {
+    font-size: 3.5vw;
+  }
+
+  .episode-left-side p {
+    font-size: 3vw;
+  }
+
+  .checkbox-wrapper label {
+    --size: 5vw;
+  }
+
+  .series-status {
+    font-size: 4vw;
+  }
 }

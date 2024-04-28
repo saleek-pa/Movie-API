@@ -1,77 +1,164 @@
+.skeleton-margin {
+   margin-top: 6vw;
+}
+
 .skeleton-movie-card {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   width: 200px;
-   height: 270px;
-   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25vh;
+  height: 35vh;
+  cursor: pointer;
 }
 
 .skeleton-movie-image {
-   width: 180px;
-   height: 250px;
-   border-radius: 10px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 12vw;
+  height: 18vw;
+  border-radius: 10px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-movie-title {
-   width: 100px;
-   height: 15px;
-   margin-top: 10px;
-   border-radius: 10px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 100px;
+  height: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-movie-details-image {
-   width: 300px;
-   height: 450px;
-   border-radius: 20px;
-   margin-bottom: 20px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 19vw;
+  height: 28vw;
+  border-radius: 20px;
+  margin-bottom: 2.5vh;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-movie-details-title {
-   width: 450px;
-   height: 40px;
-   margin: 15px 0;
-   border-radius: 10px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 35vw;
+  height: 40px;
+  margin: 15px 0;
+  border-radius: 10px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-movie-details-genre {
-   width: 100px;
-   height: 35px;
-   border-radius: 30px;
-   margin-right: 10px;
-   margin-bottom: 40px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 100px;
+  height: 35px;
+  border-radius: 30px;
+  margin-right: 10px;
+  margin-bottom: 40px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-movie-details-plot {
-   height: 15px;
-   width: 750px;
-   border-radius: 10px;
-   margin-bottom: 10px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 49vw;
+  height: 1.3vw;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 .skeleton-cast-image {
-   width: 100px;
-   height: 150px;
-   margin-bottom: 5px;
-   border-radius: 10px;
-   background-color: gray;
-   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+  width: 100px;
+  height: 150px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: gray;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
 }
 
 @keyframes pulse {
-   to {
-      opacity: 0.2;
-   }
+  to {
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 992px) {
+  .skeleton-movie-card {
+    display: none;
+  }
+
+  .skeleton-movie-image {
+    width: 16vw;
+    height: 22vw;
+  }
+
+  .skeleton-movie-details-image {
+    width: 35vw;
+    height: 50vw;
+  }
+
+  .skeleton-movie-details-plot {
+    width: 70vw;
+  }
+
+  .skeleton-movie-details-title {
+    width: 55vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .skeleton-movie-image {
+    width: 20vw;
+    height: 28vw;
+  }
+
+  .skeleton-movie-details-image {
+    width: 40vw;
+    height: 55vw;
+  }
+
+  .skeleton-movie-details-plot {
+    width: 80vw;
+    height: 1.7vw;
+  }
+
+  .skeleton-movie-details-title {
+    width: 65vw;
+  }
+}
+
+@media (max-width: 576px) {
+  .skeleton-movie-image {
+    width: 25vw;
+    height: 34vw;
+  }
+
+  .skeleton-movie-details-image {
+    width: 45vw;
+    height: 60vw;
+  }
+
+  .skeleton-movie-details-plot {
+    width: 85vw;
+    height: 2.5vw;
+  }
+
+  .skeleton-movie-details-title {
+    width: 75vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .skeleton-movie-image {
+    width: 38vw;
+    height: 53vw;
+  }
+
+  .skeleton-movie-details-image {
+    width: 60vw;
+    height: 83vw;
+  }
+
+  .skeleton-movie-details-plot {
+    width: 85vw;
+    height: 2.5vw;
+  }
 }
