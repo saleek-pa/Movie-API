@@ -37,7 +37,7 @@ export default function Completed() {
   }, [isMovie, user]);
 
   const returning = completed.filter((series) => series.status === 'Returning Series');
-  const ended = completed.filter((series) => series.status === 'Ended');
+  const ended = completed.filter((series) => series.status === 'Ended' || 'Canceled');
 
   const toggleMovieSeries = (e) => {
     dispatch(setIsMovie(e.target.textContent === 'Movie' ? true : false));
@@ -61,19 +61,23 @@ export default function Completed() {
         <CardList movies={completed} />
       ) : (
         <>
-          <div className="list-heading">
-            <h3>Returning Series</h3>
-          </div>
+          {returning.length > 0 && (
+            <div className="list-heading">
+              <h3>Returning Series</h3>
+            </div>
+          )}
           <CardList movies={returning} />
           <div className="movie-card-container">
-            <div className="list-heading">
-              <h3>Ended</h3>
-            </div>
+            {ended.length > 0 && (
+              <div className="list-heading">
+                <h3>Ended</h3>
+              </div>
+            )}
             <CardList movies={ended} />
-            {completed.length === 0 && <h3 className="text-center text-muted">Its empty!</h3>}
           </div>
         </>
       )}
+      {completed.length === 0 && <h3 className="text-center text-muted">Its empty!</h3>}
     </div>
   );
 }
