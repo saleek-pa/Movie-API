@@ -285,6 +285,7 @@ export default function SeriesDetails() {
                                   episodeId: ep.id,
                                   seasonDetails,
                                   episodeChecked,
+                                  setEpisodeChecked,
                                   seasonChecked,
                                   setSeasonChecked,
                                 })

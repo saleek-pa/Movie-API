@@ -108,14 +108,15 @@ const movieSlice = createSlice({
     },
 
     handleEpisodeCheckbox: (state, action) => {
-      const { seasonId, episodeId, seasonDetails, episodeChecked, seasonChecked, setSeasonChecked } = action.payload;
+      const { seasonId, episodeId, seasonDetails, episodeChecked, setEpisodeChecked, seasonChecked, setSeasonChecked } =
+        action.payload;
       const season = seasonDetails.find((season) => season.id === seasonId);
 
       if (episodeChecked.includes(episodeId)) {
         episodeChecked.splice(episodeChecked.indexOf(episodeId), 1);
         state.episode = state.episode.filter((id) => id !== episodeId);
       } else {
-        episodeChecked.push(episodeId);
+        setEpisodeChecked([...episodeChecked, episodeId])
         state.episode = [...state.episode, episodeId];
       }
 

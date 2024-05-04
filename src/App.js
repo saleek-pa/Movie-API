@@ -21,10 +21,13 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       toast.error('Experiencing loading delays ?\n consider using DNS 1.1.1.1');
     }, 3000);
-  }, [user]);
+
+    return () => clearTimeout(timeout);
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
