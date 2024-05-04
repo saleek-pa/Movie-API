@@ -37,9 +37,9 @@ Install dependencies
 ## Configuration
 Create a `.env` file in the root directory.
 ```bash
-  REACT_APP_ACCESS_TOKEN_AUTH = your_tmdb_api_key
+  REACT_APP_ACCESS_TOKEN_AUTH = your_access_token_auth
 ```
-Replace `your_tmdb_api_key` with the API key obtained from TMDB.
+Replace `your_access_token_auth` with the 'Access Token Auth' obtained from TMDB.
 
 ## Running the App
 ```bash
